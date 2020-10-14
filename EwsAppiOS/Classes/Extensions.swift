@@ -56,11 +56,62 @@ extension UIView {
     
     
     func updateConstraint(attribute: NSLayoutConstraint.Attribute, constant: CGFloat) -> Void {
+        
+   
         if let constraint = (self.constraints.filter{$0.firstAttribute == attribute}.first) {
+            print(constraint)
+
             constraint.constant = constant
-            self.layoutIfNeeded()
+            
         }
+        
     }
+
+    
+    func setConstraintConstant(constant: CGFloat,
+                                  forAttribute attribute: NSLayoutConstraint.Attribute) -> Bool
+          {
+           if let constraint = constraintForAttribute(attribute: attribute) {
+                  constraint.constant = constant
+            
+//            UIView.animate(withDuration: 0.2) {
+//
+//            self.layoutIfNeeded()
+//
+//             }
+            
+                  return true
+              }
+              else {
+                  superview?.addConstraint(NSLayoutConstraint(
+                      item: self,
+                      attribute: attribute,
+                      relatedBy: .equal,
+                      toItem: nil,
+                      attribute: .notAnAttribute,
+                      multiplier: 1.0, constant: constant))
+                  return false
+              }
+          }
+          
+       func constraintConstantforAttribute(attribute: NSLayoutConstraint.Attribute) -> CGFloat?
+          {
+           if let constraint = constraintForAttribute(attribute: attribute) {
+                  return constraint.constant
+              }
+              else {
+                  return nil
+              }
+          }
+          
+       func constraintForAttribute(attribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint?
+          {
+              return superview?.constraints.filter({
+                  $0.firstAttribute == attribute
+              }).first
+          }
+          
+    
     
     
     func setViewShadow() {

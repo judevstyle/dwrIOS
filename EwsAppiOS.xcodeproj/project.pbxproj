@@ -24,6 +24,9 @@
 		C452CE5D253087E5004CDC0A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE5C253087E5004CDC0A /* MainViewController.swift */; };
 		C452CE612530947A004CDC0A /* MenuSideViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE602530947A004CDC0A /* MenuSideViewCell.swift */; };
 		C452CE6B25309985004CDC0A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE6A25309985004CDC0A /* DashboardView.swift */; };
+		C490D308253570B9004CF6BE /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C490D307253570B9004CF6BE /* APIService.swift */; };
+		C490D30B253577F4004CF6BE /* SwiftyXMLParser in Frameworks */ = {isa = PBXBuildFile; productRef = C490D30A253577F4004CF6BE /* SwiftyXMLParser */; };
+		C490D30E25358F25004CF6BE /* StationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C490D30D25358F25004CF6BE /* StationModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +48,8 @@
 		C452CE5C253087E5004CDC0A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C452CE602530947A004CDC0A /* MenuSideViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSideViewCell.swift; sourceTree = "<group>"; };
 		C452CE6A25309985004CDC0A /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		C490D307253570B9004CF6BE /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		C490D30D25358F25004CF6BE /* StationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationModel.swift; sourceTree = "<group>"; };
 		C76B148D4A0169BF3A63C10A /* Pods-EwsAppiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.debug.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,6 +61,7 @@
 				C452CE5725308573004CDC0A /* NVActivityIndicatorViewExtended in Frameworks */,
 				C452CE5525308573004CDC0A /* NVActivityIndicatorView in Frameworks */,
 				6C485DBA615099ACE6B43ABF /* Pods_EwsAppiOS.framework in Frameworks */,
+				C490D30B253577F4004CF6BE /* SwiftyXMLParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +106,8 @@
 		C452CE2D25308031004CDC0A /* EwsAppiOS */ = {
 			isa = PBXGroup;
 			children = (
+				C490D30C25358F0E004CF6BE /* Models */,
+				C490D3062535702E004CF6BE /* APIService */,
 				C452CE5E25309455004CDC0A /* Views */,
 				C452CE50253084EC004CDC0A /* Classes */,
 				C452CE46253083A7004CDC0A /* Resources */,
@@ -191,6 +199,22 @@
 			path = DashboardView;
 			sourceTree = "<group>";
 		};
+		C490D3062535702E004CF6BE /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				C490D307253570B9004CF6BE /* APIService.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
+		C490D30C25358F0E004CF6BE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C490D30D25358F25004CF6BE /* StationModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -213,6 +237,7 @@
 			packageProductDependencies = (
 				C452CE5425308573004CDC0A /* NVActivityIndicatorView */,
 				C452CE5625308573004CDC0A /* NVActivityIndicatorViewExtended */,
+				C490D30A253577F4004CF6BE /* SwiftyXMLParser */,
 			);
 			productName = EwsAppiOS;
 			productReference = C452CE2B25308031004CDC0A /* EwsAppiOS.app */;
@@ -244,6 +269,7 @@
 			mainGroup = C452CE2225308031004CDC0A;
 			packageReferences = (
 				C452CE5325308573004CDC0A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
+				C490D309253577F4004CF6BE /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */,
 			);
 			productRefGroup = C452CE2C25308031004CDC0A /* Products */;
 			projectDirPath = "";
@@ -336,11 +362,13 @@
 			files = (
 				C452CE5A253085A6004CDC0A /* IntroViewController.swift in Sources */,
 				C452CE3325308031004CDC0A /* ViewController.swift in Sources */,
+				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
 				C452CE3925308031004CDC0A /* EwsAppiOS.xcdatamodeld in Sources */,
 				C452CE5D253087E5004CDC0A /* MainViewController.swift in Sources */,
 				C452CE6B25309985004CDC0A /* DashboardView.swift in Sources */,
 				C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */,
 				C452CE5225308504004CDC0A /* Extensions.swift in Sources */,
+				C490D308253570B9004CF6BE /* APIService.swift in Sources */,
 				C452CE612530947A004CDC0A /* MenuSideViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,6 +505,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C76B148D4A0169BF3A63C10A /* Pods-EwsAppiOS.debug.xcconfig */;
 			buildSettings = {
+				API_BASE_URL = "http://ews.dwr.go.th/mobilexml";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y46GLN8894;
@@ -497,6 +526,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 70EF7AD5828DF5FB899BCC69 /* Pods-EwsAppiOS.release.xcconfig */;
 			buildSettings = {
+				API_BASE_URL = "http://ews.dwr.go.th/mobilexml";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y46GLN8894;
@@ -545,6 +575,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		C490D309253577F4004CF6BE /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yahoojapan/SwiftyXMLParser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -557,6 +595,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C452CE5325308573004CDC0A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
 			productName = NVActivityIndicatorViewExtended;
+		};
+		C490D30A253577F4004CF6BE /* SwiftyXMLParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C490D309253577F4004CF6BE /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
+			productName = SwiftyXMLParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 
