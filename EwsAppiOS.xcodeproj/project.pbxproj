@@ -20,13 +20,19 @@
 		C452CE5225308504004CDC0A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE5125308504004CDC0A /* Extensions.swift */; };
 		C452CE5525308573004CDC0A /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = C452CE5425308573004CDC0A /* NVActivityIndicatorView */; };
 		C452CE5725308573004CDC0A /* NVActivityIndicatorViewExtended in Frameworks */ = {isa = PBXBuildFile; productRef = C452CE5625308573004CDC0A /* NVActivityIndicatorViewExtended */; };
-		C452CE5A253085A6004CDC0A /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE59253085A6004CDC0A /* IntroViewController.swift */; };
-		C452CE5D253087E5004CDC0A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE5C253087E5004CDC0A /* MainViewController.swift */; };
 		C452CE612530947A004CDC0A /* MenuSideViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE602530947A004CDC0A /* MenuSideViewCell.swift */; };
 		C452CE6B25309985004CDC0A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE6A25309985004CDC0A /* DashboardView.swift */; };
 		C490D308253570B9004CF6BE /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C490D307253570B9004CF6BE /* APIService.swift */; };
 		C490D30B253577F4004CF6BE /* SwiftyXMLParser in Frameworks */ = {isa = PBXBuildFile; productRef = C490D30A253577F4004CF6BE /* SwiftyXMLParser */; };
 		C490D30E25358F25004CF6BE /* StationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C490D30D25358F25004CF6BE /* StationModel.swift */; };
+		EF1A1E9C253C2957009DBBEF /* MainAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1E9B253C2957009DBBEF /* MainAppViewController.swift */; };
+		EF1A1E9F253C2AFC009DBBEF /* MenuSlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1E9E253C2AFC009DBBEF /* MenuSlideViewController.swift */; };
+		EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */; };
+		EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */; };
+		EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */; };
+		EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */; };
+		EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */; };
+		EFBBB5072539DBBF002AA238 /* StationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBB5062539DBBF002AA238 /* StationListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,13 +50,19 @@
 		C452CE4A253084D8004CDC0A /* Kanit-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Bold.ttf"; sourceTree = "<group>"; };
 		C452CE4B253084D8004CDC0A /* Kanit-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kanit-Regular.ttf"; sourceTree = "<group>"; };
 		C452CE5125308504004CDC0A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		C452CE59253085A6004CDC0A /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		C452CE5C253087E5004CDC0A /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C452CE602530947A004CDC0A /* MenuSideViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSideViewCell.swift; sourceTree = "<group>"; };
 		C452CE6A25309985004CDC0A /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		C490D307253570B9004CF6BE /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		C490D30D25358F25004CF6BE /* StationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationModel.swift; sourceTree = "<group>"; };
 		C76B148D4A0169BF3A63C10A /* Pods-EwsAppiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.debug.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		EF1A1E9B253C2957009DBBEF /* MainAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppViewController.swift; sourceTree = "<group>"; };
+		EF1A1E9E253C2AFC009DBBEF /* MenuSlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideViewController.swift; sourceTree = "<group>"; };
+		EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDataModel.swift; sourceTree = "<group>"; };
+		EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStationViewCell.swift; sourceTree = "<group>"; };
+		EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationXLastDataModel.swift; sourceTree = "<group>"; };
+		EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStationViewController.swift; sourceTree = "<group>"; };
+		EFBBB5062539DBBF002AA238 /* StationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,8 +137,11 @@
 		C452CE452530839F004CDC0A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EF1A1EA0253C39B4009DBBEF /* DashboardView */,
+				EF1A1E9D253C2AEF009DBBEF /* MenuSlide */,
+				EFBBB5052539DB93002AA238 /* StationList */,
+				EFBBB5022539DB5E002AA238 /* Map */,
 				C452CE5B253087DB004CDC0A /* Main */,
-				C452CE5825308594004CDC0A /* Intro */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -158,18 +173,10 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		C452CE5825308594004CDC0A /* Intro */ = {
-			isa = PBXGroup;
-			children = (
-				C452CE59253085A6004CDC0A /* IntroViewController.swift */,
-			);
-			path = Intro;
-			sourceTree = "<group>";
-		};
 		C452CE5B253087DB004CDC0A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				C452CE5C253087E5004CDC0A /* MainViewController.swift */,
+				EF1A1E9B253C2957009DBBEF /* MainAppViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -177,6 +184,7 @@
 		C452CE5E25309455004CDC0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EF1A1EA5253C6372009DBBEF /* CardStationView */,
 				C452CE692530997D004CDC0A /* DashboardView */,
 				C452CE5F2530945A004CDC0A /* ViewCellMenu */,
 			);
@@ -211,8 +219,50 @@
 			isa = PBXGroup;
 			children = (
 				C490D30D25358F25004CF6BE /* StationModel.swift */,
+				EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */,
+				EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		EF1A1E9D253C2AEF009DBBEF /* MenuSlide */ = {
+			isa = PBXGroup;
+			children = (
+				EF1A1E9E253C2AFC009DBBEF /* MenuSlideViewController.swift */,
+			);
+			path = MenuSlide;
+			sourceTree = "<group>";
+		};
+		EF1A1EA0253C39B4009DBBEF /* DashboardView */ = {
+			isa = PBXGroup;
+			children = (
+				EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */,
+			);
+			path = DashboardView;
+			sourceTree = "<group>";
+		};
+		EF1A1EA5253C6372009DBBEF /* CardStationView */ = {
+			isa = PBXGroup;
+			children = (
+				EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */,
+			);
+			path = CardStationView;
+			sourceTree = "<group>";
+		};
+		EFBBB5022539DB5E002AA238 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		EFBBB5052539DB93002AA238 /* StationList */ = {
+			isa = PBXGroup;
+			children = (
+				EFBBB5062539DBBF002AA238 /* StationListViewController.swift */,
+			);
+			path = StationList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,16 +410,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C452CE5A253085A6004CDC0A /* IntroViewController.swift in Sources */,
 				C452CE3325308031004CDC0A /* ViewController.swift in Sources */,
+				EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */,
 				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
+				EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */,
+				EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */,
 				C452CE3925308031004CDC0A /* EwsAppiOS.xcdatamodeld in Sources */,
-				C452CE5D253087E5004CDC0A /* MainViewController.swift in Sources */,
 				C452CE6B25309985004CDC0A /* DashboardView.swift in Sources */,
 				C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */,
+				EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */,
 				C452CE5225308504004CDC0A /* Extensions.swift in Sources */,
 				C490D308253570B9004CF6BE /* APIService.swift in Sources */,
 				C452CE612530947A004CDC0A /* MenuSideViewCell.swift in Sources */,
+				EF1A1E9C253C2957009DBBEF /* MainAppViewController.swift in Sources */,
+				EFBBB5072539DBBF002AA238 /* StationListViewController.swift in Sources */,
+				EF1A1E9F253C2AFC009DBBEF /* MenuSlideViewController.swift in Sources */,
+				EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

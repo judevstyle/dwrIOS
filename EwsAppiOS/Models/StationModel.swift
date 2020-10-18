@@ -26,41 +26,6 @@ struct StationModel : Codable {
     let longitude : String?
     
     
-//    enum CodingKeys: String, CodingKey {
-//        case std = "std"
-//        case name = "name"
-//        case station_name = "station_name"
-//        case tambon = "tambon"
-//        case amphoe = "amphoe"
-//        case province = "province"
-//        case dept = "dept"
-//        case basin = "basin"
-//        case region = "region"
-//        case station_type = "station_type"
-//        case stn_cover = "stn_cover"
-//        case latitude = "latitude"
-//        case longitude = "longitude"
-//
-//    }
-    
-//    init(from decoder: Decoder) throws {
-//        let values = try decoder.container(keyedBy: CodingKeys.self)
-//        std = try values.decodeIfPresent(String.self, forKey: .std)
-//        name = try values.decodeIfPresent(String.self, forKey: .name)
-//        station_name = try values.decodeIfPresent(String.self, forKey: .station_name)
-//        tambon = try values.decodeIfPresent(String.self, forKey: .tambon)
-//        amphoe = try values.decodeIfPresent(String.self, forKey: .amphoe)
-//        province = try values.decodeIfPresent(String.self, forKey: .province)
-//        dept = try values.decodeIfPresent(String.self, forKey: .dept)
-//        basin = try values.decodeIfPresent(String.self, forKey: .basin)
-//        region = try values.decodeIfPresent(String.self, forKey: .region)
-//        station_type = try values.decodeIfPresent(String.self, forKey: .station_type)
-//        stn_cover = try values.decodeIfPresent(String.self, forKey: .stn_cover)
-//        latitude = try values.decodeIfPresent(String.self, forKey: .latitude)
-//        longitude = try values.decodeIfPresent(String.self, forKey: .longitude)
-//
-//    }
-    
     init(std: String,
          name:String,
          station_name: String,
@@ -88,7 +53,6 @@ struct StationModel : Codable {
         self.stn_cover = stn_cover
         self.latitude = latitude
         self.longitude = longitude
-
     }
     
     
@@ -104,30 +68,31 @@ struct StationModel : Codable {
             if let count = xml["ews", "station"].all?.count {
                 if count > 0 {
                     for item_station in xml["ews", "station"].all! {
-
                         stations.append(
                             StationModel(
-                                std: "",
-                                name: "",
-                                station_name: "",
-                                tambon: "",
-                                amphoe: "",
-                                province: "",
-                                dept: "",
-                                basin: "",
-                                region: "",
-                                station_type: "",
-                                stn_cover: "",
-                                latitude: "",
-                                longitude: ""
+                                std: item_station.attributes["stn"]!,
+                                name: item_station.childElements[0].text ?? "",
+                                station_name: item_station.childElements[1].text ?? "",
+                                tambon: item_station.childElements[2].text ?? "",
+                                amphoe: item_station.childElements[3].text ?? "",
+                                province: item_station.childElements[4].text ?? "",
+                                dept: item_station.childElements[5].text ?? "",
+                                basin: item_station.childElements[6].text ?? "",
+                                region: item_station.childElements[7].text ?? "",
+                                station_type: item_station.childElements[8].text ?? "",
+                                stn_cover: item_station.childElements[9].text ?? "",
+                                latitude: item_station.childElements[10].text ?? "",
+                                longitude: item_station.childElements[11].text ?? ""
                             )
                         )
+
                         
                     }
                 }
             
         }
 //        print(stations)
+        
         
         return stations
         

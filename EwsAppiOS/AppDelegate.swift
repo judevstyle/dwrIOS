@@ -9,58 +9,63 @@
 import UIKit
 import CoreData
 import Moya
-//import SwiftyXMLParser
+import GoogleMaps
+import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    
     var window: UIWindow?
     static let shareDelegate = AppDelegate()
-    var stations: [StationModel]! = []
-
+    var stations: [StationModel]! = nil
+    var currentLocation: CLLocationCoordinate2D? = CLLocationCoordinate2DMake(15.8700, 100.9925) //Thailand
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-       
-
+        
+        
+        
+        
+        let attrs = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont(name: "Kanit-Regular", size: 18)!
+        ]
+        
+        UINavigationBar.appearance().titleTextAttributes = attrs
+        
+        GMSServices.provideAPIKey("AIzaSyDg-bwviwDVeAhD_JPJt4mdCidS9dK4uvA")
+        GMSPlacesClient.provideAPIKey("AIzaSyDg-bwviwDVeAhD_JPJt4mdCidS9dK4uvA")
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let rootVC = MainAppViewController()
+        window?.rootViewController = rootVC
+        window?.makeKeyAndVisible()
+        
         DispatchQueue.global(qos: .background).async {
-            self.stations = StationModel.FetchStations()
+            AppDelegate.shareDelegate.stations = StationModel.FetchStations()
         }
         
-             let attrs = [
-                 NSAttributedString.Key.foregroundColor: UIColor.white,
-                 NSAttributedString.Key.font: UIFont(name: "Kanit-Regular", size: 18)!
-             ]
-             
-             UINavigationBar.appearance().titleTextAttributes = attrs
-        
-            window = UIWindow(frame: UIScreen.main.bounds)
-               let rootVC = IntroViewController()
-               let rootNC = UINavigationController(rootViewController: rootVC)
-               window?.rootViewController = rootNC
-               window?.makeKeyAndVisible()
-               
         
         return true
     }
     
     
-
+    
     // MARK: - Core Data stack
-
+    
     lazy var persistentContainer: NSPersistentContainer = {
-
+        
         let container = NSPersistentContainer(name: "EwsAppiOS")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-
+                
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
         return container
     }()
-
+    
     // MARK: - Core Data Saving support
-
+    
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -74,6 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
 }
 

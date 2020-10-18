@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import NVActivityIndicatorViewExtended
+import Toast_Swift
 
 extension UIView {
     
@@ -416,7 +417,7 @@ extension UIViewController: NVActivityIndicatorViewable {
     
     func startLoding() {
         let size = CGSize(width: 40.0, height: 40.0)
-        startAnimating(size, message: "", messageFont: .PrimaryRegular(size: 17), type: .circleStrokeSpin,color: .AppPrimary(), backgroundColor: .blackAlpha(alpha: 0.3), textColor: .white, fadeInAnimation: nil)
+        startAnimating(size, message: "", messageFont: .PrimaryRegular(size: 17), type: .circleStrokeSpin,color: .whiteAlpha(alpha: 0.7), backgroundColor: .blackAlpha(alpha: 0.3), textColor: .white, fadeInAnimation: nil)
     }
     
     func stopLoding() {
@@ -431,6 +432,11 @@ extension UIViewController: NVActivityIndicatorViewable {
         })
         dialogMessage.addAction(ok)
         self.present(dialogMessage, animated: true, completion: nil)
+    }
+    
+    
+    func ToastMsg(msg:String) {
+        self.view.makeToast("\(msg)", duration: 1.5, position: .bottom)
     }
     
     func hideKeyboardWhenTappedAround() {
@@ -475,6 +481,21 @@ extension UIScrollView {
         self.contentInset = contentInset
     }
     
+}
+
+extension NSAttributedString {
+    func withLineSpacing(_ spacing: CGFloat) -> NSAttributedString {
+
+
+        let attributedString = NSMutableAttributedString(attributedString: self)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        paragraphStyle.lineSpacing = spacing
+        attributedString.addAttribute(.paragraphStyle,
+                                      value: paragraphStyle,
+                                      range: NSRange(location: 0, length: string.count))
+        return NSAttributedString(attributedString: attributedString)
+    }
 }
 
 extension String {
