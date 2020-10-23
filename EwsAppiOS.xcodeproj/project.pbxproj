@@ -30,6 +30,7 @@
 		EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */; };
 		EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */; };
 		EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */; };
+		EF5E7FF125433D3D0054D025 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = EF5E7FF025433D3D0054D025 /* style.json */; };
 		EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */; };
 		EF9ABE43254179E0001EAA20 /* DashboardCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9ABE42254179E0001EAA20 /* DashboardCardModel.swift */; };
 		EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9ABE4425417CB9001EAA20 /* DashboardMapView.swift */; };
@@ -62,6 +63,7 @@
 		EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDataModel.swift; sourceTree = "<group>"; };
 		EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStationViewCell.swift; sourceTree = "<group>"; };
+		EF5E7FF025433D3D0054D025 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationXLastDataModel.swift; sourceTree = "<group>"; };
 		EF9ABE42254179E0001EAA20 /* DashboardCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCardModel.swift; sourceTree = "<group>"; };
 		EF9ABE4425417CB9001EAA20 /* DashboardMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardMapView.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				C452CE3C25308037004CDC0A /* LaunchScreen.storyboard */,
 				C452CE3F25308037004CDC0A /* Info.plist */,
 				C452CE3725308031004CDC0A /* EwsAppiOS.xcdatamodeld */,
+				EF5E7FF025433D3D0054D025 /* style.json */,
 			);
 			path = EwsAppiOS;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				C452CE4E253084D8004CDC0A /* Kanit-Bold.ttf in Resources */,
 				C452CE4C253084D8004CDC0A /* Kanit-Light.ttf in Resources */,
 				C452CE3B25308037004CDC0A /* Assets.xcassets in Resources */,
+				EF5E7FF125433D3D0054D025 /* style.json in Resources */,
 				C452CE4F253084D8004CDC0A /* Kanit-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

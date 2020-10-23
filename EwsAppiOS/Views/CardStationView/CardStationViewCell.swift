@@ -14,7 +14,7 @@ class CardStationViewCell: UITableViewCell {
     
     lazy var viewCard: UIView = {
         let view = UIView()
-        view.backgroundColor = .whiteAlpha(alpha: 0.2)
+        view.backgroundColor = .whiteAlpha(alpha: 0.3)
         view.layer.cornerRadius = 8
         return view
     }()
@@ -34,7 +34,7 @@ class CardStationViewCell: UITableViewCell {
         let label = UILabel()
         
         label.numberOfLines = 2
-        label.textColor = .blackAlpha(alpha: 0.8)
+        label.textColor = .blackAlpha(alpha: 0.6)
         
         let stringValue = "ต.หนองไผ่ อ.ด่านมะขามเตี้ย จ.กาญจนบุรี\nหมู่บ้านคลอบคลุมจำนวน 3 หมู่บ้าน"
         

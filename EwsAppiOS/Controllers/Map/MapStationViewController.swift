@@ -20,7 +20,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     private var clusterManager: GMUClusterManager!
     
     var markerCustom: GMSMarker?
-    var markerView: UIImageView?
     
     var marker: GMSMarker!
     
@@ -54,6 +53,35 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         tableview.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
         tableview.layer.cornerRadius = 8
         return tableview
+    }()
+    
+    lazy var markerDefaultView: UIImageView = {
+        let pin = UIImage(named: "pin-default")!.withRenderingMode(.alwaysOriginal)
+        //        let size = CGSize(width: 25, height: 25)
+        //        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
+        return UIImageView(image: pin)
+    }()
+    
+    
+    lazy var markerBewareView: UIImageView = {
+        let pin = UIImage(named: "pin-beware")!.withRenderingMode(.alwaysOriginal)
+        //        let size = CGSize(width: 25, height: 25)
+        //        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
+        return UIImageView(image: pin)
+    }()
+    
+    lazy var markerEvacuateView: UIImageView = {
+        let pin = UIImage(named: "pin-evacuate")!.withRenderingMode(.alwaysOriginal)
+        //        let size = CGSize(width: 25, height: 25)
+        //        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
+        return UIImageView(image: pin)
+    }()
+    
+    lazy var markerWarningView: UIImageView = {
+        let pin = UIImage(named: "pin-warning")!.withRenderingMode(.alwaysOriginal)
+        //        let size = CGSize(width: 25, height: 25)
+        //        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
+        return UIImageView(image: pin)
     }()
     
     
@@ -96,13 +124,14 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: -16, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 100, heightConstant: self.view.frame.height/2)
         
         
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         
     }
-    
     
     @objc func handleClose(){
         dismiss(animated: true, completion: nil)
@@ -112,47 +141,51 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
-        
-        
-        mapView = GMSMapView.map(withFrame: self.viewMain.frame, camera: camera)
-        mapView.mapType = .hybrid
-        mapView.isMyLocationEnabled = true
-        
-        self.viewMain.addSubview(mapView)
-        mapView.anchor(viewMain.topAnchor, left: viewMain.leftAnchor, bottom: viewMain.bottomAnchor, right: viewMain.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        self.mapView.delegate = self
-        
-        let iconGenerator = GMUDefaultClusterIconGenerator()
-        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-        let renderer = GMUDefaultClusterRenderer(mapView: mapView,
-                                                 clusterIconGenerator: iconGenerator)
-        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm,
-                                           renderer: renderer)
-        
-        clusterManager.setMapDelegate(self)
-        
-        
-        setStyleMap()
-        
+        loadMapView()
         
         self.startLoding()
         DispatchQueue.global(qos: .background).async {
             self.dashboards = DashboardCardModel.getCountStatus()
             
-            print(self.dashboards)
             DispatchQueue.main.async {
                 self.stopLoding()
                 self.tableview.reloadData()
             }
         }
         
-        let pin = UIImage(named: "pin")!.withRenderingMode(.alwaysOriginal)
-        let size = CGSize(width: 30, height: 30)
-        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
-        markerView = UIImageView(image: aspectScaledToFitImage)
         
+    }
+    
+    // Set the status bar style to complement night-mode.
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    func loadMapView() {
+        
+        
+        let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
+        
+        
+        mapView = GMSMapView.map(withFrame: self.viewMain.frame, camera: camera)
+        mapView.isMyLocationEnabled = true
+        
+        self.viewMain.addSubview(mapView)
+        mapView.anchor(viewMain.topAnchor, left: viewMain.leftAnchor, bottom: viewMain.bottomAnchor, right: viewMain.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        
+        do {
+            // Set the map style by passing the URL of the local file.
+            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
+                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+            } else {
+                NSLog("Unable to find style.json")
+            }
+        } catch {
+            NSLog("One or more of the map styles failed to load. \(error)")
+        }
+        
+        self.mapView.delegate = self
         
         getMap()
     }
@@ -166,8 +199,10 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
                 
                 if let lat = item.latitude!.toDouble() {
                     if let long = item.longitude!.toDouble() {
+                        Thread.sleep(forTimeInterval: 0.0001)
                         DispatchQueue.main.async {
-                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index)
+                            
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerDefaultView)
                         }
                         
                     }
@@ -183,14 +218,14 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     
     
-    func handleAddMarker(coordinate: CLLocationCoordinate2D, index: Int){
+    func handleAddMarker(coordinate: CLLocationCoordinate2D, index: Int, iconMarker: UIImageView){
         
         
         let position = coordinate
         marker = GMSMarker(position: position)
         marker.snippet = "\(index)"
         marker.isTappable = true
-        marker.iconView = markerView
+        marker.iconView = iconMarker
         marker.tracksViewChanges = true
         marker.map = self.mapView
         self.markerCustom = marker
@@ -198,19 +233,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     }
     
     
-    
-    func setStyleMap() {
-        
-        do {
-            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
-                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
-            } else {
-                NSLog("Unable to find style.json")
-            }
-        } catch {
-            NSLog("One or more of the map styles failed to load. \(error)")
-        }
-    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

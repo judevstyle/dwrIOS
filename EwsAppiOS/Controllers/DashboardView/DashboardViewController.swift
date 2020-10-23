@@ -35,6 +35,14 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     }()
     
     
+    let bgImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "bg")
+        image.contentMode = .scaleToFill
+        
+        return image
+    }()
+    
     let cellId = "cellDashboard"
     
     lazy var tableview: UITableView = {
@@ -48,8 +56,6 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         tableview.separatorStyle = .none
         return tableview
     }()
-    
-    
     
     lazy var  menuSlide: SideMenuNavigationController = {
         let rootVc = MenuSlideViewController()
@@ -83,8 +89,12 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
         tableview.register(DashboardView.self, forCellReuseIdentifier: cellId)
         
+        view.addSubview(bgImage)
         view.addSubview(tableview)
         view.addSubview(viewAllButton)
+        
+        
+        bgImage.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 16, leftConstant: 16, bottomConstant: 100, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
