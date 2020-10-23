@@ -6,7 +6,8 @@ target 'EwsAppiOS' do
   use_frameworks!
 
   # Pods for EwsAppiOS
- pod 'MaterialComponents/ActionSheet'
+
+pod 'MaterialComponents/ActionSheet'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'Google-Maps-iOS-Utils', '~> 3.2.1'

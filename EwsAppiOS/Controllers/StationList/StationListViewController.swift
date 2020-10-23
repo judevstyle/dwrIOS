@@ -95,6 +95,7 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CardStationViewCell
         
+        cell.station = self.stations_last[indexPath.row]
         
         return cell
     }

@@ -52,7 +52,7 @@ struct StationXLastDataModel : Codable {
                         stn: lastdata.stn!,
                         warning_type: lastdata.warning_type!,
                         title: station.name!,
-                        address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) หมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
+                        address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) \nหมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
                         rain: lastdata.rain!,
                         rain12h: lastdata.rain12h!,
                         rain07h: lastdata.rain07h!,

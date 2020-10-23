@@ -10,11 +10,12 @@ import UIKit
 import GoogleMaps
 import GoogleMapsUtils
 import Moya
+import AlamofireImage
 
-class MapStationViewController: UIViewController, GMSMapViewDelegate {
+class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     let APIServiceProvider = MoyaProvider<APIService>()
-
+    
     private var mapView: GMSMapView!
     private var clusterManager: GMUClusterManager!
     
@@ -37,6 +38,27 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate {
     }()
     
     
+    let cellId = "cellDashboard"
+    
+    
+    lazy var tableview: UITableView = {
+        let tableview = UITableView()
+        tableview.dataSource = self
+        tableview.delegate = self
+        
+        tableview.tableFooterView = UIView()
+        tableview.backgroundColor = .clear
+        tableview.isScrollEnabled = false
+        tableview.separatorStyle = .none
+        tableview.showsVerticalScrollIndicator = false
+        tableview.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
+        tableview.layer.cornerRadius = 8
+        return tableview
+    }()
+    
+    
+    var dashboards = DashboardCardModel.dashboards()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,35 +77,43 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate {
         setupView()
     }
     
-
     
     func setupView() {
         
-//        view.addSubview(viewStatus)
+        //        view.addSubview(viewStatus)
         view.addSubview(viewMain)
         
-//        viewStatus.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        //        viewStatus.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
         
         
         viewMain.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        tableview.register(DashboardMapView.self, forCellReuseIdentifier: cellId)
+        
+        view.addSubview(tableview)
+        
+        tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: -16, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 100, heightConstant: self.view.frame.height/2)
         
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-   
+        
     }
     
+    
     @objc func handleClose(){
-           dismiss(animated: true, completion: nil)
-       }
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
         
-        let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 12.0)
         
         mapView = GMSMapView.map(withFrame: self.viewMain.frame, camera: camera)
         mapView.mapType = .hybrid
@@ -101,53 +131,135 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate {
         clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm,
                                            renderer: renderer)
         
-        // Register self to listen to GMSMapViewDelegate events.
         clusterManager.setMapDelegate(self)
         
-//        let pin = UIImage(named: "pin")!.withRenderingMode(.alwaysOriginal)
-//        let size = CGSize(width: 45, height: 45)
-//        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
-//        markerView = UIImageView(image: aspectScaledToFitImage)
         
+        setStyleMap()
+        
+        
+        self.startLoding()
+        DispatchQueue.global(qos: .background).async {
+            self.dashboards = DashboardCardModel.getCountStatus()
+            
+            print(self.dashboards)
+            DispatchQueue.main.async {
+                self.stopLoding()
+                self.tableview.reloadData()
+            }
+        }
+        
+        let pin = UIImage(named: "pin")!.withRenderingMode(.alwaysOriginal)
+        let size = CGSize(width: 30, height: 30)
+        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
+        markerView = UIImageView(image: aspectScaledToFitImage)
+        
+        
+        getMap()
+    }
+    
+    
+    func getMap() {
+        
+        
+        DispatchQueue.global(qos: .background).async {
+            for (index,item) in AppDelegate.shareDelegate.stations.enumerated() {
+                
+                if let lat = item.latitude!.toDouble() {
+                    if let long = item.longitude!.toDouble() {
+                        DispatchQueue.main.async {
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index)
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
+        let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
+        self.mapView.animate(to: camera)
         
         
     }
     
     
     
-//
-//
-//    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-//        //        print("sssss", marker.snippet!)
-//        let actionSheet = MDCActionSheetController(title: "คลินิค \(self.listClinic[Int("\(marker.snippet!)")!].u_name_clinic!)",
-//            message: "")
-//
-//
-//        let actionOne = MDCActionSheetAction(title: "รายละเอียด",
-//                                             image: UIImage(named: "eye"),
-//                                             handler:  { _ in
-//                                                let detailVC = DetailClinicViewController()
-//                                                detailVC.clinicData = self.listClinic[Int("\(marker.snippet!)")!]
-//                                                detailVC.listServices = self.listClinic[Int("\(marker.snippet!)")!].service_day ?? []
-//                                                detailVC.listDoctor = self.listClinic[Int("\(marker.snippet!)")!].doctor ?? []
-//                                                detailVC.hidesBottomBarWhenPushed = true
-//                                                self.navigationController?.pushViewController(detailVC, animated: true)
-//
-//        })
-//
-//        actionSheet.addAction(actionOne)
-//
-//        actionSheet.titleFont = UIFont.KanitMedium(size: 21)
-//        actionSheet.actionFont = UIFont.KanitRegular(size: 17)
-//        actionSheet.actionTextColor = UIColor.gray
-//        actionSheet.imageRenderingMode = .alwaysTemplate
-//        actionSheet.actionTintColor = .gray
-//
-//
-//        present(actionSheet, animated: true, completion: nil)
-//
-//        return true
-//    }
+    func handleAddMarker(coordinate: CLLocationCoordinate2D, index: Int){
+        
+        
+        let position = coordinate
+        marker = GMSMarker(position: position)
+        marker.snippet = "\(index)"
+        marker.isTappable = true
+        marker.iconView = markerView
+        marker.tracksViewChanges = true
+        marker.map = self.mapView
+        self.markerCustom = marker
+        
+    }
+    
+    
+    
+    func setStyleMap() {
+        
+        do {
+            if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
+                mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+            } else {
+                NSLog("Unable to find style.json")
+            }
+        } catch {
+            NSLog("One or more of the map styles failed to load. \(error)")
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dashboards.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! DashboardMapView
+        
+        cell.dashboard = dashboards[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.frame.height/CGFloat(dashboards.count)
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if AppDelegate.shareDelegate.stations != nil {
+            
+            let rootVC = StationListViewController()
+            
+            switch indexPath.row {
+            case 0:
+                rootVC.StatusType = "สถานการณ์ อพยพ"
+            case 1:
+                rootVC.StatusType = "สถานการณ์ เตือนภัย"
+            case 2:
+                rootVC.StatusType = "สถานการณ์ เฝ้าระวัง"
+            case 3:
+                rootVC.StatusType = "สถานการณ์ ฝนตกเล็กน้อย"
+            default:
+                rootVC.StatusType = "สถานการณ์ ฝนตกเล็กน้อย"
+            }
+            let rootNC = UINavigationController(rootViewController: rootVC)
+            rootNC.modalPresentationStyle = .fullScreen
+            rootNC.modalTransitionStyle = .crossDissolve
+            DispatchQueue.main.async {
+                self.present(rootNC, animated: true, completion: nil)
+            }
+        }else {
+            //            delegateMainApp!.ToastLoading()
+        }
+    }
     
     
 }
+
+

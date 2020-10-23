@@ -8,32 +8,6 @@
 
 import UIKit
 
-struct DashboardCardModel {
-    var name: String
-    var value: String
-    var color: UIColor
-    
-    
-    init(name: String, value: String, color: UIColor) {
-        self.name = name
-        self.value = value
-        self.color = color
-    }
-    
-    
-    static func dashboards() -> [DashboardCardModel] {
-           var dashboards = [DashboardCardModel]()
-           
-        dashboards.append(DashboardCardModel(name: "อพยพ", value: "0", color: .red))
-            dashboards.append(DashboardCardModel(name: "เตือนภัย", value: "0", color: .yellow))
-        dashboards.append(DashboardCardModel(name: "เฝ้าระวัง", value: "0", color: .green))
-        dashboards.append(DashboardCardModel(name: "มีฝน", value: "0", color: .mediumBlue))
-
-           
-           return dashboards
-       }
-}
-
 class DashboardView: UITableViewCell {
     
 

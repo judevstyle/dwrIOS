@@ -284,6 +284,68 @@ extension UIView {
     
 }
 
+
+extension String {
+    func toDouble() -> Double? {
+        return NumberFormatter().number(from: self)?.doubleValue
+    }
+}
+
+
+extension UITableViewCell {
+    
+    func withTextParagraph(text: String,fonSize: Int) -> NSAttributedString {
+        
+           let attributedString = NSMutableAttributedString(string: text)
+                
+                let paragraphStyle = NSMutableParagraphStyle()
+                
+                paragraphStyle.maximumLineHeight = 17.0
+                
+                
+                attributedString.addAttribute(
+                    .paragraphStyle,
+                    value: paragraphStyle,
+                    range: NSRange(location: 0, length: attributedString.length
+                ))
+                
+                attributedString.addAttribute(
+                    .font,
+                    value: UIFont.PrimaryLight(size: CGFloat(fonSize)),
+                    range: NSRange(location: 0, length: attributedString.length
+                ))
+           
+           return attributedString
+       }
+    
+    
+//    func ParagraphDashboardMap(title: String, value: String) -> NSAttributedString {
+//
+//             let attributedString = NSMutableAttributedString(a)
+//
+//                  let paragraphStyle = NSMutableParagraphStyle()
+//
+//                  paragraphStyle.maximumLineHeight = 17.0
+//
+//
+//                  attributedString.addAttribute(
+//                      .paragraphStyle,
+//                      value: paragraphStyle,
+//                      range: NSRange(location: 0, length: attributedString.length
+//                  ))
+//
+//                  attributedString.addAttribute(
+//                      .font,
+//                      value: UIFont.PrimaryLight(size: 15),
+//                      range: NSRange(location: 0, length: attributedString.length
+//                  ))
+//
+//             return attributedString
+//         }
+       
+}
+
+
 extension UIColor {
     
     static func whiteAlpha(alpha: CGFloat) -> UIColor {

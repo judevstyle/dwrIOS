@@ -6,6 +6,7 @@
 //  Copyright © 2563 ssoft. All rights reserved.
 //
 
+
 import UIKit
 import SideMenu
 import SwiftyXMLParser
@@ -63,7 +64,8 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     var topConstraint = NSLayoutConstraint()
     
-    var dashboards = DashboardCardModel.dashboards()
+    var dashboards:[DashboardCardModel] = DashboardCardModel.dashboards()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +91,20 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
         viewAllButton.anchor(nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 30, bottomConstant: 16, rightConstant: 30, widthConstant: 0, heightConstant: 0)
         
+ 
+        
+        self.startLoding()
+        DispatchQueue.global(qos: .background).async {
+            self.dashboards = DashboardCardModel.getCountStatus()
+                  
+            print(self.dashboards)
+                  DispatchQueue.main.async {
+                      self.stopLoding()
+                      self.tableview.reloadData()
+                  }
+              }
+    
+    
         setupView()
         
         DispatchQueue.main.async {
@@ -120,7 +136,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     func setupView() {
         
     }
-    
+
     @objc func handleSlide(){
         present(menuSlide, animated: true, completion: nil)
         
@@ -129,8 +145,6 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     
     func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
-        print("SideMenu Appeared! (animated: \(animated))")
-        
         self.tableview.setConstraintConstant(constant: -95, forAttribute: .right)
         self.viewAllButton.setConstraintConstant(constant: -95, forAttribute: .right)
     }
@@ -140,9 +154,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         self.tableview.setConstraintConstant(constant: -16, forAttribute: .right)
         self.viewAllButton.setConstraintConstant(constant: -16, forAttribute: .right)
     }
-    
-    
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dashboards.count
     }
@@ -151,8 +163,6 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! DashboardView
         
         cell.dashboard = dashboards[indexPath.row]
-        
-        
         return cell
     }
     
@@ -162,8 +172,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
+
         if AppDelegate.shareDelegate.stations != nil {
             
             let rootVC = StationListViewController()
@@ -198,6 +207,4 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         delegateMainApp!.ToastLoading()
     }
 }
-
-
 
