@@ -48,14 +48,16 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
         return 75
     }
     
+    var mene_list = MenuSlideModel.menus()
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return mene_list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MenuSideViewCell
         
-        cell.backgroundColor = .AppPrimary()
+        cell.menu = mene_list[indexPath.row]
         
         return cell
     }
@@ -67,6 +69,8 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
             switch indexPath.row {
             case 2:
                  openMenuView(controller: MapStationViewController())
+            case 4:
+                    openMenuView(controller: SettingViewController())
             default:
                 print("soon")
             }
@@ -80,11 +84,11 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
         
         var rootVC: UIViewController! = controller
         DispatchQueue.main.async {
-            
             let rootNC = UINavigationController(rootViewController: rootVC)
             rootNC.modalPresentationStyle = .fullScreen
             rootNC.modalTransitionStyle = .crossDissolve
             self.present(rootNC, animated: true, completion: nil)
         }
+        
     }
 }

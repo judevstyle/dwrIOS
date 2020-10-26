@@ -101,20 +101,20 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
         viewAllButton.anchor(nil, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 30, bottomConstant: 16, rightConstant: 30, widthConstant: 0, heightConstant: 0)
         
- 
+        
         
         self.startLoding()
         DispatchQueue.global(qos: .background).async {
             self.dashboards = DashboardCardModel.getCountStatus()
-                  
+            
             print(self.dashboards)
-                  DispatchQueue.main.async {
-                      self.stopLoding()
-                      self.tableview.reloadData()
-                  }
-              }
-    
-    
+            DispatchQueue.main.async {
+                self.stopLoding()
+                self.tableview.reloadData()
+            }
+        }
+        
+        
         setupView()
         
         DispatchQueue.main.async {
@@ -146,7 +146,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     func setupView() {
         
     }
-
+    
     @objc func handleSlide(){
         present(menuSlide, animated: true, completion: nil)
         
@@ -164,7 +164,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         self.tableview.setConstraintConstant(constant: -16, forAttribute: .right)
         self.viewAllButton.setConstraintConstant(constant: -16, forAttribute: .right)
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dashboards.count
     }
@@ -182,35 +182,46 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         if AppDelegate.shareDelegate.stations != nil {
-            
-            let rootVC = StationListViewController()
             
             switch indexPath.row {
             case 0:
-                rootVC.StatusType = "สถานการณ์ อพยพ"
+                getLastData(type: "สถานการณ์ อพยพ")
             case 1:
-                rootVC.StatusType = "สถานการณ์ เตือนภัย"
+                getLastData(type: "สถานการณ์ เตือนภัย")
             case 2:
-                rootVC.StatusType = "สถานการณ์ เฝ้าระวัง"
+                getLastData(type: "สถานการณ์ เฝ้าระวัง")
             case 3:
-                rootVC.StatusType = "สถานการณ์ ฝนตกเล็กน้อย"
+                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
             default:
-                rootVC.StatusType = "สถานการณ์ ฝนตกเล็กน้อย"
+                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
             }
-            let rootNC = UINavigationController(rootViewController: rootVC)
-            rootNC.modalPresentationStyle = .fullScreen
-            rootNC.modalTransitionStyle = .crossDissolve
-            DispatchQueue.main.async {
-                self.present(rootNC, animated: true, completion: nil)
-            }
+            
         }else {
             delegateMainApp!.ToastLoading()
         }
         
         
     }
+    
+    func getLastData(type: String) {
+        self.startLoding()
+        DispatchQueue.global(qos: .background).async {
+            var stations_last = LastDataModel.FetchLastData(type: type)
+            
+            DispatchQueue.main.async {
+                let rootVC = StationListViewController()
+                rootVC.stations_last = stations_last
+                let rootNC = UINavigationController(rootViewController: rootVC)
+                rootNC.modalPresentationStyle = .fullScreen
+                rootNC.modalTransitionStyle = .crossDissolve
+                self.present(rootNC, animated: true, completion: nil)
+                self.stopLoding()
+            }
+        }
+    }
+    
     
     
     func ToastLoading() {

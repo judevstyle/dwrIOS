@@ -16,7 +16,7 @@ struct StationXLastDataModel : Codable {
     let title: String?
     let address: String?
     let rain : String?
-    let rain12h : String?
+    let rain12h : Double?
     let rain07h : String?
     let rain24h : String?
     
@@ -25,7 +25,7 @@ struct StationXLastDataModel : Codable {
          title:String,
          address:String,
          rain:String,
-         rain12h:String,
+         rain12h:Double,
          rain07h:String,
          rain24h:String
     ) {
@@ -48,13 +48,15 @@ struct StationXLastDataModel : Codable {
         for lastdata in last_data {
             for station in AppDelegate.shareDelegate.stations {
                 if station.std! == lastdata.stn!  {
+                    
+                    let myDouble = Double(lastdata.rain12h!)
                     stationxlast_data.append(StationXLastDataModel(
                         stn: lastdata.stn!,
                         warning_type: lastdata.warning_type!,
                         title: station.name!,
                         address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) \nหมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
                         rain: lastdata.rain!,
-                        rain12h: lastdata.rain12h!,
+                        rain12h: myDouble ?? 0.0,
                         rain07h: lastdata.rain07h!,
                         rain24h: lastdata.rain24h!)
                     )
@@ -62,7 +64,9 @@ struct StationXLastDataModel : Codable {
             }
         }
         
-        return stationxlast_data
+        let sortedArray = stationxlast_data.sorted(by: {$1.rain12h! < $0.rain12h!})
+        
+        return sortedArray
         
     }
     

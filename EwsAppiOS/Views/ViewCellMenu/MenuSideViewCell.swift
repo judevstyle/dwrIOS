@@ -31,18 +31,22 @@ class MenuSideViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var menu: MenuSlideModel? {
+        didSet {
+            btnMenu.image = menu?.icon
+        }
+    }
+    
     
     func setupView()  {
         
         selectionStyle = .none
-        backgroundColor = .white
-        
+        backgroundColor = .AppPrimary()
         preservesSuperviewLayoutMargins = false
         separatorInset = .zero
         layoutMargins = .zero
         
-        
         addSubview(btnMenu)
-        btnMenu.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 10, leftConstant: 10, bottomConstant: 10, rightConstant: 10, widthConstant: 0, heightConstant: 0)
+        btnMenu.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 15, leftConstant: 15, bottomConstant: 15, rightConstant: 15, widthConstant: 0, heightConstant: 0)
     }
 }

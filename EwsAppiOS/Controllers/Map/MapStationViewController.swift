@@ -253,33 +253,43 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if AppDelegate.shareDelegate.stations != nil {
-            
-            let rootVC = StationListViewController()
-            
-            switch indexPath.row {
-            case 0:
-                rootVC.StatusType = "สถานการณ์ อพยพ"
-            case 1:
-                rootVC.StatusType = "สถานการณ์ เตือนภัย"
-            case 2:
-                rootVC.StatusType = "สถานการณ์ เฝ้าระวัง"
-            case 3:
-                rootVC.StatusType = "สถานการณ์ ฝนตกเล็กน้อย"
-            default:
-                rootVC.StatusType = "สถานการณ์ ฝนตกเล็กน้อย"
-            }
-            let rootNC = UINavigationController(rootViewController: rootVC)
-            rootNC.modalPresentationStyle = .fullScreen
-            rootNC.modalTransitionStyle = .crossDissolve
-            DispatchQueue.main.async {
-                self.present(rootNC, animated: true, completion: nil)
-            }
-        }else {
-            //            delegateMainApp!.ToastLoading()
-        }
-    }
+          
+          if AppDelegate.shareDelegate.stations != nil {
+              
+              switch indexPath.row {
+              case 0:
+                  getLastData(type: "สถานการณ์ อพยพ")
+              case 1:
+                  getLastData(type: "สถานการณ์ เตือนภัย")
+              case 2:
+                  getLastData(type: "สถานการณ์ เฝ้าระวัง")
+              case 3:
+                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+              default:
+                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+              }
+              
+          }
+          
+      }
+      
+      func getLastData(type: String) {
+          self.startLoding()
+          DispatchQueue.global(qos: .background).async {
+              var stations_last = LastDataModel.FetchLastData(type: type)
+              
+              DispatchQueue.main.async {
+                  let rootVC = StationListViewController()
+                  rootVC.stations_last = stations_last
+                  let rootNC = UINavigationController(rootViewController: rootVC)
+                  rootNC.modalPresentationStyle = .fullScreen
+                  rootNC.modalTransitionStyle = .crossDissolve
+                  self.present(rootNC, animated: true, completion: nil)
+                  self.stopLoding()
+              }
+          }
+      }
+      
     
     
 }

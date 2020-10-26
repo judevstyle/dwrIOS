@@ -26,6 +26,7 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         tableview.backgroundColor = .clear
         tableview.isScrollEnabled = true
         tableview.separatorStyle = .none
+        tableview.showsVerticalScrollIndicator = false
         tableview.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
         tableview.layer.cornerRadius = 8
         return tableview
@@ -33,17 +34,12 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     
-    var StatusType: String? {
+    var stations_last: [StationXLastDataModel]? = [] {
         didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.getLastData()
-            }
+            self.tableview.reloadData()
         }
     }
     
-    
-    
-    var stations_last: [StationXLastDataModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,35 +69,28 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
-    func getLastData() {
-        
-        self.startLoding()
-        DispatchQueue.global(qos: .background).async {
-            self.stations_last = LastDataModel.FetchLastData(type: self.StatusType!)
-            
-            DispatchQueue.main.async {
-                print(self.stations_last.count)
-                self.stopLoding()
-                self.tableview.reloadData()
-            }
-        }
-    }
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stations_last.count
+        return stations_last!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CardStationViewCell
         
-        cell.station = self.stations_last[indexPath.row]
+        cell.station = self.stations_last?[indexPath.row]
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height/4.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let rootVC = DetailStationViewController()
+        let rootNC = UINavigationController(rootViewController: rootVC)
+        rootNC.modalPresentationStyle = .fullScreen
+        rootNC.modalTransitionStyle = .crossDissolve
+        self.present(rootNC, animated: true, completion: nil)
     }
     
 }
