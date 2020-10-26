@@ -22,12 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        
-        
-        
         let attrs = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
-            NSAttributedString.Key.font: UIFont(name: "Kanit-Regular", size: 18)!
+            NSAttributedString.Key.font: UIFont.PrimaryRegular(size: 18)
         ]
         
         UINavigationBar.appearance().titleTextAttributes = attrs
