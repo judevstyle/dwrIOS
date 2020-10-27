@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6C485DBA615099ACE6B43ABF /* Pods_EwsAppiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A90D6DCBD6825A8E250803A /* Pods_EwsAppiOS.framework */; };
 		C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE2E25308031004CDC0A /* AppDelegate.swift */; };
-		C452CE3325308031004CDC0A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE3225308031004CDC0A /* ViewController.swift */; };
 		C452CE3925308031004CDC0A /* EwsAppiOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C452CE3725308031004CDC0A /* EwsAppiOS.xcdatamodeld */; };
 		C452CE3B25308037004CDC0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C452CE3A25308037004CDC0A /* Assets.xcassets */; };
 		C452CE3E25308037004CDC0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C452CE3C25308037004CDC0A /* LaunchScreen.storyboard */; };
@@ -48,7 +47,6 @@
 		70EF7AD5828DF5FB899BCC69 /* Pods-EwsAppiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.release.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.release.xcconfig"; sourceTree = "<group>"; };
 		C452CE2B25308031004CDC0A /* EwsAppiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EwsAppiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C452CE2E25308031004CDC0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C452CE3225308031004CDC0A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C452CE3825308031004CDC0A /* EwsAppiOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EwsAppiOS.xcdatamodel; sourceTree = "<group>"; };
 		C452CE3A25308037004CDC0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C452CE3D25308037004CDC0A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				C452CE46253083A7004CDC0A /* Resources */,
 				C452CE452530839F004CDC0A /* Controllers */,
 				C452CE2E25308031004CDC0A /* AppDelegate.swift */,
-				C452CE3225308031004CDC0A /* ViewController.swift */,
 				C452CE3A25308037004CDC0A /* Assets.xcassets */,
 				C452CE3C25308037004CDC0A /* LaunchScreen.storyboard */,
 				C452CE3F25308037004CDC0A /* Info.plist */,
@@ -451,7 +448,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C452CE3325308031004CDC0A /* ViewController.swift in Sources */,
 				EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */,
 				EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */,
 				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
