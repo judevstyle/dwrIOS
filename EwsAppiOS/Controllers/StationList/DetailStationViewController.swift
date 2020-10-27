@@ -26,44 +26,115 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         collectionView.showsHorizontalScrollIndicator = false
         
         collectionView.isPagingEnabled = true
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         
         return collectionView
     }()
     
     
-      let pageControl: UIPageControl = {
-          let pageControl = UIPageControl()
-          
-          pageControl.currentPageIndicatorTintColor = .AppPrimary()
-          pageControl.pageIndicatorTintColor = .blackAlpha(alpha: 0.2)
-          
-          return pageControl
-          
-      }()
+    
+    let titlLabel: UILabel = {
+        let label = UILabel()
+        label.text = "บ้านแซะ"
+        label.font = .PrimaryRegular(size: 23)
+        label.textAlignment = .center
+        label.textColor = .white
+        
+        return label
+    }()
+
+    let valueLabel: UILabel = {
+        let label = UILabel()
+
+
+        let unit = "ต.หนองไผ่ อ.ด่านมะขามเตี้ย จ.กาญจนบุรี\nหมู่บ้านคลอบคลุมจำนวน 3 หมู่บ้าน"
+        
+        let attributedText = NSMutableAttributedString(string: unit, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 17), NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 0.9
+        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
+        
+        label.attributedText = attributedText
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }()
+    
+    lazy var previousBtn: UIButton = {
+        let button = UIButton(type: .system)
+        
+        button.setImage(UIImage(named: "previous")!.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.addTarget(self, action: #selector(previousAction), for: .touchUpInside)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        button.tintColor = .white
+        return button
+    }()
+    
+    
+    lazy var nextBtn: UIButton = {
+        let button = UIButton(type: .system)
+        
+        button.setImage(UIImage(named: "next")!.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        button.tintColor = .white
+        
+        return button
+    }()
+    
+    let pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        
+        pageControl.currentPageIndicatorTintColor = .AppPrimary()
+        pageControl.pageIndicatorTintColor = .blackAlpha(alpha: 0.2)
+        
+        return pageControl
+        
+    }()
+    
+    
+    
+    var stations_last: [StationXLastDataModel]? = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .AppPrimary()
-               self.setHideBorderNavigation(status: true)
-               self.setBarStyleNavigation(style: .black)
-               self.setTitleNavigation(title: "สรุปสถานการ์ณฝน")
-               
-               
-               let leftbutton = UIBarButtonItem(image: UIImage(systemName:  "clear"), style: .done, target: self, action: #selector(handleClose))
-               
-               leftbutton.tintColor = .white
-               
-               navigationItem.leftBarButtonItem = leftbutton
+        self.setHideBorderNavigation(status: true)
+        self.setBarStyleNavigation(style: .black)
+//        self.setTitleNavigation(title: "สรุปสถานการ์ณฝน")
+        
+        let leftbutton = UIBarButtonItem(image: UIImage(systemName:  "clear"), style: .done, target: self, action: #selector(handleClose))
+        
+        leftbutton.tintColor = .white
+        
+        navigationItem.leftBarButtonItem = leftbutton
         
         
         collectionView.register(DetailStationViewCell.self, forCellWithReuseIdentifier: cellID)
         
+        
+        view.addSubview(previousBtn)
+        previousBtn.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 8, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 45, heightConstant: 45)
+        
+        
+        
+        view.addSubview(nextBtn)
+               nextBtn.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 16, widthConstant: 45, heightConstant: 45)
+        
+        
+        view.addSubview(titlLabel)
+        titlLabel.anchor(view.safeAreaLayoutGuide.topAnchor, left: previousBtn.rightAnchor, bottom: nil, right: nextBtn.leftAnchor, topConstant: -30, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        view.addSubview(valueLabel)
+        valueLabel.anchor(titlLabel.bottomAnchor, left: previousBtn.rightAnchor, bottom: nil, right: nextBtn.leftAnchor, topConstant: 5, leftConstant: 5, bottomConstant: 0, rightConstant: 5, widthConstant: 0, heightConstant: 0)
+        
         view.addSubview(collectionView)
-        collectionView.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        
+        collectionView.anchor(valueLabel.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
     
     
@@ -73,40 +144,79 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
     }
     
     
-    
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-       }
-       
-
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-           return 0
-       }
-       
-       var pages = PageDetailStationModel.page()
-       
-       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         
-        pageControl.numberOfPages = pages.count
-        return pages.count
-       }
-       
-       
-       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DetailStationViewCell
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        cell.page = pages[indexPath.row]
+        setStateButtonPreviousNext()
+        
+    }
     
-           return cell
-       }
+    
+    @objc func previousAction (){
+        pageSelected(index: pageControl.currentPage-1)
+    }
+    
+    @objc func nextAction (){
+        pageSelected(index: pageControl.currentPage+1)
+    }
+    
+    func setStateButtonPreviousNext()  {
+        if pageControl.currentPage == 0 {
+            previousBtn.tintColor = .whiteAlpha(alpha: 0.5)
+            previousBtn.isEnabled = false
+        }else if pageControl.currentPage == (self.stations_last!.count-1)  {
+            nextBtn.tintColor = .whiteAlpha(alpha: 0.5)
+            nextBtn.isEnabled = false
+        }else {
+            previousBtn.tintColor = .white
+            previousBtn.isEnabled = true
+            nextBtn.tintColor = .white
+            nextBtn.isEnabled = true
+        }
+    }
+    
+    
+    func pageSelected(index: Int) {
+        let scrollIndex: NSIndexPath = NSIndexPath(item: index, section: 0)
+        collectionView.scrollToItem(at: scrollIndex as IndexPath, at: .right, animated: true)
+        pageControl.currentPage = index
+        
+        setStateButtonPreviousNext()
+        
+        print(pageControl.currentPage)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        pageControl.numberOfPages = self.stations_last!.count
+        
+        
+        return self.stations_last!.count
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DetailStationViewCell
+    
+        return cell
+    }
+    
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-           
-           let pageWidth = view.frame.width
-           pageControl.currentPage = Int(collectionView.contentOffset.x/pageWidth)
-           
-        print(pageControl.currentPage)
-           
-       }
-    
+        
+        let pageWidth = view.frame.width
+        pageControl.currentPage = Int(collectionView.contentOffset.x/pageWidth)
+        setStateButtonPreviousNext()
+    }
+
 }

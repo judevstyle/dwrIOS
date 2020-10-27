@@ -58,60 +58,60 @@ extension UIView {
     
     func updateConstraint(attribute: NSLayoutConstraint.Attribute, constant: CGFloat) -> Void {
         
-   
+        
         if let constraint = (self.constraints.filter{$0.firstAttribute == attribute}.first) {
             print(constraint)
-
+            
             constraint.constant = constant
             
         }
         
     }
-
+    
     
     func setConstraintConstant(constant: CGFloat,
-                                  forAttribute attribute: NSLayoutConstraint.Attribute) -> Bool
-          {
-           if let constraint = constraintForAttribute(attribute: attribute) {
-                  constraint.constant = constant
+                               forAttribute attribute: NSLayoutConstraint.Attribute) -> Bool
+    {
+        if let constraint = constraintForAttribute(attribute: attribute) {
+            constraint.constant = constant
             
-//            UIView.animate(withDuration: 0.2) {
-//
-//            self.layoutIfNeeded()
-//
-//             }
+            //            UIView.animate(withDuration: 0.2) {
+            //
+            //            self.layoutIfNeeded()
+            //
+            //             }
             
-                  return true
-              }
-              else {
-                  superview?.addConstraint(NSLayoutConstraint(
-                      item: self,
-                      attribute: attribute,
-                      relatedBy: .equal,
-                      toItem: nil,
-                      attribute: .notAnAttribute,
-                      multiplier: 1.0, constant: constant))
-                  return false
-              }
-          }
-          
-       func constraintConstantforAttribute(attribute: NSLayoutConstraint.Attribute) -> CGFloat?
-          {
-           if let constraint = constraintForAttribute(attribute: attribute) {
-                  return constraint.constant
-              }
-              else {
-                  return nil
-              }
-          }
-          
-       func constraintForAttribute(attribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint?
-          {
-              return superview?.constraints.filter({
-                  $0.firstAttribute == attribute
-              }).first
-          }
-          
+            return true
+        }
+        else {
+            superview?.addConstraint(NSLayoutConstraint(
+                item: self,
+                attribute: attribute,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0, constant: constant))
+            return false
+        }
+    }
+    
+    func constraintConstantforAttribute(attribute: NSLayoutConstraint.Attribute) -> CGFloat?
+    {
+        if let constraint = constraintForAttribute(attribute: attribute) {
+            return constraint.constant
+        }
+        else {
+            return nil
+        }
+    }
+    
+    func constraintForAttribute(attribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint?
+    {
+        return superview?.constraints.filter({
+            $0.firstAttribute == attribute
+        }).first
+    }
+    
     
     
     
@@ -181,87 +181,87 @@ extension UIView {
     
     
     func roundedTopLeft(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.topLeft],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
-
-       func roundedTopRight(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.topRight],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
-       func roundedBottomLeft(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.bottomLeft],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
-       func roundedBottomRight(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.bottomRight],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
-       func roundedBottom(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.bottomRight , .bottomLeft],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
-       func roundedTop(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.topRight , .topLeft],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
-       func roundedLeft(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.topLeft , .bottomLeft],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
-       func roundedRight(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.topRight , .bottomRight],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
-       func roundedAllCorner(cornerRadius: Double){
-           let maskPath1 = UIBezierPath(roundedRect: bounds,
-                                        byRoundingCorners: [.topRight , .bottomRight , .topLeft , .bottomLeft],
-                                        cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-           let maskLayer1 = CAShapeLayer()
-           maskLayer1.frame = bounds
-           maskLayer1.path = maskPath1.cgPath
-           layer.mask = maskLayer1
-       }
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.topLeft],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    
+    func roundedTopRight(cornerRadius: Double){
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.topRight],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    func roundedBottomLeft(cornerRadius: Double){
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.bottomLeft],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    func roundedBottomRight(cornerRadius: Double){
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.bottomRight],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    func roundedBottom(cornerRadius: Double){
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.bottomRight , .bottomLeft],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    func roundedTop(cornerRadius: Double){
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.topRight , .topLeft],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    func roundedLeft(cornerRadius: Double){
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.topLeft , .bottomLeft],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    func roundedRight(cornerRadius: Double){
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.topRight , .bottomRight],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
+    func roundedAllCorner(cornerRadius: Double){
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+                                     byRoundingCorners: [.topRight , .bottomRight , .topLeft , .bottomLeft],
+                                     cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
     
     func addBottomRoundedEdge(desiredCurve: CGFloat?) {
         let offset: CGFloat = self.frame.width / desiredCurve!
@@ -291,58 +291,79 @@ extension String {
     }
 }
 
+extension UILabel {
+    
+    func setLineHeight(lineHeight: CGFloat) {
+        let text = self.text
+        if let text = text {
+            let attributeString = NSMutableAttributedString(string: text)
+            let style = NSMutableParagraphStyle()
+            
+            style.lineSpacing = lineHeight
+            attributeString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSMakeRange(0, text.count))
+            self.attributedText = attributeString
+        }
+    }
+    
+    
+  func addCharactersSpacing(spacing: CGFloat, txt: String) {
+        let attributedString = NSMutableAttributedString(string: txt)
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: spacing, range: NSRange(location: 0, length: txt.count))
+        self.attributedText = attributedString
+    }
+}
 
 extension UITableViewCell {
     
     func withTextParagraph(text: String,fonSize: Int) -> NSAttributedString {
         
-           let attributedString = NSMutableAttributedString(string: text)
-                
-                let paragraphStyle = NSMutableParagraphStyle()
-                
-                paragraphStyle.maximumLineHeight = 17.0
-                
-                
-                attributedString.addAttribute(
-                    .paragraphStyle,
-                    value: paragraphStyle,
-                    range: NSRange(location: 0, length: attributedString.length
-                ))
-                
-                attributedString.addAttribute(
-                    .font,
-                    value: UIFont.PrimaryLight(size: CGFloat(fonSize)),
-                    range: NSRange(location: 0, length: attributedString.length
-                ))
-           
-           return attributedString
-       }
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        
+        paragraphStyle.maximumLineHeight = 17.0
+        
+        
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        attributedString.addAttribute(
+            .font,
+            value: UIFont.PrimaryLight(size: CGFloat(fonSize)),
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        return attributedString
+    }
     
     
-//    func ParagraphDashboardMap(title: String, value: String) -> NSAttributedString {
-//
-//             let attributedString = NSMutableAttributedString(a)
-//
-//                  let paragraphStyle = NSMutableParagraphStyle()
-//
-//                  paragraphStyle.maximumLineHeight = 17.0
-//
-//
-//                  attributedString.addAttribute(
-//                      .paragraphStyle,
-//                      value: paragraphStyle,
-//                      range: NSRange(location: 0, length: attributedString.length
-//                  ))
-//
-//                  attributedString.addAttribute(
-//                      .font,
-//                      value: UIFont.PrimaryLight(size: 15),
-//                      range: NSRange(location: 0, length: attributedString.length
-//                  ))
-//
-//             return attributedString
-//         }
-       
+    //    func ParagraphDashboardMap(title: String, value: String) -> NSAttributedString {
+    //
+    //             let attributedString = NSMutableAttributedString(a)
+    //
+    //                  let paragraphStyle = NSMutableParagraphStyle()
+    //
+    //                  paragraphStyle.maximumLineHeight = 17.0
+    //
+    //
+    //                  attributedString.addAttribute(
+    //                      .paragraphStyle,
+    //                      value: paragraphStyle,
+    //                      range: NSRange(location: 0, length: attributedString.length
+    //                  ))
+    //
+    //                  attributedString.addAttribute(
+    //                      .font,
+    //                      value: UIFont.PrimaryLight(size: 15),
+    //                      range: NSRange(location: 0, length: attributedString.length
+    //                  ))
+    //
+    //             return attributedString
+    //         }
+    
 }
 
 
@@ -356,10 +377,23 @@ extension UIColor {
         return UIColor(white: 0, alpha: alpha)
     }
     
-     static func AppPrimary() -> UIColor {
-           return UIColor(named: "AppPrimary")!
-       }
+    static func AppPrimary() -> UIColor {
+        return UIColor(named: "AppPrimary")!
+    }
     
+    static func AppAccent() -> UIColor {
+        return UIColor(named: "AppAccent")!
+    }
+    
+    static func AppPrimaryDark() -> UIColor {
+        return UIColor(named: "AppPrimaryDark")!
+    }
+    
+    
+    
+    static func AppPrimaryDarkGray() -> UIColor {
+        return UIColor(named: "AppPrimaryDarkGray")!
+    }
     
     
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
@@ -380,7 +414,7 @@ extension UIColor {
 
 extension UIFont {
     
-   static func PrimaryBold(size: CGFloat) -> UIFont {
+    static func PrimaryBold(size: CGFloat) -> UIFont {
         return UIFont(name: "Kanit-Bold", size: size)!
     }
     
@@ -415,16 +449,16 @@ extension UIViewController: NVActivityIndicatorViewable {
     
     func generateQRCode(from string: String) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)
-
+        
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
             let transform = CGAffineTransform(scaleX: 7, y: 7)
-
+            
             if let output = filter.outputImage?.transformed(by: transform) {
                 return UIImage(ciImage: output)
             }
         }
-
+        
         return nil
     }
     
@@ -547,8 +581,8 @@ extension UIScrollView {
 
 extension NSAttributedString {
     func withLineSpacing(_ spacing: CGFloat) -> NSAttributedString {
-
-
+        
+        
         let attributedString = NSMutableAttributedString(attributedString: self)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineBreakMode = .byTruncatingTail
@@ -562,12 +596,12 @@ extension NSAttributedString {
 
 extension String {
     
-        func isBase64() -> Bool {
-            guard Data(base64Encoded: self) != nil else {
-                return false
-            }
-            return true
+    func isBase64() -> Bool {
+        guard Data(base64Encoded: self) != nil else {
+            return false
         }
+        return true
+    }
     
     
     func toBase64() -> String {
@@ -580,11 +614,11 @@ extension String {
     }
     
     func convertBase64StringToImage () -> UIImage {
-         let imageData = Data.init(base64Encoded: self, options: .init(rawValue: 0))
-         let image = UIImage(data: imageData!)
-         return image!
-     }
-     
+        let imageData = Data.init(base64Encoded: self, options: .init(rawValue: 0))
+        let image = UIImage(data: imageData!)
+        return image!
+    }
+    
 }
 
 extension Date {
@@ -769,30 +803,30 @@ extension UIApplication {
 }
 
 extension UIImage {
-     func convertImageToBase64String () -> String {
+    func convertImageToBase64String () -> String {
         return self.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
-       }
+    }
     
     func resize(targetSize: CGSize) -> UIImage {
-         return UIGraphicsImageRenderer(size:targetSize).image { _ in
-             self.draw(in: CGRect(origin: .zero, size: targetSize))
-         }
-     }
+        return UIGraphicsImageRenderer(size:targetSize).image { _ in
+            self.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
+    }
     
     func resizeImage(targetSize: CGSize) -> UIImage {
-       let size = self.size
-       let widthRatio  = targetSize.width  / size.width
-       let heightRatio = targetSize.height / size.height
-       let newSize = widthRatio > heightRatio ?  CGSize(width: size.width * heightRatio, height: size.height * heightRatio) : CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-       let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
-       UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-       self.draw(in: rect)
-       let newImage = UIGraphicsGetImageFromCurrentImageContext()
-       UIGraphicsEndImageContext()
-
-       return newImage!
-     }
+        let size = self.size
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        let newSize = widthRatio > heightRatio ?  CGSize(width: size.width * heightRatio, height: size.height * heightRatio) : CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        self.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
     
     
 }
@@ -800,7 +834,7 @@ extension UIImage {
 var activityView: NVActivityIndicatorView!
 
 extension UIImageView {
-
+    
     
     func setTopCornerRadius(cornerRadius: CGFloat) {
         let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners:[.topLeft, .topRight], cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))

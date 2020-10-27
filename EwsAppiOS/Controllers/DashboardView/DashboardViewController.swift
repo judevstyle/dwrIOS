@@ -210,14 +210,19 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         DispatchQueue.global(qos: .background).async {
             var stations_last = LastDataModel.FetchLastData(type: type)
             
+            
             DispatchQueue.main.async {
-                let rootVC = StationListViewController()
-                rootVC.stations_last = stations_last
-                let rootNC = UINavigationController(rootViewController: rootVC)
-                rootNC.modalPresentationStyle = .fullScreen
-                rootNC.modalTransitionStyle = .crossDissolve
-                self.present(rootNC, animated: true, completion: nil)
-                self.stopLoding()
+                if stations_last.count != 0 {
+                    let rootVC = StationListViewController()
+                    rootVC.stations_last = stations_last
+                    let rootNC = UINavigationController(rootViewController: rootVC)
+                    rootNC.modalPresentationStyle = .fullScreen
+                    rootNC.modalTransitionStyle = .crossDissolve
+                    self.present(rootNC, animated: true, completion: nil)
+                    self.stopLoding()
+                }else {
+                    self.stopLoding()
+                }
             }
         }
     }

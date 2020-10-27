@@ -31,15 +31,19 @@
 		EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */; };
 		EF5E7FF125433D3D0054D025 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = EF5E7FF025433D3D0054D025 /* style.json */; };
 		EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */; };
+		EF7396432548876000A0266C /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7396422548876000A0266C /* ReportViewController.swift */; };
+		EF739645254888FA00A0266C /* ReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF739644254888FA00A0266C /* ReportModel.swift */; };
+		EF73964825488AEE00A0266C /* CardReportViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF73964725488AEE00A0266C /* CardReportViewCell.swift */; };
 		EF9ABE43254179E0001EAA20 /* DashboardCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9ABE42254179E0001EAA20 /* DashboardCardModel.swift */; };
 		EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9ABE4425417CB9001EAA20 /* DashboardMapView.swift */; };
+		EFB3159325482EAE00B2E4E9 /* ListCardRainViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3159225482EAE00B2E4E9 /* ListCardRainViewCell.swift */; };
+		EFB3159525482EBA00B2E4E9 /* ListCardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3159425482EBA00B2E4E9 /* ListCardStationViewCell.swift */; };
 		EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */; };
 		EFBBB5072539DBBF002AA238 /* StationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBB5062539DBBF002AA238 /* StationListViewController.swift */; };
 		EFC62B8F2547378200F19217 /* MenuSlideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B8E2547378200F19217 /* MenuSlideModel.swift */; };
 		EFC62B9225473FDF00F19217 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B9125473FDF00F19217 /* SettingViewController.swift */; };
 		EFC62B942547448800F19217 /* DetailStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B932547448800F19217 /* DetailStationViewController.swift */; };
 		EFC62B972547459A00F19217 /* DetailStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B962547459A00F19217 /* DetailStationViewCell.swift */; };
-		EFC62B992547463700F19217 /* PageDetailStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B982547463700F19217 /* PageDetailStationModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,15 +72,19 @@
 		EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStationViewCell.swift; sourceTree = "<group>"; };
 		EF5E7FF025433D3D0054D025 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationXLastDataModel.swift; sourceTree = "<group>"; };
+		EF7396422548876000A0266C /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		EF739644254888FA00A0266C /* ReportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModel.swift; sourceTree = "<group>"; };
+		EF73964725488AEE00A0266C /* CardReportViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardReportViewCell.swift; sourceTree = "<group>"; };
 		EF9ABE42254179E0001EAA20 /* DashboardCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCardModel.swift; sourceTree = "<group>"; };
 		EF9ABE4425417CB9001EAA20 /* DashboardMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardMapView.swift; sourceTree = "<group>"; };
+		EFB3159225482EAE00B2E4E9 /* ListCardRainViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardRainViewCell.swift; sourceTree = "<group>"; };
+		EFB3159425482EBA00B2E4E9 /* ListCardStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardStationViewCell.swift; sourceTree = "<group>"; };
 		EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStationViewController.swift; sourceTree = "<group>"; };
 		EFBBB5062539DBBF002AA238 /* StationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListViewController.swift; sourceTree = "<group>"; };
 		EFC62B8E2547378200F19217 /* MenuSlideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideModel.swift; sourceTree = "<group>"; };
 		EFC62B9125473FDF00F19217 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		EFC62B932547448800F19217 /* DetailStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStationViewController.swift; sourceTree = "<group>"; };
 		EFC62B962547459A00F19217 /* DetailStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStationViewCell.swift; sourceTree = "<group>"; };
-		EFC62B982547463700F19217 /* PageDetailStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDetailStationModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +159,7 @@
 		C452CE452530839F004CDC0A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EF7396412548874600A0266C /* ReportView */,
 				EFC62B9025473FC700F19217 /* SettingView */,
 				EF1A1EA0253C39B4009DBBEF /* DashboardView */,
 				EF1A1E9D253C2AEF009DBBEF /* MenuSlide */,
@@ -199,6 +208,7 @@
 		C452CE5E25309455004CDC0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EF73964625488AD300A0266C /* CardReportViewCell */,
 				EFC62B952547455F00F19217 /* DetailStationViewCell */,
 				EF1A1EA5253C6372009DBBEF /* CardStationView */,
 				C452CE692530997D004CDC0A /* DashboardView */,
@@ -240,7 +250,7 @@
 				EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */,
 				EF9ABE42254179E0001EAA20 /* DashboardCardModel.swift */,
 				EFC62B8E2547378200F19217 /* MenuSlideModel.swift */,
-				EFC62B982547463700F19217 /* PageDetailStationModel.swift */,
+				EF739644254888FA00A0266C /* ReportModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -267,6 +277,38 @@
 				EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */,
 			);
 			path = CardStationView;
+			sourceTree = "<group>";
+		};
+		EF7396412548874600A0266C /* ReportView */ = {
+			isa = PBXGroup;
+			children = (
+				EF7396422548876000A0266C /* ReportViewController.swift */,
+			);
+			path = ReportView;
+			sourceTree = "<group>";
+		};
+		EF73964625488AD300A0266C /* CardReportViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				EF73964725488AEE00A0266C /* CardReportViewCell.swift */,
+			);
+			path = CardReportViewCell;
+			sourceTree = "<group>";
+		};
+		EFB3159025482E6200B2E4E9 /* ListCardRainViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				EFB3159225482EAE00B2E4E9 /* ListCardRainViewCell.swift */,
+			);
+			path = ListCardRainViewCell;
+			sourceTree = "<group>";
+		};
+		EFB3159125482E7D00B2E4E9 /* ListCardStationViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				EFB3159425482EBA00B2E4E9 /* ListCardStationViewCell.swift */,
+			);
+			path = ListCardStationViewCell;
 			sourceTree = "<group>";
 		};
 		EFBBB5022539DB5E002AA238 /* Map */ = {
@@ -297,6 +339,8 @@
 		EFC62B952547455F00F19217 /* DetailStationViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				EFB3159125482E7D00B2E4E9 /* ListCardStationViewCell */,
+				EFB3159025482E6200B2E4E9 /* ListCardRainViewCell */,
 				EFC62B962547459A00F19217 /* DetailStationViewCell.swift */,
 			);
 			path = DetailStationViewCell;
@@ -451,14 +495,17 @@
 				EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */,
 				EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */,
 				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
+				EF7396432548876000A0266C /* ReportViewController.swift in Sources */,
 				EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */,
+				EF739645254888FA00A0266C /* ReportModel.swift in Sources */,
 				EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */,
 				EFC62B972547459A00F19217 /* DetailStationViewCell.swift in Sources */,
 				C452CE3925308031004CDC0A /* EwsAppiOS.xcdatamodeld in Sources */,
 				C452CE6B25309985004CDC0A /* DashboardView.swift in Sources */,
 				EFC62B942547448800F19217 /* DetailStationViewController.swift in Sources */,
 				C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */,
-				EFC62B992547463700F19217 /* PageDetailStationModel.swift in Sources */,
+				EFB3159525482EBA00B2E4E9 /* ListCardStationViewCell.swift in Sources */,
+				EFB3159325482EAE00B2E4E9 /* ListCardRainViewCell.swift in Sources */,
 				EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */,
 				C452CE5225308504004CDC0A /* Extensions.swift in Sources */,
 				C490D308253570B9004CF6BE /* APIService.swift in Sources */,
@@ -469,6 +516,7 @@
 				EFBBB5072539DBBF002AA238 /* StationListViewController.swift in Sources */,
 				EF1A1E9F253C2AFC009DBBEF /* MenuSlideViewController.swift in Sources */,
 				EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */,
+				EF73964825488AEE00A0266C /* CardReportViewCell.swift in Sources */,
 				EF9ABE43254179E0001EAA20 /* DashboardCardModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

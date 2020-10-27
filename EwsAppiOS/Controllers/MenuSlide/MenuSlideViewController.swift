@@ -68,11 +68,16 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
         if AppDelegate.shareDelegate.stations != nil {
             switch indexPath.row {
             case 2:
-                 openMenuView(controller: MapStationViewController())
+                openMenuView(controller: MapStationViewController())
+                break
+            case 3:
+                openMenuView(controller: ReportViewController())
+                break
             case 4:
-                    openMenuView(controller: SettingViewController())
+                openMenuView(controller: SettingViewController())
+                break
             default:
-                print("soon")
+                break
             }
         }else {
             delegateDashboard!.ToastLoading()
