@@ -66,8 +66,6 @@ struct LastDataModel : Codable {
     
     static func FetchLastData(type:String) -> [StationXLastDataModel] {
         
-      
-        
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
         let urlString = URL(string: "\(baseURL)/lastdata.xml")
         
@@ -78,40 +76,63 @@ struct LastDataModel : Codable {
         if let count = xml["ews", "station"].all?.count {
             if count > 0 {
                 
-                for item_station in xml["ews", "station"].all! {
-
-                    if item_station.childElements[10].name == "status" && item_station.childElements[10].text! == "\(type)"{
-                        last_data.append(
-                            LastDataModel(
-                                stn: item_station.attributes["stn"]!,
-                                warning_type: item_station.childElements[0].text ?? "",
-                                date: item_station.childElements[1].text ?? "",
-                                temp: item_station.childElements[2].text ?? "",
-                                rain: item_station.childElements[3].text ?? "",
-                                rain12h: item_station.childElements[4].text ?? "",
-                                rain07h: item_station.childElements[5].text ?? "",
-                                rain24h: item_station.childElements[6].text ?? "",
-                                wl: item_station.childElements[7].text ?? "",
-                                wl07h: item_station.childElements[8].text ?? "",
-                                soil: item_station.childElements[9].text ?? "",
-                                status: item_station.childElements[10].text ?? "",
-                                warn_rf: item_station.childElements[11].text ?? "",
-                                warn_wl: item_station.childElements[12].text ?? "",
-                                stn_cover: item_station.childElements[13].text ?? "")
-                        )
-                    }
+                if type == "all" {
                     
+                    for item_station in xml["ews", "station"].all! {
+                        
+                        if item_station.childElements[10].name == "status" && item_station.childElements[10].text! != "กำลังเชื่อมต่อสัญญาน" {
+                            last_data.append(
+                                LastDataModel(
+                                    stn: item_station.attributes["stn"]!,
+                                    warning_type: item_station.childElements[0].text ?? "",
+                                    date: item_station.childElements[1].text ?? "",
+                                    temp: item_station.childElements[2].text ?? "",
+                                    rain: item_station.childElements[3].text ?? "",
+                                    rain12h: item_station.childElements[4].text ?? "",
+                                    rain07h: item_station.childElements[5].text ?? "",
+                                    rain24h: item_station.childElements[6].text ?? "",
+                                    wl: item_station.childElements[7].text ?? "",
+                                    wl07h: item_station.childElements[8].text ?? "",
+                                    soil: item_station.childElements[9].text ?? "",
+                                    status: item_station.childElements[10].text ?? "",
+                                    warn_rf: item_station.childElements[11].text ?? "",
+                                    warn_wl: item_station.childElements[12].text ?? "",
+                                    stn_cover: item_station.childElements[13].text ?? "")
+                            )
+                            
+                        }
+                    }
+                }else {
+                    for item_station in xml["ews", "station"].all! {
+                        if item_station.childElements[10].name == "status" && item_station.childElements[10].text! == "\(type)"{
+                            last_data.append(
+                                LastDataModel(
+                                    stn: item_station.attributes["stn"]!,
+                                    warning_type: item_station.childElements[0].text ?? "",
+                                    date: item_station.childElements[1].text ?? "",
+                                    temp: item_station.childElements[2].text ?? "",
+                                    rain: item_station.childElements[3].text ?? "",
+                                    rain12h: item_station.childElements[4].text ?? "",
+                                    rain07h: item_station.childElements[5].text ?? "",
+                                    rain24h: item_station.childElements[6].text ?? "",
+                                    wl: item_station.childElements[7].text ?? "",
+                                    wl07h: item_station.childElements[8].text ?? "",
+                                    soil: item_station.childElements[9].text ?? "",
+                                    status: item_station.childElements[10].text ?? "",
+                                    warn_rf: item_station.childElements[11].text ?? "",
+                                    warn_wl: item_station.childElements[12].text ?? "",
+                                    stn_cover: item_station.childElements[13].text ?? "")
+                            )
+                        }
+                    }
                 }
                 
-                
-                
-                
             }
-            
         }
         
+        var list_ew07 = Ews07Model.FetchEws07()
         
-        return StationXLastDataModel.mixStationXLastData(last_data: last_data)
+        return StationXLastDataModel.mixStationXLastData(last_data: last_data, list_ew07: list_ew07)
         
     }
     

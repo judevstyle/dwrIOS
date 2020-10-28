@@ -12,7 +12,6 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     
-    
     let cellId = "cellReport"
     lazy var tableview: UITableView = {
         let tableview = UITableView()
@@ -28,7 +27,8 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableview.layer.cornerRadius = 8
         return tableview
     }()
-
+    
+    var reports_list: [ReportModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,16 +50,22 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
         
-//        self.tableview.estimatedRowHeight = tableview.frame.height/6
+        //        self.tableview.estimatedRowHeight = tableview.frame.height/6
+        
+        tableview.rowHeight = UITableView.automaticDimension
+        tableview.estimatedRowHeight = UITableView.automaticDimension
+        
+        reports_list = ReportModel.reports()
+        tableview.reloadData()
+        
+        
     }
-
+    
     @objc func handleClose(){
         dismiss(animated: true, completion: nil)
         
     }
     
-    
-    var reports_list = ReportModel.reports()
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reports_list.count
@@ -71,6 +77,7 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.report = reports_list[indexPath.row]
         cell.noLabel.text = "\(indexPath.row+1)"
         
+        
         return cell
     }
     
@@ -78,15 +85,15 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let rootVC = DetailStationViewController()
-//        rootVC.stations_last = self.stations_last
-        let rootNC = UINavigationController(rootViewController: rootVC)
-        rootNC.modalPresentationStyle = .overFullScreen
-        rootNC.modalTransitionStyle = .crossDissolve
-        present(rootNC, animated: true, completion: nil)
-    }
-    
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        let rootVC = DetailStationViewController()
+    ////        rootVC.stations_last = self.stations_last
+    //        let rootNC = UINavigationController(rootViewController: rootVC)
+    //        rootNC.modalPresentationStyle = .overFullScreen
+    //        rootNC.modalTransitionStyle = .crossDissolve
+    //        present(rootNC, animated: true, completion: nil)
+    //    }
+    //
     
     
 }

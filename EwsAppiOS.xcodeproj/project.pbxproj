@@ -29,6 +29,7 @@
 		EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */; };
 		EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */; };
 		EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */; };
+		EF344A2F25497BA900E85F6D /* Ews07Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF344A2E25497BA900E85F6D /* Ews07Model.swift */; };
 		EF5E7FF125433D3D0054D025 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = EF5E7FF025433D3D0054D025 /* style.json */; };
 		EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */; };
 		EF7396432548876000A0266C /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7396422548876000A0266C /* ReportViewController.swift */; };
@@ -70,6 +71,7 @@
 		EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDataModel.swift; sourceTree = "<group>"; };
 		EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStationViewCell.swift; sourceTree = "<group>"; };
+		EF344A2E25497BA900E85F6D /* Ews07Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ews07Model.swift; sourceTree = "<group>"; };
 		EF5E7FF025433D3D0054D025 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationXLastDataModel.swift; sourceTree = "<group>"; };
 		EF7396422548876000A0266C /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				EF9ABE42254179E0001EAA20 /* DashboardCardModel.swift */,
 				EFC62B8E2547378200F19217 /* MenuSlideModel.swift */,
 				EF739644254888FA00A0266C /* ReportModel.swift */,
+				EF344A2E25497BA900E85F6D /* Ews07Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */,
 				EF73964825488AEE00A0266C /* CardReportViewCell.swift in Sources */,
 				EF9ABE43254179E0001EAA20 /* DashboardCardModel.swift in Sources */,
+				EF344A2F25497BA900E85F6D /* Ews07Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

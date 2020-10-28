@@ -85,6 +85,7 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let rootVC = DetailStationViewController()
         rootVC.stations_last = self.stations_last
+        rootVC.currentPage = indexPath.item
         let rootNC = UINavigationController(rootViewController: rootVC)
         rootNC.modalPresentationStyle = .overFullScreen
         rootNC.modalTransitionStyle = .crossDissolve

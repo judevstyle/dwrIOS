@@ -12,6 +12,7 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
     
     private var cellID = "CellStation"
     
+    var currentPage: Int = 0
     
     lazy var collectionView: UICollectionView = {
         
@@ -33,7 +34,7 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
     
     
     
-    let titlLabel: UILabel = {
+    lazy var titlLabel: UILabel = {
         let label = UILabel()
         label.text = "บ้านแซะ"
         label.font = .PrimaryRegular(size: 23)
@@ -42,11 +43,10 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         
         return label
     }()
-
-    let valueLabel: UILabel = {
+    
+    lazy var valueLabel: UILabel = {
         let label = UILabel()
-
-
+        
         let unit = "ต.หนองไผ่ อ.ด่านมะขามเตี้ย จ.กาญจนบุรี\nหมู่บ้านคลอบคลุมจำนวน 3 หมู่บ้าน"
         
         let attributedText = NSMutableAttributedString(string: unit, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 17), NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
@@ -58,8 +58,8 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         label.attributedText = attributedText
         label.textAlignment = .center
         label.numberOfLines = 2
-        
         label.adjustsFontSizeToFitWidth = true
+        
         return label
     }()
     
@@ -87,17 +87,16 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         return button
     }()
     
-    let pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        
-        pageControl.currentPageIndicatorTintColor = .AppPrimary()
-        pageControl.pageIndicatorTintColor = .blackAlpha(alpha: 0.2)
-        
-        return pageControl
-        
-    }()
-    
-    
+    //    lazy var pageControl: UIPageControl = {
+    //        let pageControl = UIPageControl()
+    //
+    //        pageControl.currentPageIndicatorTintColor = .AppPrimary()
+    //        pageControl.pageIndicatorTintColor = .blackAlpha(alpha: 0.2)
+    //        pageControl.currentPage = 0
+    //
+    //        return pageControl
+    //
+    //    }()
     
     var stations_last: [StationXLastDataModel]? = []
     
@@ -107,14 +106,13 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         view.backgroundColor = .AppPrimary()
         self.setHideBorderNavigation(status: true)
         self.setBarStyleNavigation(style: .black)
-//        self.setTitleNavigation(title: "สรุปสถานการ์ณฝน")
+        //        self.setTitleNavigation(title: "สรุปสถานการ์ณฝน")
         
         let leftbutton = UIBarButtonItem(image: UIImage(systemName:  "clear"), style: .done, target: self, action: #selector(handleClose))
         
         leftbutton.tintColor = .white
         
         navigationItem.leftBarButtonItem = leftbutton
-        
         
         collectionView.register(DetailStationViewCell.self, forCellWithReuseIdentifier: cellID)
         
@@ -125,7 +123,7 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         
         
         view.addSubview(nextBtn)
-               nextBtn.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 16, widthConstant: 45, heightConstant: 45)
+        nextBtn.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 16, widthConstant: 45, heightConstant: 45)
         
         
         view.addSubview(titlLabel)
@@ -135,6 +133,16 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         
         view.addSubview(collectionView)
         collectionView.anchor(valueLabel.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        
+        DispatchQueue.main.async {
+            let scrollIndex: NSIndexPath = NSIndexPath(item: self.currentPage, section: 0)
+            self.collectionView.scrollToItem(at: scrollIndex as IndexPath, at: .right, animated: false)
+            self.setStateButtonPreviousNext()
+            
+            self.setValueStation()
+            
+        }
     }
     
     
@@ -147,24 +155,24 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        setStateButtonPreviousNext()
-        
     }
+    
+    
     
     
     @objc func previousAction (){
-        pageSelected(index: pageControl.currentPage-1)
+        pageSelected(index: currentPage-1, animated: true, position: .left)
     }
     
     @objc func nextAction (){
-        pageSelected(index: pageControl.currentPage+1)
+        pageSelected(index: currentPage+1, animated: true, position: .right)
     }
     
     func setStateButtonPreviousNext()  {
-        if pageControl.currentPage == 0 {
+        if currentPage == 0 {
             previousBtn.tintColor = .whiteAlpha(alpha: 0.5)
             previousBtn.isEnabled = false
-        }else if pageControl.currentPage == (self.stations_last!.count-1)  {
+        }else if currentPage == (self.stations_last!.count-1)  {
             nextBtn.tintColor = .whiteAlpha(alpha: 0.5)
             nextBtn.isEnabled = false
         }else {
@@ -173,17 +181,25 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
             nextBtn.tintColor = .white
             nextBtn.isEnabled = true
         }
+        
+        if self.stations_last!.count == 1 {
+            previousBtn.tintColor = .whiteAlpha(alpha: 0.5)
+            previousBtn.isEnabled = false
+            nextBtn.tintColor = .whiteAlpha(alpha: 0.5)
+            nextBtn.isEnabled = false
+        }
     }
     
     
-    func pageSelected(index: Int) {
+    func pageSelected(index: Int, animated: Bool, position: UICollectionView.ScrollPosition) {
         let scrollIndex: NSIndexPath = NSIndexPath(item: index, section: 0)
-        collectionView.scrollToItem(at: scrollIndex as IndexPath, at: .right, animated: true)
-        pageControl.currentPage = index
         
-        setStateButtonPreviousNext()
-        
-        print(pageControl.currentPage)
+        collectionView.scrollToItem(at: scrollIndex as IndexPath, at: position, animated: animated)
+        currentPage = index
+        self.setStateButtonPreviousNext()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            self.setValueStation()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -198,25 +214,42 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        pageControl.numberOfPages = self.stations_last!.count
-        
-        
         return self.stations_last!.count
     }
     
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DetailStationViewCell
-    
+        
+        cell.station = self.stations_last![indexPath.row]
+        
         return cell
     }
     
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
         let pageWidth = view.frame.width
-        pageControl.currentPage = Int(collectionView.contentOffset.x/pageWidth)
+        currentPage = Int(collectionView.contentOffset.x/pageWidth)
         setStateButtonPreviousNext()
+        setValueStation()
     }
-
+    
+    func setValueStation() {
+        titlLabel.text = "\(self.stations_last![currentPage].title!)"
+        
+        let unit = "\(self.stations_last![currentPage].address!)"
+        
+        let attributedText = NSMutableAttributedString(string: unit, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 17), NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 0.9
+        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
+        
+        valueLabel.attributedText = attributedText
+        valueLabel.textAlignment = .center
+        valueLabel.numberOfLines = 2
+        valueLabel.adjustsFontSizeToFitWidth = true
+    }
+    
 }

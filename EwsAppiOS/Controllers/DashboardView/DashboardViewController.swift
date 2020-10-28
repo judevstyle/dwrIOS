@@ -24,11 +24,12 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     var ValueWarningStations:[String] = ["0","0","0","0"]
     var TitleWarningStations:[String] = ["อพยพ","เตือนภัย","เฝ้าระวัง","มีฝน"]
     
-    let viewAllButton: UIButton = {
+    lazy var viewAllButton: UIButton = {
         let button = UIButton()
         button.setTitle("ดูสถานการ์ณทั้งหมด", for: .normal)
         
         button.titleLabel?.font = .PrimaryRegular(size: 20)
+        button.addTarget(self, action: #selector(handleAllEws), for: .touchUpInside)
         
         button.tintColor = .white
         return button
@@ -113,14 +114,15 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                 self.tableview.reloadData()
             }
         }
-        
-        
-        setupView()
-        
+
         DispatchQueue.main.async {
             self.getCountStatus()
         }
         
+    }
+    
+   @objc func handleAllEws()  {
+         getLastData(type: "all")
     }
     
     
@@ -141,11 +143,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
         self.tableview.reloadData()
     }
-    
-    
-    func setupView() {
-        
-    }
+
     
     @objc func handleSlide(){
         present(menuSlide, animated: true, completion: nil)
@@ -153,17 +151,16 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     }
     
     
-    
-    func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
-        self.tableview.setConstraintConstant(constant: -95, forAttribute: .right)
-        self.viewAllButton.setConstraintConstant(constant: -95, forAttribute: .right)
-    }
-    
-    
-    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
-        self.tableview.setConstraintConstant(constant: -16, forAttribute: .right)
-        self.viewAllButton.setConstraintConstant(constant: -16, forAttribute: .right)
-    }
+//    func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
+//        self.tableview.setConstraintConstant(constant: -95, forAttribute: .right)
+//        self.viewAllButton.setConstraintConstant(constant: -95, forAttribute: .right)
+//    }
+//
+//
+//    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
+//        self.tableview.setConstraintConstant(constant: -16, forAttribute: .right)
+//        self.viewAllButton.setConstraintConstant(constant: -16, forAttribute: .right)
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dashboards.count
@@ -209,7 +206,6 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         self.startLoding()
         DispatchQueue.global(qos: .background).async {
             var stations_last = LastDataModel.FetchLastData(type: type)
-            
             
             DispatchQueue.main.async {
                 if stations_last.count != 0 {

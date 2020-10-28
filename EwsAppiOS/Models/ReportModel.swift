@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyXMLParser
 
 struct ReportModel {
     var title: String?
@@ -22,10 +23,22 @@ struct ReportModel {
     static func reports() -> [ReportModel] {
         var reports = [ReportModel]()
         
-        reports.append(ReportModel(title: "แจ้ง เฝ้าระวัง ด้วยระดับน้ำ ระดับน้ำสูง", address: "สถานี บ้านหูแร่ ต.ทุ่งตำเสา อ.เมือง จ.สงขลา", date: "วันที่ 22 เดือน ตุลาคม พ.ศ. 2563 เวลา 19.57.00"))
-        reports.append(ReportModel(title: "แจ้ง เฝ้าระวัง ด้วยระดับน้ำ ระดับน้ำสูง", address: "สถานี บ้านหูแร่ ต.ทุ่งตำเสา อ.เมือง จ.สงขลา", date: "วันที่ 22 เดือน ตุลาคม พ.ศ. 2563 เวลา 19.57.00"))
-        reports.append(ReportModel(title: "แจ้ง เฝ้าระวัง ด้วยระดับน้ำ ระดับน้ำสูง", address: "สถานี บ้านหูแร่ ต.ทุ่งตำเสา อ.เมือง จ.สงขลา", date: "วันที่ 22 เดือน ตุลาคม พ.ศ. 2563 เวลา 19.57.00"))
-        reports.append(ReportModel(title: "แจ้ง เฝ้าระวัง ด้วยระดับน้ำ ระดับน้ำสูง", address: "สถานี บ้านหูแร่ ต.ทุ่งตำเสา อ.เมือง จ.สงขลา", date: "วันที่ 22 เดือน ตุลาคม พ.ศ. 2563 เวลา 19.57.00"))
+        
+        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+        let urlString = URL(string: "\(baseURL)/warn_report.xml")
+        
+        let xml = try! XML.parse(Data(contentsOf: urlString!))
+        
+        if let count = xml["ews", "station"].all?.count {
+            if count > 0 {
+                for item_report in xml["ews", "station"].all! {
+                    let title = item_report.childElements[1].text!.subStringReport()
+                    reports.append(ReportModel(title: "\(title[0])", address: "สถานี \(title[1])", date: "วันที่ 22 เดือน ตุลาคม พ.ศ. 2563 เวลา 19.57.00"))
+                }
+                
+            }
+        }
+    
         return reports
     }
 }

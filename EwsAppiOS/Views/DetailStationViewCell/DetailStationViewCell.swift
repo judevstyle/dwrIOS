@@ -33,6 +33,13 @@ class DetailStationViewCell: UICollectionViewCell, UITableViewDelegate, UITableV
         return tableview
     }()
 
+    var station: StationXLastDataModel? {
+            didSet {
+                DispatchQueue.main.async { [weak self] in
+                    self?.setupValue()
+                }
+            }
+        }
     
     func setupViewCell()  {
         backgroundColor = .AppPrimaryDark()
@@ -45,10 +52,8 @@ class DetailStationViewCell: UICollectionViewCell, UITableViewDelegate, UITableV
         
     }
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,10 +61,19 @@ class DetailStationViewCell: UICollectionViewCell, UITableViewDelegate, UITableV
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdStation, for: indexPath) as! ListCardStationViewCell
             
+            if station != nil {
+                cell.station = station!
+                       }
+            
             return cell
         }else {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdRain, for: indexPath) as! ListCardRainViewCell
+
+            if station != nil {
+                cell.ews07 = station!.ews07
+                cell.indexPath = indexPath
+            }
             
             return cell
         }
@@ -79,5 +93,11 @@ class DetailStationViewCell: UICollectionViewCell, UITableViewDelegate, UITableV
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    func setupValue() {
+        
+        tableview.reloadData()
+        
+    }
     
 }

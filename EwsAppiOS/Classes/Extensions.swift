@@ -306,7 +306,7 @@ extension UILabel {
     }
     
     
-  func addCharactersSpacing(spacing: CGFloat, txt: String) {
+    func addCharactersSpacing(spacing: CGFloat, txt: String) {
         let attributedString = NSMutableAttributedString(string: txt)
         attributedString.addAttribute(NSAttributedString.Key.kern, value: spacing, range: NSRange(location: 0, length: txt.count))
         self.attributedText = attributedString
@@ -594,6 +594,8 @@ extension NSAttributedString {
     }
 }
 
+import Foundation
+
 extension String {
     
     func isBase64() -> Bool {
@@ -603,6 +605,16 @@ extension String {
         return true
     }
     
+    
+    func subStringReport() -> [String]{
+        
+        let text = self.components(separatedBy: "สถานี")
+        
+        let title    = text[0]
+        let address = text[1]
+        
+        return [title,address]
+    }
     
     func toBase64() -> String {
         if let data = (self).data(using: String.Encoding.utf8) {

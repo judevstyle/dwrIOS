@@ -256,18 +256,20 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
           
           if AppDelegate.shareDelegate.stations != nil {
               
-              switch indexPath.row {
-              case 0:
-                  getLastData(type: "สถานการณ์ อพยพ")
-              case 1:
-                  getLastData(type: "สถานการณ์ เตือนภัย")
-              case 2:
-                  getLastData(type: "สถานการณ์ เฝ้าระวัง")
-              case 3:
-                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
-              default:
-                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
-              }
+//              switch indexPath.row {
+//              case 0:
+//                  getLastData(type: "สถานการณ์ อพยพ")
+//              case 1:
+//                  getLastData(type: "สถานการณ์ เตือนภัย")
+//              case 2:
+//                  getLastData(type: "สถานการณ์ เฝ้าระวัง")
+//              case 3:
+//                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+//              default:
+//                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+//              }
+            
+            mapView.clear()
               
           }
           
