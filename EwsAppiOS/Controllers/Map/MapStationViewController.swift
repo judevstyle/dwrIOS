@@ -85,6 +85,134 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     }()
     
     
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 1
+        label.font = .PrimaryLight(size: 25)
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.text = "บ้านหินแด้น"
+        return label
+    }()
+    
+    
+    lazy var addressLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 2
+        label.textColor = .blackAlpha(alpha: 0.7)
+        
+        let stringValue = "ต.หนองไผ่ อ.ด่านมะขามเตี้ย จ.กาญจนบุรี\nหมู่บ้านคลอบคลุมจำนวน 3 หมู่บ้าน"
+        
+        let attributedString = NSMutableAttributedString(string: stringValue)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        
+        paragraphStyle.maximumLineHeight = 17.0
+        
+        
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        attributedString.addAttribute(
+            .font,
+            value: UIFont.PrimaryLight(size: CGFloat(15)),
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        
+        label.attributedText = attributedString
+        
+        return label
+    }()
+    
+    
+    let rainLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 1
+        label.text = "ปริมาณฝนสะสม"
+        label.textColor = .blackAlpha(alpha: 0.7)
+        
+        label.font = .PrimaryLight(size: 17)
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    let valueLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 1
+        label.textColor = .blackAlpha(alpha: 0.7)
+        
+        var stringValue = "0"
+        
+        let attributedString = NSMutableAttributedString(string: stringValue)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        
+        paragraphStyle.maximumLineHeight = 50
+        
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        attributedString.addAttribute(
+            .font,
+            value: UIFont.PrimaryRegular(size: CGFloat(40)),
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        attributedString.addAttribute(
+            .foregroundColor,
+            value: UIColor.blackAlpha(alpha: 0.7),
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        
+        label.attributedText = attributedString
+        
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    
+    lazy var viewRecenty: UIView = {
+        let view = UIView()
+        
+        
+        view.backgroundColor = .clear
+        
+        return view
+    }()
+    
+    let iconView: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "overcast")
+        image.contentMode = .scaleAspectFit
+        
+        return image
+    }()
+    
+    
+    let textRecenty: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.text = "ดูฝนย้อนหลัง 7 วัน"
+        label.font = .PrimaryLight(size: 15)
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
     var dashboards = DashboardCardModel.dashboards()
     
     
@@ -161,6 +289,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         return .lightContent
     }
     
+    
     func loadMapView() {
         
         
@@ -187,7 +316,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         self.mapView.delegate = self
         
-        getMap()
+        //        getMap()
     }
     
     
@@ -217,7 +346,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     }
     
     
-    
     func handleAddMarker(coordinate: CLLocationCoordinate2D, index: Int, iconMarker: UIImageView){
         
         
@@ -231,7 +359,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         self.markerCustom = marker
         
     }
-    
     
     
     
@@ -250,53 +377,109 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         return tableView.frame.height/CGFloat(dashboards.count)
     }
     
+    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        showPickerController()
+    }
     
+    func showPickerController() {
+        let alertController = UIAlertController(title: "", message: nil, preferredStyle: .actionSheet)
+        let customView = UIView()
+        alertController.view.addSubview(customView)
+        alertController.view.backgroundColor = .white
+        alertController.view.layer.cornerRadius = 8
+        alertController.view.layer.masksToBounds = true
+        
+        customView.anchor(alertController.view.topAnchor, left: alertController.view.leftAnchor, bottom: alertController.view.bottomAnchor, right: alertController.view.rightAnchor, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        
+        customView.addSubview(titleLabel)
+        customView.addSubview(addressLabel)
+        customView.addSubview(viewRecenty)
+        customView.addSubview(rainLabel)
+        customView.addSubview(valueLabel)
+        
+        
+        titleLabel.anchor(customView.topAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
+        
+        addressLabel.anchor(titleLabel.bottomAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
+        
+        viewRecenty.anchor(addressLabel.bottomAnchor, left: customView.leftAnchor, bottom: customView.bottomAnchor, right: nil, topConstant: 5, leftConstant: 20, bottomConstant: 8, rightConstant: 20, widthConstant: alertController.view.frame.width/2, heightConstant: 0)
+        
+        viewRecenty.addSubview(iconView)
+        viewRecenty.addSubview(textRecenty)
+        iconView.anchor(viewRecenty.topAnchor, left: viewRecenty.leftAnchor, bottom: nil, right: viewRecenty.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 60)
+        
+        textRecenty.anchor(iconView.bottomAnchor, left: viewRecenty.leftAnchor, bottom: viewRecenty.bottomAnchor, right: viewRecenty.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        rainLabel.anchor(addressLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        
+        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 5, widthConstant: 0, heightConstant: 0)
+        
+        //        alertController.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.present(alertController, animated: true) {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlertController))
+            alertController.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
+            
+            let tapRecenty = UITapGestureRecognizer(target: self, action: #selector(self.handleRecentyRain))
+            self.viewRecenty.isUserInteractionEnabled = true
+            self.viewRecenty.addGestureRecognizer(tapRecenty)
+            
+        }
+    }
+    
+    @objc func handleRecentyRain(){
+                   self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @objc func dismissAlertController()
+    {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-          
-          if AppDelegate.shareDelegate.stations != nil {
-              
-//              switch indexPath.row {
-//              case 0:
-//                  getLastData(type: "สถานการณ์ อพยพ")
-//              case 1:
-//                  getLastData(type: "สถานการณ์ เตือนภัย")
-//              case 2:
-//                  getLastData(type: "สถานการณ์ เฝ้าระวัง")
-//              case 3:
-//                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
-//              default:
-//                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
-//              }
+        
+        if AppDelegate.shareDelegate.stations != nil {
+            
+            //              switch indexPath.row {
+            //              case 0:
+            //                  getLastData(type: "สถานการณ์ อพยพ")
+            //              case 1:
+            //                  getLastData(type: "สถานการณ์ เตือนภัย")
+            //              case 2:
+            //                  getLastData(type: "สถานการณ์ เฝ้าระวัง")
+            //              case 3:
+            //                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+            //              default:
+            //                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+            //              }
             
             mapView.clear()
-              
-          }
-          
-      }
-      
-      func getLastData(type: String) {
-          self.startLoding()
-          DispatchQueue.global(qos: .background).async {
-              var stations_last = LastDataModel.FetchLastData(type: type)
-              
-             DispatchQueue.main.async {
-                  if stations_last.count != 0 {
-                      let rootVC = StationListViewController()
-                      rootVC.stations_last = stations_last
-                      let rootNC = UINavigationController(rootViewController: rootVC)
-                      rootNC.modalPresentationStyle = .fullScreen
-                      rootNC.modalTransitionStyle = .crossDissolve
-                      self.present(rootNC, animated: true, completion: nil)
-                      self.stopLoding()
-                  }else {
-                      self.stopLoding()
-                  }
-              }
-          }
-      }
-      
+            
+        }
+        
+    }
     
+    func getLastData(type: String) {
+        self.startLoding()
+        DispatchQueue.global(qos: .background).async {
+            var stations_last = LastDataModel.FetchLastData(type: type)
+            
+            DispatchQueue.main.async {
+                if stations_last.count != 0 {
+                    let rootVC = StationListViewController()
+                    rootVC.stations_last = stations_last
+                    let rootNC = UINavigationController(rootViewController: rootVC)
+                    rootNC.modalPresentationStyle = .fullScreen
+                    rootNC.modalTransitionStyle = .crossDissolve
+                    self.present(rootNC, animated: true, completion: nil)
+                    self.stopLoding()
+                }else {
+                    self.stopLoding()
+                }
+            }
+        }
+    }
     
 }
 

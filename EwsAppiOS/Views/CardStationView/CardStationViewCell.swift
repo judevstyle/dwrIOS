@@ -70,7 +70,7 @@ class CardStationViewCell: UITableViewCell {
     
     let iconView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "clound")
+        image.image = UIImage(named: "overcast")
         image.contentMode = .scaleAspectFit
         
         return image

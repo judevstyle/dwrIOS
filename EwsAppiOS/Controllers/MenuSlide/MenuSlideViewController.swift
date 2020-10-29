@@ -75,6 +75,8 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
                 break
             case 4:
                 openMenuView(controller: SettingViewController())
+            case 5:
+            openMenuView(controller: InfoViewController())
                 break
             default:
                 break

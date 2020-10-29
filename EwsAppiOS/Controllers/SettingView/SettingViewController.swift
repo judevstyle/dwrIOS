@@ -42,8 +42,8 @@ class SettingViewController: UIViewController {
     lazy var switchOnOff: UISwitch = {
         let switchOnOff = UISwitch()
         switchOnOff.isOn = false
-        switchOnOff.translatesAutoresizingMaskIntoConstraints = false
         switchOnOff.addTarget(self, action: #selector(switchButton), for: .valueChanged)
+        switchOnOff.thumbTintColor = .white
         return switchOnOff
     }()
     
@@ -75,7 +75,7 @@ class SettingViewController: UIViewController {
         
         labelSetting1.anchor(viewMain.topAnchor, left: iconSetting1.rightAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 35)
         
-        switchOnOff.anchor(viewMain.topAnchor, left: nil, bottom: nil, right: viewMain.leftAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 0, rightConstant: 16, widthConstant: 100, heightConstant: 100)
+        switchOnOff.anchor(viewMain.topAnchor, left: nil, bottom: nil, right: viewMain.rightAnchor, topConstant: 16, leftConstant: 0, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
     }
     
     
@@ -85,7 +85,8 @@ class SettingViewController: UIViewController {
     }
     
     @objc func switchButton(){
-          dismiss(animated: true, completion: nil)
+//          dismiss(animated: true, completion: nil)
+        print(switchOnOff.isOn)
           
       }
     

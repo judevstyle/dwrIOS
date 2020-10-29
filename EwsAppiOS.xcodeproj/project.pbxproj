@@ -45,6 +45,10 @@
 		EFC62B9225473FDF00F19217 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B9125473FDF00F19217 /* SettingViewController.swift */; };
 		EFC62B942547448800F19217 /* DetailStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B932547448800F19217 /* DetailStationViewController.swift */; };
 		EFC62B972547459A00F19217 /* DetailStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B962547459A00F19217 /* DetailStationViewCell.swift */; };
+		EFC8F4F5254AC37B003FCB44 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8F4F4254AC37B003FCB44 /* InfoViewController.swift */; };
+		EFC8F4F8254ACB22003FCB44 /* CollapsibleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8F4F7254ACB22003FCB44 /* CollapsibleTableViewCell.swift */; };
+		EFC8F4FA254ACB52003FCB44 /* CollapsibleTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8F4F9254ACB52003FCB44 /* CollapsibleTableViewHeader.swift */; };
+		EFC8F4FD254ACC00003FCB44 /* InfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8F4FC254ACC00003FCB44 /* InfoModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +91,10 @@
 		EFC62B9125473FDF00F19217 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		EFC62B932547448800F19217 /* DetailStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStationViewController.swift; sourceTree = "<group>"; };
 		EFC62B962547459A00F19217 /* DetailStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStationViewCell.swift; sourceTree = "<group>"; };
+		EFC8F4F4254AC37B003FCB44 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		EFC8F4F7254ACB22003FCB44 /* CollapsibleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewCell.swift; sourceTree = "<group>"; };
+		EFC8F4F9254ACB52003FCB44 /* CollapsibleTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewHeader.swift; sourceTree = "<group>"; };
+		EFC8F4FC254ACC00003FCB44 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +169,7 @@
 		C452CE452530839F004CDC0A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EFC8F4F3254AC363003FCB44 /* InfoView */,
 				EF7396412548874600A0266C /* ReportView */,
 				EFC62B9025473FC700F19217 /* SettingView */,
 				EF1A1EA0253C39B4009DBBEF /* DashboardView */,
@@ -210,6 +219,7 @@
 		C452CE5E25309455004CDC0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EFC8F4F6254ACAFC003FCB44 /* Info */,
 				EF73964625488AD300A0266C /* CardReportViewCell */,
 				EFC62B952547455F00F19217 /* DetailStationViewCell */,
 				EF1A1EA5253C6372009DBBEF /* CardStationView */,
@@ -247,6 +257,7 @@
 		C490D30C25358F0E004CF6BE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EFC8F4FB254ACBEC003FCB44 /* Info */,
 				C490D30D25358F25004CF6BE /* StationModel.swift */,
 				EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */,
 				EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */,
@@ -347,6 +358,31 @@
 				EFC62B962547459A00F19217 /* DetailStationViewCell.swift */,
 			);
 			path = DetailStationViewCell;
+			sourceTree = "<group>";
+		};
+		EFC8F4F3254AC363003FCB44 /* InfoView */ = {
+			isa = PBXGroup;
+			children = (
+				EFC8F4F4254AC37B003FCB44 /* InfoViewController.swift */,
+			);
+			path = InfoView;
+			sourceTree = "<group>";
+		};
+		EFC8F4F6254ACAFC003FCB44 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				EFC8F4F7254ACB22003FCB44 /* CollapsibleTableViewCell.swift */,
+				EFC8F4F9254ACB52003FCB44 /* CollapsibleTableViewHeader.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		EFC8F4FB254ACBEC003FCB44 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				EFC8F4FC254ACC00003FCB44 /* InfoModel.swift */,
+			);
+			path = Info;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -499,17 +535,21 @@
 				EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */,
 				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
 				EF7396432548876000A0266C /* ReportViewController.swift in Sources */,
+				EFC8F4F8254ACB22003FCB44 /* CollapsibleTableViewCell.swift in Sources */,
 				EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */,
 				EF739645254888FA00A0266C /* ReportModel.swift in Sources */,
 				EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */,
 				EFC62B972547459A00F19217 /* DetailStationViewCell.swift in Sources */,
 				C452CE3925308031004CDC0A /* EwsAppiOS.xcdatamodeld in Sources */,
+				EFC8F4FA254ACB52003FCB44 /* CollapsibleTableViewHeader.swift in Sources */,
 				C452CE6B25309985004CDC0A /* DashboardView.swift in Sources */,
+				EFC8F4F5254AC37B003FCB44 /* InfoViewController.swift in Sources */,
 				EFC62B942547448800F19217 /* DetailStationViewController.swift in Sources */,
 				C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */,
 				EFB3159525482EBA00B2E4E9 /* ListCardStationViewCell.swift in Sources */,
 				EFB3159325482EAE00B2E4E9 /* ListCardRainViewCell.swift in Sources */,
 				EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */,
+				EFC8F4FD254ACC00003FCB44 /* InfoModel.swift in Sources */,
 				C452CE5225308504004CDC0A /* Extensions.swift in Sources */,
 				C490D308253570B9004CF6BE /* APIService.swift in Sources */,
 				C452CE612530947A004CDC0A /* MenuSideViewCell.swift in Sources */,

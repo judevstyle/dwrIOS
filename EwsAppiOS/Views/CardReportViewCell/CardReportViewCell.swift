@@ -19,7 +19,7 @@ class CardReportViewCell: UITableViewCell {
     
     let circleView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemOrange
+        view.backgroundColor = .red
         view.layer.cornerRadius = 28/2
         view.layer.masksToBounds = true
         return view
