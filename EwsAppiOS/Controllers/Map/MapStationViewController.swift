@@ -39,7 +39,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     let cellId = "cellDashboard"
     
-    
     lazy var tableview: UITableView = {
         let tableview = UITableView()
         tableview.dataSource = self
@@ -57,11 +56,10 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     lazy var markerDefaultView: UIImageView = {
         let pin = UIImage(named: "pin-default")!.withRenderingMode(.alwaysOriginal)
-        //        let size = CGSize(width: 25, height: 25)
-        //        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
+        let size = CGSize(width: 20, height: 20)
+        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
         return UIImageView(image: pin)
     }()
-    
     
     lazy var markerBewareView: UIImageView = {
         let pin = UIImage(named: "pin-beware")!.withRenderingMode(.alwaysOriginal)
@@ -79,8 +77,8 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     lazy var markerWarningView: UIImageView = {
         let pin = UIImage(named: "pin-warning")!.withRenderingMode(.alwaysOriginal)
-        //        let size = CGSize(width: 25, height: 25)
-        //        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
+        let size = CGSize(width: 25, height: 25)
+        let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
         return UIImageView(image: pin)
     }()
     
@@ -215,6 +213,12 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     var dashboards = DashboardCardModel.dashboards()
     
+    var listMarker: [StationXLastDataModel] = []
+    var selectedStation: StationXLastDataModel? = nil
+    
+    var viewModel: LastDataStationProtocol!
+    
+    var index: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -238,10 +242,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         //        view.addSubview(viewStatus)
         view.addSubview(viewMain)
-        
-        //        viewStatus.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        
-        
         
         viewMain.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
@@ -271,12 +271,10 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         loadMapView()
         
-        self.startLoding()
         DispatchQueue.global(qos: .background).async {
             self.dashboards = DashboardCardModel.getCountStatus()
             
             DispatchQueue.main.async {
-                self.stopLoding()
                 self.tableview.reloadData()
             }
         }
@@ -291,7 +289,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     
     func loadMapView() {
-        
         
         let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
         
@@ -316,38 +313,46 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         self.mapView.delegate = self
         
-        //        getMap()
+        configure(LastDataViewModel())
+        
     }
     
     
-    func getMap() {
-        
-        
-        DispatchQueue.global(qos: .background).async {
-            for (index,item) in AppDelegate.shareDelegate.stations.enumerated() {
-                
-                if let lat = item.latitude!.toDouble() {
-                    if let long = item.longitude!.toDouble() {
-                        Thread.sleep(forTimeInterval: 0.0001)
-                        DispatchQueue.main.async {
-                            
-                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerDefaultView)
-                        }
-                        
+    func configure(_ interface: LastDataStationProtocol) {
+        self.viewModel = interface
+        bindToViewModel()
+        self.getLastData(type: "all")
+    }
+    
+    fileprivate func showAlert(data: StationXLastDataModel) {
+        DispatchQueue.main.async {
+            self.listMarker.append(data)
+            self.tableview.reloadData()
+            self.stopLoding()
+            if let lat = data.latitude!.toDouble() {
+                if let long = data.longitude!.toDouble() {
+                    switch data.status {
+                    case "สถานการณ์ อพยพ":
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerEvacuateView)
+                    case "สถานการณ์ เตือนภัย":
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWarningView)
+                    case "สถานการณ์ เฝ้าระวัง":
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerBewareView)
+                    case "สถานการณ์ ฝนตกเล็กน้อย":
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
+                    default:
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
                     }
                 }
             }
+            
+            self.index += 1
+            
+            
         }
-        
-        let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
-        self.mapView.animate(to: camera)
-        
-        
     }
     
-    
     func handleAddMarker(coordinate: CLLocationCoordinate2D, index: Int, iconMarker: UIImageView){
-        
         
         let position = coordinate
         marker = GMSMarker(position: position)
@@ -377,11 +382,15 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         return tableView.frame.height/CGFloat(dashboards.count)
     }
     
-    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        showPickerController()
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        
+        showPickerController(index: Int(marker.snippet!)!)
+        
+        return true
     }
     
-    func showPickerController() {
+    func showPickerController(index: Int) {
         let alertController = UIAlertController(title: "", message: nil, preferredStyle: .actionSheet)
         let customView = UIView()
         alertController.view.addSubview(customView)
@@ -396,7 +405,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         customView.addSubview(viewRecenty)
         customView.addSubview(rainLabel)
         customView.addSubview(valueLabel)
-        
         
         titleLabel.anchor(customView.topAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
@@ -414,7 +422,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 5, widthConstant: 0, heightConstant: 0)
         
-        //        alertController.view.translatesAutoresizingMaskIntoConstraints = false
+        setValueAlert(station: listMarker[index])
         
         self.present(alertController, animated: true) {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlertController))
@@ -427,8 +435,49 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         }
     }
     
+    
+    func setValueAlert(station: StationXLastDataModel) {
+        
+        selectedStation = station
+        
+        titleLabel.text = station.title!
+        
+        let stringValue = station.address!
+        let attributedString = NSMutableAttributedString(string: stringValue)
+        let paragraphStyle = NSMutableParagraphStyle()
+        
+        paragraphStyle.maximumLineHeight = 17.0
+        
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        attributedString.addAttribute(
+            .font,
+            value: UIFont.PrimaryLight(size: CGFloat(15)),
+            range: NSRange(location: 0, length: attributedString.length
+        ))
+        
+        addressLabel.attributedText = attributedString
+        
+        let value = Int(Double("\(station.rain12h!)")!)
+        
+        valueLabel.text = "\(value)"
+    }
+    
     @objc func handleRecentyRain(){
-                   self.dismiss(animated: true, completion: nil)
+        let rootVC = DetailMapStationViewController()
+        rootVC.station = self.selectedStation!
+        let rootNC = UINavigationController(rootViewController: rootVC)
+        
+        self.dismiss(animated: true, completion: nil)
+        
+        DispatchQueue.main.async {
+            self.present(rootNC, animated: true, completion: nil)
+        }
+        
     }
     
     
@@ -440,47 +489,82 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if AppDelegate.shareDelegate.stations != nil {
-            
-            //              switch indexPath.row {
-            //              case 0:
-            //                  getLastData(type: "สถานการณ์ อพยพ")
-            //              case 1:
-            //                  getLastData(type: "สถานการณ์ เตือนภัย")
-            //              case 2:
-            //                  getLastData(type: "สถานการณ์ เฝ้าระวัง")
-            //              case 3:
-            //                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
-            //              default:
-            //                  getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
-            //              }
-            
-            mapView.clear()
-            
+            switch indexPath.row {
+            case 0:
+                getLastData(type: "สถานการณ์ อพยพ")
+            case 1:
+                getLastData(type: "สถานการณ์ เตือนภัย")
+            case 2:
+                getLastData(type: "สถานการณ์ เฝ้าระวัง")
+            case 3:
+                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+            default:
+                getLastData(type: "all")
+            }
         }
         
     }
     
     func getLastData(type: String) {
         self.startLoding()
+        self.listMarker.removeAll()
+        self.index = 0
+        mapView.clear()
         DispatchQueue.global(qos: .background).async {
-            var stations_last = LastDataModel.FetchLastData(type: type)
-            
+            LastDataModel.FetchMapLastData(type: type, viewModel: self.viewModel as! LastDataViewModel)
             DispatchQueue.main.async {
-                if stations_last.count != 0 {
-                    let rootVC = StationListViewController()
-                    rootVC.stations_last = stations_last
-                    let rootNC = UINavigationController(rootViewController: rootVC)
-                    rootNC.modalPresentationStyle = .fullScreen
-                    rootNC.modalTransitionStyle = .crossDissolve
-                    self.present(rootNC, animated: true, completion: nil)
-                    self.stopLoding()
-                }else {
-                    self.stopLoding()
+                self.stopLoding()
+            }
+        }
+    }
+    
+    
+    func getMap() {
+        for (index,item) in self.listMarker.enumerated() {
+            if let lat = item.latitude!.toDouble() {
+                if let long = item.longitude!.toDouble() {
+                    //                    Thread.sleep(forTimeInterval: 0.0001)
+                    DispatchQueue.main.async {
+                        switch item.status {
+                        case "สถานการณ์ อพยพ":
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerEvacuateView)
+                        case "สถานการณ์ เตือนภัย":
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerWarningView)
+                        case "สถานการณ์ เฝ้าระวัง":
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerBewareView)
+                        case "สถานการณ์ ฝนตกเล็กน้อย":
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerDefaultView)
+                        default:
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerBewareView)
+                        }
+                        
+                    }
                 }
             }
         }
+        
+        DispatchQueue.main.async {
+            self.stopLoding()
+            let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
+            self.mapView.animate(to: camera)
+        }
+        
+        
     }
     
 }
 
 
+extension MapStationViewController {
+    
+    func bindToViewModel() {
+        viewModel.output.showMessageAlert = showAlert()
+    }
+    
+    func showAlert() -> ((StationXLastDataModel) -> Void) {
+        return {  [weak self] data in
+            guard let weakSelf = self else { return }
+            weakSelf.showAlert(data: data)
+        }
+    }
+}

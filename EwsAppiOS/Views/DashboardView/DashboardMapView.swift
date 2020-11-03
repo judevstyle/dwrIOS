@@ -71,23 +71,10 @@ class DashboardMapView: UITableViewCell {
         titleLabel.text = dashboard!.name
         valueLabel.text = dashboard!.value
         
-        switch dashboard!.name {
-        case "อพยพ":
-            titleLabel.textColor = .red
-            valueLabel.textColor = .red
-        case "เตือนภัย":
-            titleLabel.textColor = .yellow
-            valueLabel.textColor = .yellow
-        case "เฝ้าระวัง":
-            titleLabel.textColor = .green
-            valueLabel.textColor = .green
-        case "มีฝน":
-            titleLabel.textColor = .systemBlue
-            valueLabel.textColor = .systemBlue
-        default:
-            titleLabel.textColor = .black
-            valueLabel.textColor = .black
-        }
+        titleLabel.textColor = dashboard!.color
+        valueLabel.textColor = dashboard!.color
+       
+        iconView.image = dashboard!.icon
         
     }
     

@@ -65,17 +65,21 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if AppDelegate.shareDelegate.stations != nil {
+        if AppDelegate.shareDelegate.stations != nil && AppDelegate.shareDelegate.last_data_search != nil {
             switch indexPath.row {
             case 2:
-                openMenuView(controller: MapStationViewController())
+                openMenuView(controller: SearchViewController())
                 break
             case 3:
-                openMenuView(controller: ReportViewController())
+                openMenuView(controller: MapStationViewController())
                 break
             case 4:
-                openMenuView(controller: SettingViewController())
+                openMenuView(controller: ReportViewController())
+                break
             case 5:
+                openMenuView(controller: SettingViewController())
+                break
+            case 6:
             openMenuView(controller: InfoViewController())
                 break
             default:
@@ -88,7 +92,6 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     func openMenuView(controller: UIViewController){
-        
         var rootVC: UIViewController! = controller
         DispatchQueue.main.async {
             let rootNC = UINavigationController(rootViewController: rootVC)

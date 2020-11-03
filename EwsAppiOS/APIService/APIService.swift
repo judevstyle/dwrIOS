@@ -18,7 +18,7 @@ extension APIService: TargetType, AccessTokenAuthorizable {
     
     var baseURL: URL {
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
-        print(baseURL)
+//        print(baseURL)
         return URL(string: "\(baseURL)")!
     }
     

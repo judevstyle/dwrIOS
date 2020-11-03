@@ -14,21 +14,23 @@ struct DashboardCardModel {
     var name: String
     var value: String
     var color: UIColor
+    var icon: UIImage
     
     
-    init(name: String, value: String, color: UIColor) {
+    init(name: String, value: String, color: UIColor, icon: UIImage) {
         self.name = name
         self.value = value
         self.color = color
+        self.icon = icon
     }
     
     static func dashboards() -> [DashboardCardModel] {
         var dashboards = [DashboardCardModel]()
         
-        dashboards.append(DashboardCardModel(name: "อพยพ", value: "0", color: .red))
-        dashboards.append(DashboardCardModel(name: "เตือนภัย", value: "0", color: .yellow))
-        dashboards.append(DashboardCardModel(name: "เฝ้าระวัง", value: "0", color: .green))
-        dashboards.append(DashboardCardModel(name: "มีฝน", value: "0", color: .mediumBlue))
+        dashboards.append(DashboardCardModel(name: "อพยพ", value: "0", color: .red, icon: UIImage(named: "rain_tornado")!))
+        dashboards.append(DashboardCardModel(name: "เตือนภัย", value: "0", color: .yellow, icon: UIImage(named: "rain_thunder")!))
+        dashboards.append(DashboardCardModel(name: "เฝ้าระวัง", value: "0", color: .green, icon: UIImage(named: "rain")!))
+        dashboards.append(DashboardCardModel(name: "มีฝน", value: "0", color: .mediumBlue, icon: UIImage(named: "overcast")!))
         
         
         return dashboards
@@ -46,15 +48,10 @@ struct DashboardCardModel {
         let status1 = xml["ews"]["status3"]
         let status4 = xml["ews"]["status9"]
         
-        print(status1.text!)
-        print(status2.text!)
-        print(status3.text!)
-        print(status4.text!)
-        
-        dashboards.append(DashboardCardModel(name: "อพยพ", value: status1.text! ?? "0", color: .red))
-        dashboards.append(DashboardCardModel(name: "เตือนภัย", value: status2.text! ?? "0", color: .yellow))
-        dashboards.append(DashboardCardModel(name: "เฝ้าระวัง", value: status3.text! ?? "0", color: .green))
-        dashboards.append(DashboardCardModel(name: "มีฝน", value: status4.text! ?? "0", color: .mediumBlue))
+        dashboards.append(DashboardCardModel(name: "อพยพ", value: status1.text! ?? "0", color: .red, icon: UIImage(named: "rain_tornado")!))
+        dashboards.append(DashboardCardModel(name: "เตือนภัย", value: status2.text! ?? "0", color: .yellow, icon: UIImage(named: "rain_thunder")!))
+        dashboards.append(DashboardCardModel(name: "เฝ้าระวัง", value: status3.text! ?? "0", color: .green, icon: UIImage(named: "rain")!))
+        dashboards.append(DashboardCardModel(name: "มีฝน", value: status4.text! ?? "0", color: .mediumBlue, icon: UIImage(named: "overcast")!))
         
         return dashboards
     }

@@ -21,6 +21,7 @@ struct MenuSlideModel {
         
         menus.append(MenuSlideModel(icon: UIImage(named: "pin")))
         menus.append(MenuSlideModel(icon:  UIImage(systemName: "house")))
+        menus.append(MenuSlideModel(icon:  UIImage(systemName: "magnifyingglass")))
         menus.append(MenuSlideModel(icon:  UIImage(systemName: "mappin.and.ellipse")))
         menus.append(MenuSlideModel(icon:  UIImage(systemName: "map")))
         menus.append(MenuSlideModel(icon:  UIImage(systemName: "text.append")))

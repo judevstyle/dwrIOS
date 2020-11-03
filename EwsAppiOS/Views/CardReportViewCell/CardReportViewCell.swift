@@ -94,9 +94,7 @@ class CardReportViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func setupView()  {
-        
         backgroundColor = .clear
         separatorInset = .zero
         layoutMargins = .zero

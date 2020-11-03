@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     static let shareDelegate = AppDelegate()
     var stations: [StationModel]! = nil
+    var last_data_search: [StationXLastDataModel]! = nil
     var currentLocation: CLLocationCoordinate2D? = CLLocationCoordinate2DMake(15.8700, 100.9925) //Thailand
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -39,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DispatchQueue.global(qos: .background).async {
             AppDelegate.shareDelegate.stations = StationModel.FetchStations()
+            AppDelegate.shareDelegate.last_data_search = LastDataModel.SearchData()
+            print(AppDelegate.shareDelegate.last_data_search.count)
         }
         
         

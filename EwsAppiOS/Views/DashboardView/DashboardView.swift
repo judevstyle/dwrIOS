@@ -29,7 +29,7 @@ class DashboardView: UITableViewCell {
         let label = UILabel()
         
         label.numberOfLines = 1
-        label.font = .PrimaryRegular(size: 40)
+        label.font = .PrimaryRegular(size: 35)
         label.textColor = .white
         label.text = "อพยพ"
         return label
@@ -42,7 +42,7 @@ class DashboardView: UITableViewCell {
         label.numberOfLines = 1
         label.text = "0"
         label.textColor = .white
-        label.font = .PrimaryRegular(size: 40)
+        label.font = .PrimaryRegular(size: 35)
         
         return label
     }()
@@ -50,6 +50,7 @@ class DashboardView: UITableViewCell {
     let iconView: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "clound")
+        image.contentMode = .scaleAspectFit
         
         return image
     }()
@@ -76,6 +77,7 @@ class DashboardView: UITableViewCell {
         titleLabel.text = dashboard!.name
         valueLabel.text = dashboard!.value
         viewLine.backgroundColor = dashboard!.color
+        iconView.image = dashboard!.icon
         
     }
     
@@ -98,7 +100,7 @@ class DashboardView: UITableViewCell {
         
         titleLabel.anchor(viewCard.topAnchor, left: viewLine.rightAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 150, heightConstant: 0)
         
-        valueLabel.anchor(titleLabel.bottomAnchor, left: viewLine.rightAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        valueLabel.anchor(nil, left: viewLine.rightAnchor, bottom: viewCard.bottomAnchor, right: nil, topConstant: 0, leftConstant: 16, bottomConstant: 16, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         
         iconView.anchor(viewCard.topAnchor, left: titleLabel.rightAnchor, bottom: viewCard.bottomAnchor, right: viewCard.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 20, rightConstant: 20, widthConstant: 0, heightConstant: 0)

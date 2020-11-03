@@ -108,21 +108,21 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         DispatchQueue.global(qos: .background).async {
             self.dashboards = DashboardCardModel.getCountStatus()
             
-            print(self.dashboards)
+            
             DispatchQueue.main.async {
                 self.stopLoding()
                 self.tableview.reloadData()
             }
         }
-
+        
         DispatchQueue.main.async {
             self.getCountStatus()
         }
         
     }
     
-   @objc func handleAllEws()  {
-         getLastData(type: "all")
+    @objc func handleAllEws()  {
+        getLastData(type: "all")
     }
     
     
@@ -143,7 +143,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
         self.tableview.reloadData()
     }
-
+    
     
     @objc func handleSlide(){
         present(menuSlide, animated: true, completion: nil)
@@ -151,16 +151,16 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     }
     
     
-//    func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
-//        self.tableview.setConstraintConstant(constant: -95, forAttribute: .right)
-//        self.viewAllButton.setConstraintConstant(constant: -95, forAttribute: .right)
-//    }
-//
-//
-//    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
-//        self.tableview.setConstraintConstant(constant: -16, forAttribute: .right)
-//        self.viewAllButton.setConstraintConstant(constant: -16, forAttribute: .right)
-//    }
+    //    func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
+    //        self.tableview.setConstraintConstant(constant: -95, forAttribute: .right)
+    //        self.viewAllButton.setConstraintConstant(constant: -95, forAttribute: .right)
+    //    }
+    //
+    //
+    //    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
+    //        self.tableview.setConstraintConstant(constant: -16, forAttribute: .right)
+    //        self.viewAllButton.setConstraintConstant(constant: -16, forAttribute: .right)
+    //    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dashboards.count
@@ -199,18 +199,16 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
             delegateMainApp!.ToastLoading()
         }
         
-        
     }
     
     func getLastData(type: String) {
         self.startLoding()
         DispatchQueue.global(qos: .background).async {
-            var stations_last = LastDataModel.FetchLastData(type: type)
-            
+            var stations_last = LastDataModel.FetchLastDataV2(type: type)
             DispatchQueue.main.async {
                 if stations_last.count != 0 {
                     let rootVC = StationListViewController()
-                    rootVC.stations_last = stations_last
+                    rootVC.last_data = stations_last
                     let rootNC = UINavigationController(rootViewController: rootVC)
                     rootNC.modalPresentationStyle = .fullScreen
                     rootNC.modalTransitionStyle = .crossDissolve
@@ -224,6 +222,14 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     }
     
     
+//    func goToStationList(type: String) {
+//        let rootVC = StationListViewController()
+//        rootVC.typeLastdata = "\(type)"
+//        let rootNC = UINavigationController(rootViewController: rootVC)
+//        rootNC.modalPresentationStyle = .fullScreen
+//        rootNC.modalTransitionStyle = .crossDissolve
+//        self.present(rootNC, animated: true, completion: nil)
+//    }
     
     func ToastLoading() {
         delegateMainApp!.ToastLoading()

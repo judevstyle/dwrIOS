@@ -60,12 +60,10 @@ extension UIView {
         
         
         if let constraint = (self.constraints.filter{$0.firstAttribute == attribute}.first) {
-            print(constraint)
-            
+
             constraint.constant = constant
             
         }
-        
     }
     
     
@@ -941,3 +939,16 @@ extension Double {
     }
 }
 
+
+extension UISearchBar {
+
+func clearBackgroundColor() {
+    guard let UISearchBarBackground: AnyClass = NSClassFromString("UISearchBarBackground") else { return }
+
+    for view in subviews {
+        for subview in view.subviews where subview.isKind(of: UISearchBarBackground) {
+            subview.alpha = 0
+        }
+    }
+}
+}

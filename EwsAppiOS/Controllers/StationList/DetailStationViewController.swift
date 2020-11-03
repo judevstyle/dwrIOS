@@ -120,8 +120,6 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         view.addSubview(previousBtn)
         previousBtn.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 8, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 45, heightConstant: 45)
         
-        
-        
         view.addSubview(nextBtn)
         nextBtn.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 16, widthConstant: 45, heightConstant: 45)
         

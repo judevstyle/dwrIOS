@@ -30,6 +30,9 @@
 		EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */; };
 		EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */; };
 		EF344A2F25497BA900E85F6D /* Ews07Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF344A2E25497BA900E85F6D /* Ews07Model.swift */; };
+		EF35B888254B078000DA4244 /* DetailMapStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35B887254B078000DA4244 /* DetailMapStationViewController.swift */; };
+		EF4003C5254FF9F800BBE499 /* LastDataStationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4003C4254FF9F800BBE499 /* LastDataStationProtocol.swift */; };
+		EF4003C8254FFBD100BBE499 /* LastDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4003C7254FFBD100BBE499 /* LastDataViewModel.swift */; };
 		EF5E7FF125433D3D0054D025 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = EF5E7FF025433D3D0054D025 /* style.json */; };
 		EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */; };
 		EF7396432548876000A0266C /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7396422548876000A0266C /* ReportViewController.swift */; };
@@ -37,6 +40,8 @@
 		EF73964825488AEE00A0266C /* CardReportViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF73964725488AEE00A0266C /* CardReportViewCell.swift */; };
 		EF9ABE43254179E0001EAA20 /* DashboardCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9ABE42254179E0001EAA20 /* DashboardCardModel.swift */; };
 		EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9ABE4425417CB9001EAA20 /* DashboardMapView.swift */; };
+		EFA0C3982551BA8A008A45B2 /* CardSearchItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA0C3972551BA8A008A45B2 /* CardSearchItemViewCell.swift */; };
+		EFAF564A2551065900E881A6 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAF56492551065900E881A6 /* SearchViewController.swift */; };
 		EFB3159325482EAE00B2E4E9 /* ListCardRainViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3159225482EAE00B2E4E9 /* ListCardRainViewCell.swift */; };
 		EFB3159525482EBA00B2E4E9 /* ListCardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3159425482EBA00B2E4E9 /* ListCardStationViewCell.swift */; };
 		EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */; };
@@ -76,6 +81,9 @@
 		EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDataModel.swift; sourceTree = "<group>"; };
 		EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStationViewCell.swift; sourceTree = "<group>"; };
 		EF344A2E25497BA900E85F6D /* Ews07Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ews07Model.swift; sourceTree = "<group>"; };
+		EF35B887254B078000DA4244 /* DetailMapStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapStationViewController.swift; sourceTree = "<group>"; };
+		EF4003C4254FF9F800BBE499 /* LastDataStationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDataStationProtocol.swift; sourceTree = "<group>"; };
+		EF4003C7254FFBD100BBE499 /* LastDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDataViewModel.swift; sourceTree = "<group>"; };
 		EF5E7FF025433D3D0054D025 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationXLastDataModel.swift; sourceTree = "<group>"; };
 		EF7396422548876000A0266C /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +91,8 @@
 		EF73964725488AEE00A0266C /* CardReportViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardReportViewCell.swift; sourceTree = "<group>"; };
 		EF9ABE42254179E0001EAA20 /* DashboardCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCardModel.swift; sourceTree = "<group>"; };
 		EF9ABE4425417CB9001EAA20 /* DashboardMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardMapView.swift; sourceTree = "<group>"; };
+		EFA0C3972551BA8A008A45B2 /* CardSearchItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSearchItemViewCell.swift; sourceTree = "<group>"; };
+		EFAF56492551065900E881A6 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EFB3159225482EAE00B2E4E9 /* ListCardRainViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardRainViewCell.swift; sourceTree = "<group>"; };
 		EFB3159425482EBA00B2E4E9 /* ListCardStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardStationViewCell.swift; sourceTree = "<group>"; };
 		EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStationViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +160,7 @@
 		C452CE2D25308031004CDC0A /* EwsAppiOS */ = {
 			isa = PBXGroup;
 			children = (
+				EF4003C6254FFBA800BBE499 /* ViewModels */,
 				C490D30C25358F0E004CF6BE /* Models */,
 				C490D3062535702E004CF6BE /* APIService */,
 				C452CE5E25309455004CDC0A /* Views */,
@@ -169,6 +180,7 @@
 		C452CE452530839F004CDC0A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EFAF56482551064400E881A6 /* SearchView */,
 				EFC8F4F3254AC363003FCB44 /* InfoView */,
 				EF7396412548874600A0266C /* ReportView */,
 				EFC62B9025473FC700F19217 /* SettingView */,
@@ -203,6 +215,7 @@
 		C452CE50253084EC004CDC0A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				EF4003C3254FF9C400BBE499 /* Prorocols */,
 				C452CE5125308504004CDC0A /* Extensions.swift */,
 			);
 			path = Classes;
@@ -219,6 +232,7 @@
 		C452CE5E25309455004CDC0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EFA0C3962551BA62008A45B2 /* CardSearchItemViewCell */,
 				EFC8F4F6254ACAFC003FCB44 /* Info */,
 				EF73964625488AD300A0266C /* CardReportViewCell */,
 				EFC62B952547455F00F19217 /* DetailStationViewCell */,
@@ -293,6 +307,22 @@
 			path = CardStationView;
 			sourceTree = "<group>";
 		};
+		EF4003C3254FF9C400BBE499 /* Prorocols */ = {
+			isa = PBXGroup;
+			children = (
+				EF4003C4254FF9F800BBE499 /* LastDataStationProtocol.swift */,
+			);
+			path = Prorocols;
+			sourceTree = "<group>";
+		};
+		EF4003C6254FFBA800BBE499 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EF4003C7254FFBD100BBE499 /* LastDataViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		EF7396412548874600A0266C /* ReportView */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +337,22 @@
 				EF73964725488AEE00A0266C /* CardReportViewCell.swift */,
 			);
 			path = CardReportViewCell;
+			sourceTree = "<group>";
+		};
+		EFA0C3962551BA62008A45B2 /* CardSearchItemViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				EFA0C3972551BA8A008A45B2 /* CardSearchItemViewCell.swift */,
+			);
+			path = CardSearchItemViewCell;
+			sourceTree = "<group>";
+		};
+		EFAF56482551064400E881A6 /* SearchView */ = {
+			isa = PBXGroup;
+			children = (
+				EFAF56492551065900E881A6 /* SearchViewController.swift */,
+			);
+			path = SearchView;
 			sourceTree = "<group>";
 		};
 		EFB3159025482E6200B2E4E9 /* ListCardRainViewCell */ = {
@@ -329,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */,
+				EF35B887254B078000DA4244 /* DetailMapStationViewController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -532,6 +579,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */,
+				EF35B888254B078000DA4244 /* DetailMapStationViewController.swift in Sources */,
+				EF4003C8254FFBD100BBE499 /* LastDataViewModel.swift in Sources */,
 				EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */,
 				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
 				EF7396432548876000A0266C /* ReportViewController.swift in Sources */,
@@ -544,6 +593,7 @@
 				EFC8F4FA254ACB52003FCB44 /* CollapsibleTableViewHeader.swift in Sources */,
 				C452CE6B25309985004CDC0A /* DashboardView.swift in Sources */,
 				EFC8F4F5254AC37B003FCB44 /* InfoViewController.swift in Sources */,
+				EFAF564A2551065900E881A6 /* SearchViewController.swift in Sources */,
 				EFC62B942547448800F19217 /* DetailStationViewController.swift in Sources */,
 				C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */,
 				EFB3159525482EBA00B2E4E9 /* ListCardStationViewCell.swift in Sources */,
@@ -552,6 +602,8 @@
 				EFC8F4FD254ACC00003FCB44 /* InfoModel.swift in Sources */,
 				C452CE5225308504004CDC0A /* Extensions.swift in Sources */,
 				C490D308253570B9004CF6BE /* APIService.swift in Sources */,
+				EF4003C5254FF9F800BBE499 /* LastDataStationProtocol.swift in Sources */,
+				EFA0C3982551BA8A008A45B2 /* CardSearchItemViewCell.swift in Sources */,
 				C452CE612530947A004CDC0A /* MenuSideViewCell.swift in Sources */,
 				EF1A1E9C253C2957009DBBEF /* MainAppViewController.swift in Sources */,
 				EFC62B8F2547378200F19217 /* MenuSlideModel.swift in Sources */,

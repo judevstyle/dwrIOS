@@ -37,7 +37,6 @@ class MenuSideViewCell: UITableViewCell {
         }
     }
     
-    
     func setupView()  {
         
         selectionStyle = .none
@@ -47,6 +46,6 @@ class MenuSideViewCell: UITableViewCell {
         layoutMargins = .zero
         
         addSubview(btnMenu)
-        btnMenu.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 15, leftConstant: 15, bottomConstant: 15, rightConstant: 15, widthConstant: 0, heightConstant: 0)
+        btnMenu.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 20, rightConstant: 20, widthConstant: 0, heightConstant: 0)
     }
 }

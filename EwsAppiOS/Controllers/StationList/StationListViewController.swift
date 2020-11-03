@@ -13,7 +13,6 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
 
     let cellId = "cellStation"
     
-    
     lazy var tableview: UITableView = {
         let tableview = UITableView()
         tableview.dataSource = self
@@ -29,14 +28,10 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         return tableview
     }()
     
+    var last_data: [LastDataModel]? = []
+    var stations_last: [StationXLastDataModel]? = []
     
-    
-    var stations_last: [StationXLastDataModel]? = [] {
-        didSet {
-            self.tableview.reloadData()
-        }
-    }
-    
+    var viewModel: LastDataStationProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +53,26 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         
         view.addSubview(tableview)
         tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
+        
+        configure(LastDataViewModel())
     }
     
+    
+    func configure(_ interface: LastDataStationProtocol) {
+        self.viewModel = interface
+        bindToViewModel()
+        getLastData(last_data: last_data!)
+    }
+    
+    fileprivate func showAlert(data: StationXLastDataModel) {
+        DispatchQueue.main.async {
+            self.stations_last!.append(data)
+            self.tableview.reloadData()
+            self.stopLoding()
+            print(self.stations_last!.count)
+        }
+    }
+
     
     @objc func handleClose(){
         dismiss(animated: true, completion: nil)
@@ -92,4 +105,30 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         present(rootNC, animated: true, completion: nil)
     }
     
+    func getLastData(last_data: [LastDataModel]) {
+           self.startLoding()
+          self.stations_last!.removeAll()
+           DispatchQueue.global(qos: .background).async {
+            var list_ew07 = Ews07Model.FetchEws07()
+            StationXLastDataModel.mixStationXLastDataV2(last_data: last_data, list_ew07: list_ew07, viewModel: self.viewModel as! LastDataViewModel)
+           }
+       }
+    
+}
+
+
+
+extension StationListViewController {
+    
+     func bindToViewModel() {
+           viewModel.output.showMessageAlert = showAlert()
+       }
+       
+       func showAlert() -> ((StationXLastDataModel) -> Void) {
+           return {  [weak self] data in
+
+               guard let weakSelf = self else { return }
+               weakSelf.showAlert(data: data)
+           }
+       }
 }

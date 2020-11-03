@@ -20,6 +20,9 @@ struct StationXLastDataModel : Codable {
     let rain07h : String?
     let rain24h : String?
     let ews07: Ews07Model?
+    let latitude : String?
+    let longitude : String?
+    let status : String?
     
     init(stn: String,
          warning_type:String,
@@ -29,7 +32,11 @@ struct StationXLastDataModel : Codable {
          rain12h:Double,
          rain07h:String,
          rain24h:String,
-         ews07: Ews07Model
+         ews07: Ews07Model,
+         latitude: String,
+         longitude: String,
+         status: String
+        
     ) {
         self.stn = stn
         self.warning_type = warning_type
@@ -40,38 +47,88 @@ struct StationXLastDataModel : Codable {
         self.rain07h = rain07h
         self.rain24h = rain24h
         self.ews07 = ews07
+        self.latitude = latitude
+        self.longitude = longitude
+        self.status = status
     }
     
+    static func mixStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model], viewModel: LastDataViewModel) {
     
-    static func mixStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model]) -> [StationXLastDataModel] {
+        for lastdata in last_data {
+            for (index, station) in AppDelegate.shareDelegate.stations.enumerated() {
+                if station.std! == lastdata.stn!  {
+                    let myDouble = Double(lastdata.rain12h!)
+                    viewModel.input.saveMessageData(data:  StationXLastDataModel(
+                        stn: lastdata.stn!,
+                        warning_type: lastdata.warning_type!,
+                        title: station.name!,
+                        address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) \nหมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
+                        rain: lastdata.rain!,
+                        rain12h: myDouble ?? 0.0,
+                        rain07h: lastdata.rain07h!,
+                        rain24h: lastdata.rain24h!,
+                        ews07: list_ew07[index],
+                        latitude: station.latitude!,
+                        longitude: station.longitude!,
+                        status: lastdata.status!
+                    ))
+                    
+                }
+            }
+        }
         
-        var stationxlast_data = [StationXLastDataModel]()
+    }
+    
+    static func mixStationXLastDataV2(last_data:[LastDataModel], list_ew07:[Ews07Model], viewModel: LastDataViewModel){
         
         for lastdata in last_data {
             for (index, station) in AppDelegate.shareDelegate.stations.enumerated() {
                 if station.std! == lastdata.stn!  {
                     let myDouble = Double(lastdata.rain12h!)
-                    stationxlast_data.append(
-                        StationXLastDataModel(
-                            stn: lastdata.stn!,
-                            warning_type: lastdata.warning_type!,
-                            title: station.name!,
-                            address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) \nหมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
-                            rain: lastdata.rain!,
-                            rain12h: myDouble ?? 0.0,
-                            rain07h: lastdata.rain07h!,
-                            rain24h: lastdata.rain24h!,
-                            ews07: list_ew07[index]
-                        )
-                    )
+
+                    viewModel.input.saveMessageData(data:  StationXLastDataModel(
+                        stn: lastdata.stn!,
+                        warning_type: lastdata.warning_type!,
+                        title: station.name!,
+                        address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) \nหมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
+                        rain: lastdata.rain!,
+                        rain12h: myDouble ?? 0.0,
+                        rain07h: lastdata.rain07h!,
+                        rain24h: lastdata.rain24h!,
+                        ews07: list_ew07[index],
+                        latitude: station.latitude!,
+                        longitude: station.longitude!,
+                        status: lastdata.status!
+                    ))
                 }
             }
         }
-        
-        let sortedArray = stationxlast_data.sorted(by: {$1.rain12h! < $0.rain12h!})
-        
-        return sortedArray
-        
     }
+    
+    static func mixSearchStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model]) -> [StationXLastDataModel]{
+        var  stx: [StationXLastDataModel] = []
+          for lastdata in last_data {
+              for (index, station) in AppDelegate.shareDelegate.stations.enumerated() {
+                  if station.std! == lastdata.stn!  {
+                      let myDouble = Double(lastdata.rain12h!)
+                    stx.append(StationXLastDataModel(
+                        stn: lastdata.stn!,
+                        warning_type: lastdata.warning_type!,
+                        title: station.name!,
+                        address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) \nหมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
+                        rain: lastdata.rain!,
+                        rain12h: myDouble ?? 0.0,
+                        rain07h: lastdata.rain07h!,
+                        rain24h: lastdata.rain24h!,
+                        ews07: list_ew07[index],
+                        latitude: station.latitude!,
+                        longitude: station.longitude!,
+                        status: lastdata.status!
+                    ))
+                }
+             }
+          }
+        return stx
+      }
     
 }
