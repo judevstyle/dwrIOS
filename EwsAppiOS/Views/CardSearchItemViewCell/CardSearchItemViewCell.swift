@@ -26,7 +26,21 @@ class CardSearchItemViewCell: UITableViewCell {
         return view
     }()
     
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.PrimaryRegular(size: 25)
+        label.textColor = .white
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        return label
+    }()
     
+    
+    var item: ItemSearchModel? {
+        didSet {
+            setupValueCell()
+        }
+    }
     
     func setupViewCell() {
         
@@ -39,8 +53,24 @@ class CardSearchItemViewCell: UITableViewCell {
         
         viewCard.anchor(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 16, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
+        
+        viewCard.addSubview(titleLabel)
+        titleLabel.anchor(viewCard.topAnchor, left: viewCard.leftAnchor, bottom: viewCard.bottomAnchor, right: viewCard.rightAnchor, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        
     }
     
+    
+    func setupValueCell() {
+        titleLabel.text = "\(item!.title!)"
+        switch item!.type! {
+        case .main:
+            titleLabel.numberOfLines = 2
+            titleLabel.font = UIFont.PrimaryRegular(size: 25)
+        default:
+            titleLabel.numberOfLines = 1
+            titleLabel.font = UIFont.PrimaryRegular(size: 20)
+        }
+    }
     
     
 }

@@ -154,6 +154,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CardSearchItemViewCell
         
         
+        cell.item = self.list[indexPath.item]
+        
         return cell
     }
     
