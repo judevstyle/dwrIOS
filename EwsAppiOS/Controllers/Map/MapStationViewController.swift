@@ -228,7 +228,8 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         self.setHideBorderNavigation(status: true)
         self.setBarStyleNavigation(style: .black)
         
-        let leftbutton = UIBarButtonItem(image: UIImage(systemName:  "clear"), style: .done, target: self, action: #selector(handleClose))
+        let leftbutton = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleClose))
+            leftbutton.tintColor = .white
         
         leftbutton.tintColor = .white
         
@@ -249,7 +250,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         view.addSubview(tableview)
         
-        tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: -16, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 100, heightConstant: self.view.frame.height/2)
+        tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: -16, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 100, heightConstant: self.view.frame.height/1.5)
         
         
         
@@ -272,8 +273,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         loadMapView()
         
         DispatchQueue.global(qos: .background).async {
-            self.dashboards = DashboardCardModel.getCountStatus()
-            
+            self.dashboards = DashboardCardModel.getCountStatusMap()
             DispatchQueue.main.async {
                 self.tableview.reloadData()
             }
@@ -375,6 +375,11 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! DashboardMapView
         
         cell.dashboard = dashboards[indexPath.row]
+        if indexPath.row == dashboards.count-1 {
+            cell.iconView.isHidden = true
+        }else {
+            cell.iconView.isHidden = false
+        }
         return cell
     }
     
@@ -465,6 +470,24 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         let value = Int(Double("\(station.rain12h!)")!)
         
         valueLabel.text = "\(value)"
+        
+        
+        switch station.status! {
+        case "สถานการณ์ อพยพ":
+            iconView.image = UIImage(named: "rain_tornado")!
+            break
+        case "สถานการณ์ เตือนภัย":
+            iconView.image = UIImage(named: "rain_thunder")!
+             break
+        case "สถานการณ์ เฝ้าระวัง":
+             iconView.image = UIImage(named: "rain")!
+             break
+        case "สถานการณ์ ฝนตกเล็กน้อย":
+             iconView.image = UIImage(named: "overcast")!
+             break
+        default:
+             iconView.image = UIImage(named: "overcast")!
+        }
     }
     
     @objc func handleRecentyRain(){

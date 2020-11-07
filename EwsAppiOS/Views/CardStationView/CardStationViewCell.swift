@@ -48,12 +48,12 @@ class CardStationViewCell: UITableViewCell {
         let label = UILabel()
         
         label.numberOfLines = 1
-        label.text = "ฝนสะสม 12 ชั่วโมง"
+        label.text = "ปริมาณน้ำฝน"
         label.textColor = .white
-
+        
         label.font = .PrimaryLight(size: 17)
         label.textAlignment = .center
-
+        
         return label
     }()
     
@@ -76,15 +76,15 @@ class CardStationViewCell: UITableViewCell {
         return image
     }()
     
-        var station: StationXLastDataModel? {
-          didSet {
-              DispatchQueue.main.async { [weak self] in
-                  self?.setupValue()
-              }
-          }
-      }
-
-
+    var station: StationXLastDataModel? {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.setupValue()
+            }
+        }
+    }
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -102,7 +102,7 @@ class CardStationViewCell: UITableViewCell {
         layoutMargins = .zero
         
         selectionStyle = .none
-
+        
         
         //
         //        iconView.anchor(addressLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: frame.width/2, heightConstant: 50)
@@ -117,7 +117,7 @@ class CardStationViewCell: UITableViewCell {
         viewCard.addSubview(iconView)
         viewCard.addSubview(rainLabel)
         viewCard.addSubview(valueLabel)
-
+        
         
         titleLabel.anchor(viewCard.topAnchor, left: viewCard.leftAnchor, bottom: nil, right: viewCard.rightAnchor, topConstant: 5, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
@@ -135,10 +135,24 @@ class CardStationViewCell: UITableViewCell {
         titleLabel.text = "\(station!.title!)"
         addressLabel.attributedText = self.withTextParagraph(text: "\(station!.address!)", fonSize: 15)
         
-        let value = Int(Double("\(station!.rain12h!)")!)
+        var value = "N/A"
         
+        if station!.warning_type == "rain" {
+            
+            if let newValue = station!.wl!.toDouble() {
+                value = String(format: "%d", newValue)
+            }else {
+                value = station!.wl!
+            }
+        }else {
+            if let newValue = station!.wl!.toDouble() {
+                           value = String(format: "%d", newValue)
+                       }else {
+                           value = station!.wl!
+                       }
+        }
         valueLabel.text = "\(value)"
     }
-
+    
     
 }

@@ -39,9 +39,8 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.setTitleNavigation(title: "รายงาน")
         
         
-        let leftbutton = UIBarButtonItem(image: UIImage(systemName:  "clear"), style: .done, target: self, action: #selector(handleClose))
-        
-        leftbutton.tintColor = .white
+         let leftbutton = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleClose))
+                   leftbutton.tintColor = .white
         
         navigationItem.leftBarButtonItem = leftbutton
         tableview.register(CardReportViewCell.self, forCellReuseIdentifier: cellId)

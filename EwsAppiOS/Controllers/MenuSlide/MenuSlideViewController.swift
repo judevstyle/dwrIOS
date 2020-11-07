@@ -65,10 +65,14 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if AppDelegate.shareDelegate.stations != nil && AppDelegate.shareDelegate.last_data_search != nil {
+        if AppDelegate.shareDelegate.stations != nil {
             switch indexPath.row {
             case 2:
-                openMenuView(controller: SearchViewController())
+                if  AppDelegate.shareDelegate.last_data_search != nil {
+                      openMenuView(controller: SearchViewController())
+                }else {
+                     delegateDashboard!.ToastLoading()
+                }
                 break
             case 3:
                 openMenuView(controller: MapStationViewController())
@@ -80,7 +84,7 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
                 openMenuView(controller: SettingViewController())
                 break
             case 6:
-            openMenuView(controller: InfoViewController())
+                openMenuView(controller: InfoViewController())
                 break
             default:
                 break

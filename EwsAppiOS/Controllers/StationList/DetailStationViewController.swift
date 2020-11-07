@@ -108,7 +108,8 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         self.setBarStyleNavigation(style: .black)
         //        self.setTitleNavigation(title: "สรุปสถานการ์ณฝน")
         
-        let leftbutton = UIBarButtonItem(image: UIImage(systemName:  "clear"), style: .done, target: self, action: #selector(handleClose))
+        let icon = UIImage(named: "cancel")?.withRenderingMode(.alwaysTemplate).resize(targetSize: CGSize(width: 15, height: 15))
+        let leftbutton = UIBarButtonItem(image: icon, style: .done, target: self, action: #selector(handleClose))
         
         leftbutton.tintColor = .white
         

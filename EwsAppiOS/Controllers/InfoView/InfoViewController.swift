@@ -41,9 +41,8 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.setTitleNavigation(title: "Info")
         
         
-        let leftbutton = UIBarButtonItem(image: UIImage(systemName:  "clear"), style: .done, target: self, action: #selector(handleClose))
-        
-        leftbutton.tintColor = .white
+         let leftbutton = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleClose))
+                   leftbutton.tintColor = .white
         
         navigationItem.leftBarButtonItem = leftbutton
         

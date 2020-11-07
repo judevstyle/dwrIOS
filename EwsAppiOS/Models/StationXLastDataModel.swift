@@ -23,6 +23,10 @@ struct StationXLastDataModel : Codable {
     let latitude : String?
     let longitude : String?
     let status : String?
+    let province: String?
+    let region: String?
+    let dept: String?
+    let wl : String?
     
     init(stn: String,
          warning_type:String,
@@ -35,7 +39,11 @@ struct StationXLastDataModel : Codable {
          ews07: Ews07Model,
          latitude: String,
          longitude: String,
-         status: String
+         status: String,
+         province: String,
+         region: String,
+         dept: String,
+         wl: String
         
     ) {
         self.stn = stn
@@ -50,6 +58,10 @@ struct StationXLastDataModel : Codable {
         self.latitude = latitude
         self.longitude = longitude
         self.status = status
+        self.province = province
+        self.region = region
+        self.dept = dept
+        self.wl = wl
     }
     
     static func mixStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model], viewModel: LastDataViewModel) {
@@ -70,7 +82,11 @@ struct StationXLastDataModel : Codable {
                         ews07: list_ew07[index],
                         latitude: station.latitude!,
                         longitude: station.longitude!,
-                        status: lastdata.status!
+                        status: lastdata.status!,
+                        province: station.province!,
+                        region: station.region!,
+                        dept: station.dept!,
+                        wl: lastdata.wl!
                     ))
                     
                 }
@@ -98,7 +114,11 @@ struct StationXLastDataModel : Codable {
                         ews07: list_ew07[index],
                         latitude: station.latitude!,
                         longitude: station.longitude!,
-                        status: lastdata.status!
+                        status: lastdata.status!,
+                        province: station.province!,
+                        region: station.region!,
+                        dept: station.dept!,
+                        wl: lastdata.wl!
                     ))
                 }
             }
@@ -123,7 +143,11 @@ struct StationXLastDataModel : Codable {
                         ews07: list_ew07[index],
                         latitude: station.latitude!,
                         longitude: station.longitude!,
-                        status: lastdata.status!
+                        status: lastdata.status!,
+                        province: station.province!,
+                        region: station.region!,
+                        dept: station.dept!,
+                        wl: lastdata.wl!
                     ))
                 }
              }

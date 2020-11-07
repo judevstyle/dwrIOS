@@ -42,9 +42,8 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         self.setTitleNavigation(title: "สรุปสถานการ์ณฝน")
         
         
-        let leftbutton = UIBarButtonItem(image: UIImage(systemName:  "clear"), style: .done, target: self, action: #selector(handleClose))
-        
-        leftbutton.tintColor = .white
+         let leftbutton = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleClose))
+                   leftbutton.tintColor = .white
         
         navigationItem.leftBarButtonItem = leftbutton
         
@@ -69,7 +68,6 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
             self.stations_last!.append(data)
             self.tableview.reloadData()
             self.stopLoding()
-            print(self.stations_last!.count)
         }
     }
 

@@ -110,6 +110,7 @@ class ListCardStationViewCell: UITableViewCell {
         if ((station!.rain12h) != nil) {
             value = "\n\(String(format: "%.2f", station!.rain12h!))"
         }
+        
         let name = "\n\(station!.title!)"
         let address = "\n\(station!.address!)"
         

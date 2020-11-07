@@ -66,6 +66,34 @@ class CardSearchItemViewCell: UITableViewCell {
         case .main:
             titleLabel.numberOfLines = 2
             titleLabel.font = UIFont.PrimaryRegular(size: 25)
+            break
+        case .region:
+            titleLabel.numberOfLines = 1
+            titleLabel.font = UIFont.PrimaryRegular(size: 20)
+            switch item!.title {
+            case "C":
+                titleLabel.text = "ภาคกลาง"
+                break
+            case "W":
+                titleLabel.text = "ภาคตะวันตก"
+                break
+            case "E":
+                titleLabel.text = "ภาคตะวันออก"
+                break
+            case "NE":
+                titleLabel.text = "ภาคตะวันออกเฉียงเหนือ"
+                break
+            case "S":
+                titleLabel.text = "ภาคใต้"
+                break
+            case "N":
+                titleLabel.text = "ภาคเหนือ"
+                break
+            default:
+                titleLabel.text = "ภาคกลาง"
+                break
+            }
+            break
         default:
             titleLabel.numberOfLines = 1
             titleLabel.font = UIFont.PrimaryRegular(size: 20)

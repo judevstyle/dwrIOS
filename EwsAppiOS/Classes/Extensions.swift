@@ -60,7 +60,7 @@ extension UIView {
         
         
         if let constraint = (self.constraints.filter{$0.firstAttribute == attribute}.first) {
-
+            
             constraint.constant = constant
             
         }
@@ -281,15 +281,15 @@ extension UIView {
     }
     
     func rotate(_ toValue: CGFloat, duration: CFTimeInterval = 0.2) {
-          let animation = CABasicAnimation(keyPath: "transform.rotation")
-          
-          animation.toValue = toValue
-          animation.duration = duration
-          animation.isRemovedOnCompletion = false
-          animation.fillMode = CAMediaTimingFillMode.forwards
-          
-          self.layer.add(animation, forKey: nil)
-      }
+        let animation = CABasicAnimation(keyPath: "transform.rotation")
+        
+        animation.toValue = toValue
+        animation.duration = duration
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = CAMediaTimingFillMode.forwards
+        
+        self.layer.add(animation, forKey: nil)
+    }
     
 }
 
@@ -941,14 +941,22 @@ extension Double {
 
 
 extension UISearchBar {
-
-func clearBackgroundColor() {
-    guard let UISearchBarBackground: AnyClass = NSClassFromString("UISearchBarBackground") else { return }
-
-    for view in subviews {
-        for subview in view.subviews where subview.isKind(of: UISearchBarBackground) {
-            subview.alpha = 0
+    
+    func clearBackgroundColor() {
+        guard let UISearchBarBackground: AnyClass = NSClassFromString("UISearchBarBackground") else { return }
+        
+        for view in subviews {
+            for subview in view.subviews where subview.isKind(of: UISearchBarBackground) {
+                subview.alpha = 0
+            }
         }
     }
-}
+    
+    
+    public func setTextColor(color: UIColor) {
+        let svs = subviews.flatMap { $0.subviews }
+        guard let tf = (svs.filter { $0 is UITextField }).first as? UITextField else { return }
+        tf.textColor = color
+    }
+    
 }

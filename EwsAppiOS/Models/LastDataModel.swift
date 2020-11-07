@@ -77,8 +77,7 @@ struct LastDataModel : Codable {
             if count > 0 {
                 
                 for item_station in xml["ews", "station"].all! {
-                    
-                    if item_station.childElements[10].name == "status" && item_station.childElements[10].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[10].text! != "สถานการณ์ ปกติ" {
+                
                         
                         let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                         last_data.append(
@@ -100,7 +99,6 @@ struct LastDataModel : Codable {
                                 stn_cover: item_station.childElements[13].text ?? "")
                         )
                         
-                    }
                 }
                 
             }
