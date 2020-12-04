@@ -36,14 +36,13 @@ class CardReportViewCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 1
         label.font = .PrimaryRegular(size:17)
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .white
         label.text = "แจ้งเฝ้าระวัง ด้วยระดับน้ำ ระดับน้ำสูง"
         label.minimumScaleFactor = 0.4
         label.lineBreakMode = .byTruncatingTail
-        label.numberOfLines = 1
+        label.numberOfLines = 0
 //        label.addCharactersSpacing(spacing: 0.6, txt: "แจ้ง เฝ้าระวัง ด้วยระดับน้ำ ระดับน้ำสูง")
         return label
     }()
@@ -130,6 +129,20 @@ class CardReportViewCell: UITableViewCell {
         
         UIView.animate(withDuration: 0.2) {
             self.contentView.layoutIfNeeded()
+        }
+        
+        
+        switch report!.status! {
+        case .Evacuate:
+            circleView.backgroundColor = .systemRed
+        case .Caution:
+            circleView.backgroundColor = .systemYellow
+        case .Watchout:
+            circleView.backgroundColor = .systemGreen
+        case .Rain:
+            circleView.backgroundColor = .mediumBlue
+        default:
+            circleView.backgroundColor = .systemRed
         }
         
         self.setNeedsDisplay()

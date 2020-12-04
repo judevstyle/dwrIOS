@@ -22,9 +22,10 @@ struct LastDataModel : Codable {
     let wl : String?
     let wl07h : String?
     let soil : String?
+    let pm25: String?
     let status : String?
-    let warn_rf : String?
-    let warn_wl : String?
+    let warn_rf : Double?
+    let warn_wl : Double?
     let stn_cover : String?
     
     init(stn: String,
@@ -38,9 +39,10 @@ struct LastDataModel : Codable {
          wl:String,
          wl07h:String,
          soil:String,
+         pm25: String,
          status:String,
-         warn_rf:String,
-         warn_wl:String,
+         warn_rf:Double,
+         warn_wl:Double,
          stn_cover:String
     ) {
         self.stn = stn
@@ -54,6 +56,7 @@ struct LastDataModel : Codable {
         self.wl = wl
         self.wl07h = wl07h
         self.soil = soil
+        self.pm25 = pm25
         self.status = status
         self.warn_rf = warn_rf
         self.warn_wl = warn_wl
@@ -77,28 +80,31 @@ struct LastDataModel : Codable {
             if count > 0 {
                 
                 for item_station in xml["ews", "station"].all! {
-                
-                        
-                        let myDouble = Double(item_station.childElements[4].text ?? "0.0")
-                        last_data.append(
-                            LastDataModel(
-                                stn: item_station.attributes["stn"]!,
-                                warning_type: item_station.childElements[0].text ?? "",
-                                date: item_station.childElements[1].text ?? "",
-                                temp: item_station.childElements[2].text ?? "",
-                                rain: item_station.childElements[3].text ?? "",
-                                rain12h: myDouble ?? 0.0,
-                                rain07h: item_station.childElements[5].text ?? "",
-                                rain24h: item_station.childElements[6].text ?? "",
-                                wl: item_station.childElements[7].text ?? "",
-                                wl07h: item_station.childElements[8].text ?? "",
-                                soil: item_station.childElements[9].text ?? "",
-                                status: item_station.childElements[10].text ?? "",
-                                warn_rf: item_station.childElements[11].text ?? "",
-                                warn_wl: item_station.childElements[12].text ?? "",
-                                stn_cover: item_station.childElements[13].text ?? "")
-                        )
-                        
+                    
+                    
+                    let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                    let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                    let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                    last_data.append(
+                        LastDataModel(
+                            stn: item_station.attributes["stn"]!,
+                            warning_type: item_station.childElements[0].text ?? "",
+                            date: item_station.childElements[1].text ?? "",
+                            temp: item_station.childElements[2].text ?? "",
+                            rain: item_station.childElements[3].text ?? "",
+                            rain12h: myDouble ?? 0.0,
+                            rain07h: item_station.childElements[5].text ?? "",
+                            rain24h: item_station.childElements[6].text ?? "",
+                            wl: item_station.childElements[7].text ?? "",
+                            wl07h: item_station.childElements[8].text ?? "",
+                            soil: item_station.childElements[9].text ?? "",
+                            pm25: item_station.childElements[10].text ?? "",
+                            status: item_station.childElements[11].text ?? "",
+                            warn_rf: rainDouble ?? 0.0,
+                            warn_wl: wlDouble ?? 0.0,
+                            stn_cover: item_station.childElements[14].text ?? "")
+                    )
+                    
                 }
                 
             }
@@ -115,14 +121,126 @@ struct LastDataModel : Codable {
         
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
         
-        var pathUrl:String = "/lastdata.xml"
+        switch type {
+        case "all":
+            getMethodAllMap(viewModel: viewModel)
+        case "สถานการณ์ ฝนตกเล็กน้อย":
+            getMethodMap(pathUrl: "/lastdata.xml", type: type, viewModel: viewModel)
+        default:
+            getMethodMap(pathUrl: "/warn.xml", type: type, viewModel: viewModel)
+        }
         
-        //        switch type {
-        //        case "all":
-        //            pathUrl = "/warn.xml"
-        //        default:
-        //            pathUrl = "/lastdata.xml"
-        //        }
+        
+    }
+    
+    static func getMethodAllMap(viewModel: LastDataViewModel) {
+        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+        
+        
+        var pathUrlWarn:String = "/warn.xml"
+        
+        let urlStringWarn = URL(string: "\(baseURL)\(pathUrlWarn)")
+        
+        let xmlWarn = try! XML.parse(Data(contentsOf: urlStringWarn!))
+        
+        
+        var last_data = [LastDataModel]()
+        
+        
+        if let count = xmlWarn["ews", "station"].all?.count {
+            if count > 0 {
+                
+                for item_station in xmlWarn["ews", "station"].all! {
+                    if (item_station.childElements[11].name == "status"
+                        ){
+                        
+                        let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                        let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                        let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                        last_data.append(
+                            LastDataModel(
+                                stn: item_station.attributes["stn"]!,
+                                warning_type: item_station.childElements[0].text ?? "",
+                                date: item_station.childElements[1].text ?? "",
+                                temp: item_station.childElements[2].text ?? "",
+                                rain: item_station.childElements[3].text ?? "",
+                                rain12h: myDouble ?? 0.0,
+                                rain07h: item_station.childElements[5].text ?? "",
+                                rain24h: item_station.childElements[6].text ?? "",
+                                wl: item_station.childElements[7].text ?? "",
+                                wl07h: item_station.childElements[8].text ?? "",
+                                soil: item_station.childElements[9].text ?? "",
+                                pm25: item_station.childElements[10].text ?? "",
+                                status: item_station.childElements[11].text ?? "",
+                                warn_rf: rainDouble ?? 0.0,
+                                warn_wl: wlDouble ?? 0.0,
+                                stn_cover: item_station.childElements[14].text ?? "")
+                        )
+                    }
+                }
+            }
+        }
+
+        
+        
+        
+        var pathUrlLastData:String = "/lastdata.xml"
+        
+        let urlStringLastData = URL(string: "\(baseURL)\(pathUrlLastData)")
+        
+        let xmlLastData = try! XML.parse(Data(contentsOf: urlStringLastData!))
+        
+        
+        
+        if let count = xmlLastData["ews", "station"].all?.count {
+            if count > 0 {
+                
+                for item_station in xmlLastData["ews", "station"].all! {
+                    if (item_station.childElements[11].name == "status" &&  item_station.childElements[11].text! == "สถานการณ์ ฝนตกเล็กน้อย"
+//                        item_station.childElements[11].text! != "สถานการณ์ เตือนภัย" &&
+//                        item_station.childElements[11].text! != "สถานการณ์ เฝ้าระวัง" &&
+//                        item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน"
+                        ){
+                        
+                        let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                        let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                        let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                        last_data.append(
+                            LastDataModel(
+                                stn: item_station.attributes["stn"]!,
+                                warning_type: item_station.childElements[0].text ?? "",
+                                date: item_station.childElements[1].text ?? "",
+                                temp: item_station.childElements[2].text ?? "",
+                                rain: item_station.childElements[3].text ?? "",
+                                rain12h: myDouble ?? 0.0,
+                                rain07h: item_station.childElements[5].text ?? "",
+                                rain24h: item_station.childElements[6].text ?? "",
+                                wl: item_station.childElements[7].text ?? "",
+                                wl07h: item_station.childElements[8].text ?? "",
+                                soil: item_station.childElements[9].text ?? "",
+                                pm25: item_station.childElements[10].text ?? "",
+                                status: item_station.childElements[11].text ?? "",
+                                warn_rf: rainDouble ?? 0.0,
+                                warn_wl: wlDouble ?? 0.0,
+                                stn_cover: item_station.childElements[14].text ?? "")
+                        )
+                    }
+                }
+            }
+        }
+        
+        
+        
+        var list_ew07 = Ews07Model.FetchEws07()
+//        print(last_data.count)
+        
+        StationXLastDataModel.mixStationXLastData(last_data: last_data, list_ew07: list_ew07, viewModel: viewModel)
+    }
+    
+    static func getMethodMap(pathUrl:String,type:String, viewModel: LastDataViewModel) {
+        
+        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+        
         
         let urlString = URL(string: "\(baseURL)\(pathUrl)")
         
@@ -133,61 +251,33 @@ struct LastDataModel : Codable {
         if let count = xml["ews", "station"].all?.count {
             if count > 0 {
                 
-                if type == "all" {
-                    
-                    for item_station in xml["ews", "station"].all! {
+                for item_station in xml["ews", "station"].all! {
+                    if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
                         
-                        if item_station.childElements[10].name == "status" && item_station.childElements[10].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[10].text! != "สถานการณ์ ปกติ" {
-                            
-                            let myDouble = Double(item_station.childElements[4].text ?? "0.0")
-                            last_data.append(
-                                LastDataModel(
-                                    stn: item_station.attributes["stn"]!,
-                                    warning_type: item_station.childElements[0].text ?? "",
-                                    date: item_station.childElements[1].text ?? "",
-                                    temp: item_station.childElements[2].text ?? "",
-                                    rain: item_station.childElements[3].text ?? "",
-                                    rain12h: myDouble ?? 0.0,
-                                    rain07h: item_station.childElements[5].text ?? "",
-                                    rain24h: item_station.childElements[6].text ?? "",
-                                    wl: item_station.childElements[7].text ?? "",
-                                    wl07h: item_station.childElements[8].text ?? "",
-                                    soil: item_station.childElements[9].text ?? "",
-                                    status: item_station.childElements[10].text ?? "",
-                                    warn_rf: item_station.childElements[11].text ?? "",
-                                    warn_wl: item_station.childElements[12].text ?? "",
-                                    stn_cover: item_station.childElements[13].text ?? "")
-                            )
-                            
-                        }
-                    }
-                }else {
-                    for item_station in xml["ews", "station"].all! {
-                        if item_station.childElements[10].name == "status" && item_station.childElements[10].text! == "\(type)"{
-                            
-                            let myDouble = Double(item_station.childElements[4].text ?? "0.0")
-                            last_data.append(
-                                LastDataModel(
-                                    stn: item_station.attributes["stn"]!,
-                                    warning_type: item_station.childElements[0].text ?? "",
-                                    date: item_station.childElements[1].text ?? "",
-                                    temp: item_station.childElements[2].text ?? "",
-                                    rain: item_station.childElements[3].text ?? "",
-                                    rain12h: myDouble ?? 0.0,
-                                    rain07h: item_station.childElements[5].text ?? "",
-                                    rain24h: item_station.childElements[6].text ?? "",
-                                    wl: item_station.childElements[7].text ?? "",
-                                    wl07h: item_station.childElements[8].text ?? "",
-                                    soil: item_station.childElements[9].text ?? "",
-                                    status: item_station.childElements[10].text ?? "",
-                                    warn_rf: item_station.childElements[11].text ?? "",
-                                    warn_wl: item_station.childElements[12].text ?? "",
-                                    stn_cover: item_station.childElements[13].text ?? "")
-                            )
-                        }
+                        let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                        let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                        let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                        last_data.append(
+                            LastDataModel(
+                                stn: item_station.attributes["stn"]!,
+                                warning_type: item_station.childElements[0].text ?? "",
+                                date: item_station.childElements[1].text ?? "",
+                                temp: item_station.childElements[2].text ?? "",
+                                rain: item_station.childElements[3].text ?? "",
+                                rain12h: myDouble ?? 0.0,
+                                rain07h: item_station.childElements[5].text ?? "",
+                                rain24h: item_station.childElements[6].text ?? "",
+                                wl: item_station.childElements[7].text ?? "",
+                                wl07h: item_station.childElements[8].text ?? "",
+                                soil: item_station.childElements[9].text ?? "",
+                                pm25: item_station.childElements[10].text ?? "",
+                                status: item_station.childElements[11].text ?? "",
+                                warn_rf: rainDouble ?? 0.0,
+                                warn_wl: wlDouble ?? 0.0,
+                                stn_cover: item_station.childElements[14].text ?? "")
+                        )
                     }
                 }
-                
             }
         }
         
@@ -200,7 +290,6 @@ struct LastDataModel : Codable {
     }
     
     
-    
     static func FetchLastDataV2(type:String) -> [LastDataModel]{
         
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
@@ -208,10 +297,10 @@ struct LastDataModel : Codable {
         var pathUrl:String = "/lastdata.xml"
         
         switch type {
-        case "all":
-            pathUrl = "/warn.xml"
-        default:
+        case "สถานการณ์ ฝนตกเล็กน้อย":
             pathUrl = "/lastdata.xml"
+        default:
+            pathUrl = "/warn.xml"
         }
         
         let urlString = URL(string: "\(baseURL)\(pathUrl)")
@@ -225,9 +314,11 @@ struct LastDataModel : Codable {
                 if type == "all" {
                     for item_station in xml["ews", "station"].all! {
                         
-                        if item_station.childElements[10].name == "status" && item_station.childElements[10].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[10].text! != "สถานการณ์ ปกติ" {
+                        if item_station.childElements[11].name == "status" && item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[11].text! != "สถานการณ์ ปกติ" {
                             
                             let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                            let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                            let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
                             last_data.append(
                                 LastDataModel(
                                     stn: item_station.attributes["stn"]!,
@@ -241,18 +332,21 @@ struct LastDataModel : Codable {
                                     wl: item_station.childElements[7].text ?? "",
                                     wl07h: item_station.childElements[8].text ?? "",
                                     soil: item_station.childElements[9].text ?? "",
-                                    status: item_station.childElements[10].text ?? "",
-                                    warn_rf: item_station.childElements[11].text ?? "",
-                                    warn_wl: item_station.childElements[12].text ?? "",
-                                    stn_cover: item_station.childElements[13].text ?? "")
+                                    pm25: item_station.childElements[10].text ?? "",
+                                    status: item_station.childElements[11].text ?? "",
+                                    warn_rf: rainDouble ?? 0.0,
+                                    warn_wl: wlDouble ?? 0.0,
+                                    stn_cover: item_station.childElements[14].text ?? "")
                             )
                             
                         }
                     }
                 }else {
                     for item_station in xml["ews", "station"].all! {
-                        if item_station.childElements[10].name == "status" && item_station.childElements[10].text! == "\(type)"{
+                        if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
                             let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                            let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                            let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
                             last_data.append(
                                 LastDataModel(
                                     stn: item_station.attributes["stn"]!,
@@ -266,10 +360,11 @@ struct LastDataModel : Codable {
                                     wl: item_station.childElements[7].text ?? "",
                                     wl07h: item_station.childElements[8].text ?? "",
                                     soil: item_station.childElements[9].text ?? "",
-                                    status: item_station.childElements[10].text ?? "",
-                                    warn_rf: item_station.childElements[11].text ?? "",
-                                    warn_wl: item_station.childElements[12].text ?? "",
-                                    stn_cover: item_station.childElements[13].text ?? "")
+                                    pm25: item_station.childElements[10].text ?? "",
+                                    status: item_station.childElements[11].text ?? "",
+                                    warn_rf: rainDouble ?? 0.0,
+                                    warn_wl: wlDouble ?? 0.0,
+                                    stn_cover: item_station.childElements[14].text ?? "")
                             )
                         }
                     }
@@ -277,10 +372,15 @@ struct LastDataModel : Codable {
                 
             }
         }
-        
-        let sortedLast_data = last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
-        
-        return sortedLast_data
+        //
+        //        var sortedLast_data = last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
+        //
+        switch type {
+        case "สถานการณ์ ฝนตกเล็กน้อย":
+            return last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
+        default:
+            return last_data.sorted(by: {$1.warn_rf! < $0.warn_rf!})
+        }
     }
     
     

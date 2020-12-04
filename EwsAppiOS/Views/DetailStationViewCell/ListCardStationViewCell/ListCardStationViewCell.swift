@@ -66,8 +66,8 @@ class ListCardStationViewCell: UITableViewCell {
     var station: StationXLastDataModel? {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                           self?.setupValue()
-                       }
+                self?.setupValue()
+            }
         }
     }
     
@@ -92,7 +92,7 @@ class ListCardStationViewCell: UITableViewCell {
         
         
         iconImage.anchor(viewCard.topAnchor, left: nil, bottom: viewCard.bottomAnchor, right: viewCard.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 16, widthConstant: 70, heightConstant: 0)
-    
+        
     }
     
     
@@ -105,10 +105,17 @@ class ListCardStationViewCell: UITableViewCell {
     
     func setValueLabel()  {
         let title = "ปริมาณฝนสะสม"
+        
         var value = "\nN/A"
         
-        if ((station!.rain12h) != nil) {
-            value = "\n\(String(format: "%.2f", station!.rain12h!))"
+        if station!.status == "สถานการณ์ ฝนตกเล็กน้อย" {
+            value = "\n\(station!.rain12h!)"
+        }else {
+            if station!.warning_type == "rain" {
+                value = "\n\(station!.warn_rf!)"
+            }else if station!.warning_type == "wl" {
+                value = "\n\(station!.warn_wl!)"
+            }
         }
         
         let name = "\n\(station!.title!)"
@@ -126,7 +133,7 @@ class ListCardStationViewCell: UITableViewCell {
         paragraphStyle.lineHeightMultiple = 0.9
         attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
         
-         valueStation.attributedText = attributedText
+        valueStation.attributedText = attributedText
         valueStation.numberOfLines = 0
     }
 }

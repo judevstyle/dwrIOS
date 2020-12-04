@@ -61,6 +61,13 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         return UIImageView(image: pin)
     }()
     
+    lazy var markerWhiteView: UIImageView = {
+          let pin = UIImage(named: "pin-all")!.withRenderingMode(.alwaysOriginal)
+              let size = CGSize(width: 17, height: 17)
+              let aspectScaledToFitImage = pin.af_imageAspectScaled(toFit: size)
+              return UIImageView(image: aspectScaledToFitImage)
+    }()
+    
     lazy var markerBewareView: UIImageView = {
         let pin = UIImage(named: "pin-beware")!.withRenderingMode(.alwaysOriginal)
         //        let size = CGSize(width: 25, height: 25)
@@ -90,6 +97,15 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         label.font = .PrimaryLight(size: 25)
         label.textColor = .blackAlpha(alpha: 0.7)
         label.text = "บ้านหินแด้น"
+        return label
+    }()
+    
+    let Pm25Label: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = .PrimaryLight(size: 15)
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.text = "PM 2.5 = 00"
         return label
     }()
     
@@ -163,7 +179,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         attributedString.addAttribute(
             .font,
-            value: UIFont.PrimaryRegular(size: CGFloat(40)),
+            value: UIFont.PrimaryRegular(size: CGFloat(35)),
             range: NSRange(location: 0, length: attributedString.length
         ))
         
@@ -211,7 +227,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         return label
     }()
     
-    var dashboards = DashboardCardModel.dashboards()
+    var dashboards = DashboardCardModel.dashboardsMap()
     
     var listMarker: [StationXLastDataModel] = []
     var selectedStation: StationXLastDataModel? = nil
@@ -229,7 +245,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         self.setBarStyleNavigation(style: .black)
         
         let leftbutton = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleClose))
-            leftbutton.tintColor = .white
+        leftbutton.tintColor = .white
         
         leftbutton.tintColor = .white
         
@@ -251,9 +267,6 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         view.addSubview(tableview)
         
         tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: -16, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 100, heightConstant: self.view.frame.height/1.5)
-        
-        
-        
         
     }
     
@@ -341,7 +354,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
                     case "สถานการณ์ ฝนตกเล็กน้อย":
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
                     default:
-                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWhiteView)
                     }
                 }
             }
@@ -410,6 +423,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         customView.addSubview(viewRecenty)
         customView.addSubview(rainLabel)
         customView.addSubview(valueLabel)
+        customView.addSubview(Pm25Label)
         
         titleLabel.anchor(customView.topAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
@@ -426,6 +440,8 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         rainLabel.anchor(addressLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
         valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 5, widthConstant: 0, heightConstant: 0)
+        
+        Pm25Label.anchor(nil, left: nil, bottom: alertController.view.bottomAnchor, right: alertController.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 3, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
         setValueAlert(station: listMarker[index])
         
@@ -467,9 +483,26 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         addressLabel.attributedText = attributedString
         
-        let value = Int(Double("\(station.rain12h!)")!)
+        
+        var value = "N/A"
+        
+        if station.status == "สถานการณ์ ฝนตกเล็กน้อย" {
+            value = "\(station.rain12h!)"
+        }else {
+            if station.warning_type == "rain" {
+                value = "\(station.warn_rf!)"
+            }else if station.warning_type == "wl" {
+                value = "\(station.warn_wl!)"
+            }
+        }
         
         valueLabel.text = "\(value)"
+        
+        if let pm2Double = station.pm25!.toDouble() {
+            Pm25Label.text = "PM 2.5 = \(pm2Double)"
+        }else {
+            Pm25Label.text = "PM 2.5 = \(station.pm25!)"
+        }
         
         
         switch station.status! {
@@ -478,15 +511,15 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
             break
         case "สถานการณ์ เตือนภัย":
             iconView.image = UIImage(named: "rain_thunder")!
-             break
+            break
         case "สถานการณ์ เฝ้าระวัง":
-             iconView.image = UIImage(named: "rain")!
-             break
+            iconView.image = UIImage(named: "rain")!
+            break
         case "สถานการณ์ ฝนตกเล็กน้อย":
-             iconView.image = UIImage(named: "overcast")!
-             break
+            iconView.image = UIImage(named: "overcast")!
+            break
         default:
-             iconView.image = UIImage(named: "overcast")!
+            iconView.image = UIImage(named: "overcast")!
         }
     }
     

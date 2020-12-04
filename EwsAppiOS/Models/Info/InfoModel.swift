@@ -7,38 +7,70 @@
 //
 
 import Foundation
+import SwiftyXMLParser
 
-public struct Item {
+struct Item: Codable {
     var name: String
     var detail: String
     
-    public init(name: String, detail: String) {
+    init(name: String, detail: String) {
         self.name = name
         self.detail = detail
     }
 }
 
-public struct Section {
+struct Section: Codable {
     var name: String
     var items: [Item]
     var collapsed: Bool
     
-    public init(name: String, items: [Item], collapsed: Bool = false) {
+    init(name: String, items: [Item], collapsed: Bool = false) {
         self.name = name
         self.items = items
         self.collapsed = collapsed
     }
+    
+    
+    static func sectionsData() -> [Section] {
+        
+        
+        var sections = [Section]()
+        
+        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+        let urlString = URL(string: "\(baseURL)/info.xml")
+        
+        let xml = try! XML.parse(Data(contentsOf: urlString!))
+        
+        let titleDerivation: String = xml["ews", "ews01"].text!
+        let detailDerivation1: String = xml["ews", "ews02"].text!
+        let detailDerivation2: String = xml["ews", "ews03"].text!
+        let titleObjective: String = xml["ews", "ews04"].text!
+        let detailObjective: String = xml["ews", "ews05"].text!
+        let titleDeveloper: String = xml["ews", "ews06"].text!
+        let detailDeveloper: String = xml["ews", "ews07"].text!
+        
+
+        //ความเป็นมา
+        sections.append(Section(name: titleDerivation, items: [
+            Item(name: "", detail: detailDerivation1),
+            Item(name: "", detail: detailDerivation2)
+        ], collapsed: true))
+        
+        //วัตถุประสงค์
+        sections.append(Section(name: titleObjective, items: [
+            Item(name: "", detail: detailObjective)
+        ], collapsed: true))
+        
+        //ผู้พัฒนา
+        sections.append(Section(name: titleDeveloper, items: [
+            Item(name: "", detail: detailDeveloper),
+        ], collapsed: true))
+        
+        
+        return  sections
+        
+    }
+    
 }
 
-public var sectionsData: [Section] = [
-    Section(name: "ความเป็นความเป็นมาของโครงการ", items: [
-        Item(name: "", detail: "กรมทรัพยากรน้ำ ได้ดำเนินการติดตั้งระบบเตือนภัยล่วงหน้า (Early Warning) สำหรับพื้นที่เสี่ยงอุทกภัย- ดินถล่ม ในพื้นที่ลาดชันและพื้นที่ราบเชิงเขา โดยเริ่มตั้งแต่ปีงบประมาณ ๒๕๔๘ ถึงปี ๒๕๕๕ ได้ติดตั้งระบบเตือนภัยจำนวน ๑,๐๕๒ สถานี ครอบคลุมหมู่บ้านเสี่ยงภัย จำนวน ๓,๒๐๗ หมู่บ้าน และกำลังดำเนินการติดตั้งระบบเตือนภัยในปีงบประมาณ ๒๕๕๘ อีกจำนวนไม่น้อยกว่า ๔๙๓ สถานี ครอบคลุมหมู่บ้านเสี่ยงภัย จำนวนไม่น้อยกว่า ๑๕๘๔ หมู่บ้าน เพื่อเป็นกลไกในการติดตามสถานการณ์ เฝ้าระวังและเตือนภัยที่เกิดจากน้ำท่วมฉับพลัน โดยการตรวจวัดข้อมูลปริมาณน้ำฝน และ/หรือระดับน้ำในพื้นที่หมู่บ้านที่อยู่ในข่ายเสี่ยงภัยสูงจากการเกิดน้ำท่วมฉับพลัน ซึ่งนอกจากการมีระบบตรวจวัดข้อมูลในพื้นที่แล้ว ระบบเตือนภัยล่วงหน้าจะต้องมีการพัฒนาโปรแกรมประยุกต์สำหรับการค้นคืนข้อมูลจากฐานข้อมูลตรวจวัดมาใช้วิเคราะห์สถานการณ์เตือนภัย เพื่อการพยากรณ์และเตือนภัยได้ โดยไม่ต้องป้อนค่าลงไปในโปรแกรมวิเคราะห์โดยตรง และพัฒนาระบบเตือนภัยล่วงหน้าแสดงผลผ่านอุปกรณ์เคลื่อนที่ (Mobile Application) สามารถนำข้อมูลการตรวจวัดและการเตือนภัยที่เกี่ยวข้องไปใช้ประโยชน์ ได้อย่างมีประสิทธิภาพ"),
-        Item(name: "", detail: "ปัจจุบันเทคโนโลยีสารสนเทศและการสื่อสารที่ก้าวหน้า และทันสมัย รวมทั้งระบบอินเตอร์เน็ตที่มีความเสถียร และอัตราการรับ-ส่งข้อมูลที่รวดเร็วยิ่งขึ้น ทำให้ง่ายต่อการเข้าถึงข้อมูลผ่านระบบอินเตอร์เน็ต จึงได้มีแนวคิดที่จะพัฒนาระบบเตือนภัยล่วงหน้าแสดงผลผ่านอุปกรณ์เคลื่อนที่ (Mobile Application) ที่ใช้ Smartphone ทั้ง ระบบปฏิบัติการ iOS และ Android เพื่อให้ง่ายต่อการเฝ้าระวัง และติดตามระบบเตือนภัยล่วงหน้า สามารถพกพาติดตัวได้สะดวก และรวดเร็วในการเข้าดูข้อมูลที่ต้องการ"),
-    ]),
-    Section(name: "วัตถุประสงค์", items: [
-        Item(name: "", detail: "เพื่อออกแบบ และพัฒนา ระบบแสดงผลข้อมูลการแจ้งเตือนภัยจากระบบเตือนภัยล่วงหน้า (Early Warning) สำหรับพื้นที่เสี่ยงอุทกภัย- ดินถล่ม ในพื้นที่ลาดชันและพื้นที่ราบเชิงเขา ผ่านอุปกรณ์เคลื่อนที่ (Mobile Application) ที่ใช้งานบน Smartphone ทั้งระบบปฏิบัติการ iOS และ Android")
-    ]),
-    Section(name: "ผู้พัฒนา", items: [
-        Item(name: "", detail: "กรมทรัพยากรน้ำ")
-    ])
-]
+

@@ -26,7 +26,9 @@ struct StationXLastDataModel : Codable {
     let province: String?
     let region: String?
     let dept: String?
-    let wl : String?
+    let pm25: String?
+    let warn_rf : Double?
+    let warn_wl: Double?
     
     init(stn: String,
          warning_type:String,
@@ -43,7 +45,9 @@ struct StationXLastDataModel : Codable {
          province: String,
          region: String,
          dept: String,
-         wl: String
+         pm25: String,
+         warn_rf: Double,
+         warn_wl: Double
         
     ) {
         self.stn = stn
@@ -61,7 +65,9 @@ struct StationXLastDataModel : Codable {
         self.province = province
         self.region = region
         self.dept = dept
-        self.wl = wl
+        self.pm25 = pm25
+        self.warn_rf = warn_rf
+        self.warn_wl = warn_wl
     }
     
     static func mixStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model], viewModel: LastDataViewModel) {
@@ -86,7 +92,9 @@ struct StationXLastDataModel : Codable {
                         province: station.province!,
                         region: station.region!,
                         dept: station.dept!,
-                        wl: lastdata.wl!
+                        pm25: lastdata.pm25!,
+                        warn_rf: lastdata.warn_rf!,
+                        warn_wl: lastdata.warn_wl!
                     ))
                     
                 }
@@ -118,7 +126,9 @@ struct StationXLastDataModel : Codable {
                         province: station.province!,
                         region: station.region!,
                         dept: station.dept!,
-                        wl: lastdata.wl!
+                         pm25: lastdata.pm25!,
+                        warn_rf: lastdata.warn_rf!,
+                        warn_wl: lastdata.warn_wl!
                     ))
                 }
             }
@@ -147,7 +157,9 @@ struct StationXLastDataModel : Codable {
                         province: station.province!,
                         region: station.region!,
                         dept: station.dept!,
-                        wl: lastdata.wl!
+                         pm25: lastdata.pm25!,
+                        warn_rf: lastdata.warn_rf!,
+                        warn_wl: lastdata.warn_wl!
                     ))
                 }
              }

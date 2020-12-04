@@ -625,6 +625,15 @@ extension String {
         return [title,address]
     }
     
+    func subStringReportStatus() -> String{
+        
+        let text = self.components(separatedBy: " ")
+        
+        let status    = text[1]
+        
+        return status
+    }
+    
     func toBase64() -> String {
         if let data = (self).data(using: String.Encoding.utf8) {
             let base64 = data.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))

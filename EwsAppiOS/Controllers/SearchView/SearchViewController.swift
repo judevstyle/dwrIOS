@@ -238,7 +238,7 @@ struct ItemSearchModel {
             }
         }
         
-        print(list.count)
+//        print(list.count)
         return list
     }
     
@@ -340,7 +340,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     fileprivate func RenderResetData(status: Bool){
         DispatchQueue.main.async {
-            print("Remove")
+//            print("Remove")
             if status {
                 self.list.removeAll()
                 self.tableview.reloadData()

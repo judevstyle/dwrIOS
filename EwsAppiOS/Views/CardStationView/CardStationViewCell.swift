@@ -8,6 +8,7 @@
 
 
 import UIKit
+import SkeletonView
 
 class CardStationViewCell: UITableViewCell {
     
@@ -137,20 +138,16 @@ class CardStationViewCell: UITableViewCell {
         
         var value = "N/A"
         
-        if station!.warning_type == "rain" {
-            
-            if let newValue = station!.wl!.toDouble() {
-                value = String(format: "%d", newValue)
-            }else {
-                value = station!.wl!
-            }
+        if station!.status == "สถานการณ์ ฝนตกเล็กน้อย" {
+            value = "\(station!.rain12h!)"
         }else {
-            if let newValue = station!.wl!.toDouble() {
-                           value = String(format: "%d", newValue)
-                       }else {
-                           value = station!.wl!
-                       }
+            if station!.warning_type == "rain" {
+                value = "\(station!.warn_rf!)"
+            }else if station!.warning_type == "wl" {
+                value = "\(station!.warn_wl!)"
+            }
         }
+        
         valueLabel.text = "\(value)"
     }
     

@@ -11,7 +11,8 @@ import UIKit
 
 class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
-    var sections = sectionsData
+//    var sections = sectionsData
+    var sections = Section.sectionsData()
     
     let cellId = "cellInfo"
     let headerId = "headerInfo"

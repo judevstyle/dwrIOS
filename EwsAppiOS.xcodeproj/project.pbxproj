@@ -29,11 +29,13 @@
 		EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */; };
 		EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA3253C59FE009DBBEF /* LastDataModel.swift */; };
 		EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */; };
+		EF2DB9AB257A314B00B45F03 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = EF2DB9AA257A314B00B45F03 /* SkeletonView */; };
 		EF344A2F25497BA900E85F6D /* Ews07Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF344A2E25497BA900E85F6D /* Ews07Model.swift */; };
 		EF35B888254B078000DA4244 /* DetailMapStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF35B887254B078000DA4244 /* DetailMapStationViewController.swift */; };
 		EF4003C5254FF9F800BBE499 /* LastDataStationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4003C4254FF9F800BBE499 /* LastDataStationProtocol.swift */; };
 		EF4003C8254FFBD100BBE499 /* LastDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4003C7254FFBD100BBE499 /* LastDataViewModel.swift */; };
 		EF5E7FF125433D3D0054D025 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = EF5E7FF025433D3D0054D025 /* style.json */; };
+		EF6C4131256269A50082096B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF6C4130256269A50082096B /* GoogleService-Info.plist */; };
 		EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */; };
 		EF7396432548876000A0266C /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7396422548876000A0266C /* ReportViewController.swift */; };
 		EF739645254888FA00A0266C /* ReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF739644254888FA00A0266C /* ReportModel.swift */; };
@@ -59,7 +61,7 @@
 /* Begin PBXFileReference section */
 		5A90D6DCBD6825A8E250803A /* Pods_EwsAppiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EwsAppiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70EF7AD5828DF5FB899BCC69 /* Pods-EwsAppiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.release.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.release.xcconfig"; sourceTree = "<group>"; };
-		C452CE2B25308031004CDC0A /* EwsAppiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EwsAppiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C452CE2B25308031004CDC0A /* EWSTHAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EWSTHAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C452CE2E25308031004CDC0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C452CE3825308031004CDC0A /* EwsAppiOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EwsAppiOS.xcdatamodel; sourceTree = "<group>"; };
 		C452CE3A25308037004CDC0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +87,8 @@
 		EF4003C4254FF9F800BBE499 /* LastDataStationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDataStationProtocol.swift; sourceTree = "<group>"; };
 		EF4003C7254FFBD100BBE499 /* LastDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDataViewModel.swift; sourceTree = "<group>"; };
 		EF5E7FF025433D3D0054D025 /* style.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
+		EF6C412F2562673F0082096B /* EwsAppiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EwsAppiOS.entitlements; sourceTree = "<group>"; };
+		EF6C4130256269A50082096B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF6D8326253CBEAA00A77DC3 /* StationXLastDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationXLastDataModel.swift; sourceTree = "<group>"; };
 		EF7396422548876000A0266C /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		EF739644254888FA00A0266C /* ReportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModel.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 				C452CE5525308573004CDC0A /* NVActivityIndicatorView in Frameworks */,
 				6C485DBA615099ACE6B43ABF /* Pods_EwsAppiOS.framework in Frameworks */,
 				C490D30B253577F4004CF6BE /* SwiftyXMLParser in Frameworks */,
+				EF2DB9AB257A314B00B45F03 /* SkeletonView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +157,7 @@
 		C452CE2C25308031004CDC0A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C452CE2B25308031004CDC0A /* EwsAppiOS.app */,
+				C452CE2B25308031004CDC0A /* EWSTHAI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 		C452CE2D25308031004CDC0A /* EwsAppiOS */ = {
 			isa = PBXGroup;
 			children = (
+				EF6C412F2562673F0082096B /* EwsAppiOS.entitlements */,
 				EF4003C6254FFBA800BBE499 /* ViewModels */,
 				C490D30C25358F0E004CF6BE /* Models */,
 				C490D3062535702E004CF6BE /* APIService */,
@@ -170,6 +176,7 @@
 				C452CE2E25308031004CDC0A /* AppDelegate.swift */,
 				C452CE3A25308037004CDC0A /* Assets.xcassets */,
 				C452CE3C25308037004CDC0A /* LaunchScreen.storyboard */,
+				EF6C4130256269A50082096B /* GoogleService-Info.plist */,
 				C452CE3F25308037004CDC0A /* Info.plist */,
 				C452CE3725308031004CDC0A /* EwsAppiOS.xcdatamodeld */,
 				EF5E7FF025433D3D0054D025 /* style.json */,
@@ -455,9 +462,10 @@
 				C452CE5425308573004CDC0A /* NVActivityIndicatorView */,
 				C452CE5625308573004CDC0A /* NVActivityIndicatorViewExtended */,
 				C490D30A253577F4004CF6BE /* SwiftyXMLParser */,
+				EF2DB9AA257A314B00B45F03 /* SkeletonView */,
 			);
 			productName = EwsAppiOS;
-			productReference = C452CE2B25308031004CDC0A /* EwsAppiOS.app */;
+			productReference = C452CE2B25308031004CDC0A /* EWSTHAI.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -487,6 +495,7 @@
 			packageReferences = (
 				C452CE5325308573004CDC0A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 				C490D309253577F4004CF6BE /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */,
+				EF2DB9A9257A314B00B45F03 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = C452CE2C25308031004CDC0A /* Products */;
 			projectDirPath = "";
@@ -503,6 +512,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C452CE3E25308037004CDC0A /* LaunchScreen.storyboard in Resources */,
+				EF6C4131256269A50082096B /* GoogleService-Info.plist in Resources */,
 				C452CE4D253084D8004CDC0A /* Kanit-Medium.ttf in Resources */,
 				C452CE4E253084D8004CDC0A /* Kanit-Bold.ttf in Resources */,
 				C452CE4C253084D8004CDC0A /* Kanit-Light.ttf in Resources */,
@@ -752,16 +762,20 @@
 				API_BASE_URL = "http://ews.dwr.go.th/mobilexml";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y46GLN8894;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ssoft.EwsAppiOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = th.go.dwr.ews4thai;
+				PRODUCT_NAME = EWSTHAI;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -774,16 +788,20 @@
 				API_BASE_URL = "http://ews.dwr.go.th/mobilexml";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y46GLN8894;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ssoft.EwsAppiOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = th.go.dwr.ews4thai;
+				PRODUCT_NAME = EWSTHAI;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -829,6 +847,14 @@
 				minimumVersion = 5.2.1;
 			};
 		};
+		EF2DB9A9257A314B00B45F03 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -846,6 +872,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C490D309253577F4004CF6BE /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
 			productName = SwiftyXMLParser;
+		};
+		EF2DB9AA257A314B00B45F03 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF2DB9A9257A314B00B45F03 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 /* End XCSwiftPackageProductDependency section */
 
