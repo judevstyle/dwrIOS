@@ -64,7 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DispatchQueue.global(qos: .background).async {
             AppDelegate.shareDelegate.stations = StationModel.FetchStations()
             AppDelegate.shareDelegate.last_data_search = LastDataModel.SearchData()
-//            print(AppDelegate.shareDelegate.last_data_search.count)
         }
         
         

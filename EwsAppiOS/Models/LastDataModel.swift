@@ -111,9 +111,9 @@ struct LastDataModel : Codable {
         }
         
         var list_ew07 = Ews07Model.FetchEws07()
-        let sortedLast_data = last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
+//        let sortedLast_data = last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
         
-        return StationXLastDataModel.mixSearchStationXLastData(last_data: sortedLast_data, list_ew07: list_ew07)
+        return StationXLastDataModel.mixSearchStationXLastData(last_data: last_data, list_ew07: list_ew07)
         
     }
     

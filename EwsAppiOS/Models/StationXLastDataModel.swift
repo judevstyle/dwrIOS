@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyXMLParser
+import Combine
 
 struct StationXLastDataModel : Codable {
     
@@ -71,7 +72,7 @@ struct StationXLastDataModel : Codable {
     }
     
     static func mixStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model], viewModel: LastDataViewModel) {
-    
+        
         for lastdata in last_data {
             for (index, station) in AppDelegate.shareDelegate.stations.enumerated() {
                 if station.std! == lastdata.stn!  {
@@ -109,7 +110,7 @@ struct StationXLastDataModel : Codable {
             for (index, station) in AppDelegate.shareDelegate.stations.enumerated() {
                 if station.std! == lastdata.stn!  {
                     let myDouble = Double(lastdata.rain12h!)
-
+                    
                     viewModel.input.saveMessageData(data:  StationXLastDataModel(
                         stn: lastdata.stn!,
                         warning_type: lastdata.warning_type!,
@@ -126,7 +127,7 @@ struct StationXLastDataModel : Codable {
                         province: station.province!,
                         region: station.region!,
                         dept: station.dept!,
-                         pm25: lastdata.pm25!,
+                        pm25: lastdata.pm25!,
                         warn_rf: lastdata.warn_rf!,
                         warn_wl: lastdata.warn_wl!
                     ))
@@ -137,10 +138,12 @@ struct StationXLastDataModel : Codable {
     
     static func mixSearchStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model]) -> [StationXLastDataModel]{
         var  stx: [StationXLastDataModel] = []
-          for lastdata in last_data {
-              for (index, station) in AppDelegate.shareDelegate.stations.enumerated() {
-                  if station.std! == lastdata.stn!  {
-                      let myDouble = Double(lastdata.rain12h!)
+        for lastdata in last_data {
+            
+            
+            for (index, station) in AppDelegate.shareDelegate.stations.enumerated() {
+                if station.std! == lastdata.stn!  {
+                    let myDouble = Double(lastdata.rain12h!)
                     stx.append(StationXLastDataModel(
                         stn: lastdata.stn!,
                         warning_type: lastdata.warning_type!,
@@ -157,14 +160,50 @@ struct StationXLastDataModel : Codable {
                         province: station.province!,
                         region: station.region!,
                         dept: station.dept!,
-                         pm25: lastdata.pm25!,
+                        pm25: lastdata.pm25!,
                         warn_rf: lastdata.warn_rf!,
                         warn_wl: lastdata.warn_wl!
                     ))
+                    break
                 }
-             }
-          }
+            }
+            
+            
+            
+            
+        }
+        
+        
+        //        for lastdata in last_data  {
+        //            let station =  AppDelegate.shareDelegate.stations.filter { $0.std == lastdata.stn! }
+        //
+        //            if station != nil {
+        //                let myDouble = Double(lastdata.rain12h!)
+        //                stx.append(StationXLastDataModel(
+        //                    stn: lastdata.stn!,
+        //                    warning_type: lastdata.warning_type!,
+        //                    title: station.name!,
+        //                    address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) \nหมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
+        //                    rain: lastdata.rain!,
+        //                    rain12h: myDouble ?? 0.0,
+        //                    rain07h: lastdata.rain07h!,
+        //                    rain24h: lastdata.rain24h!,
+        //                    ews07: list_ew07[index],
+        //                    latitude: station.latitude!,
+        //                    longitude: station.longitude!,
+        //                    status: lastdata.status!,
+        //                    province: station.province!,
+        //                    region: station.region!,
+        //                    dept: station.dept!,
+        //                    pm25: lastdata.pm25!,
+        //                    warn_rf: lastdata.warn_rf!,
+        //                    warn_wl: lastdata.warn_wl!
+        //                ))
+        //            }
+        //
+        //        }
+        
         return stx
-      }
+    }
     
 }
