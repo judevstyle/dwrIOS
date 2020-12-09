@@ -969,3 +969,10 @@ extension UISearchBar {
     }
     
 }
+
+
+extension Notification.Name {
+    static let didLoadStationsSuccess = Notification.Name("didLoadStationsSuccess")
+//    static let didCompleteTask = Notification.Name("didCompleteTask")
+//    static let completedLengthyDownload = Notification.Name("completedLengthyDownload")
+}

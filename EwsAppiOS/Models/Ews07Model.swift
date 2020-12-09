@@ -7,11 +7,8 @@
 //
 
 import Foundation
-
-import Foundation
 import SwiftyXMLParser
-
-
+import Moya
 
 struct Ews07Model : Codable {
     
@@ -59,6 +56,9 @@ struct Ews07Model : Codable {
         
     }
     
+    
+    static let APIServiceProvider = MoyaProvider<APIService>()
+    
     static func FetchEws07() -> [Ews07Model] {
         
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
@@ -92,6 +92,7 @@ struct Ews07Model : Codable {
         }
         
         return list_ews07
-        
     }
+    
+
 }

@@ -15,7 +15,6 @@ protocol MainAppDelegateProtocol {
     func ToastLoading()
 }
 
-
 class MainAppViewController: UIViewController, MainAppDelegateProtocol, CLLocationManagerDelegate {
 
      let locationManager = CLLocationManager()
@@ -33,7 +32,10 @@ class MainAppViewController: UIViewController, MainAppDelegateProtocol, CLLocati
         self.addChild(rootNC)
         
         rootNC.didMove(toParent: self)
-  
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onDidLoadStationsSuccess(_:)), name: .didLoadStationsSuccess, object: nil)
+        
+        self.startLoding()
         
     }
     
@@ -51,14 +53,6 @@ class MainAppViewController: UIViewController, MainAppDelegateProtocol, CLLocati
         self.present(rootNC, animated: false, completion: nil)
     }
     
-    
-//    func loadingStationBackground(stations: [StationModel]) {
-//        DispatchQueue.main.async {
-//            AppDelegate.shareDelegate.stations = stations
-//            self.stopLoding()
-//        }
-//       }
-       
        
     func ToastLoading() {
           ToastMsg(msg: "กำลังโหลด..")
@@ -82,5 +76,11 @@ class MainAppViewController: UIViewController, MainAppDelegateProtocol, CLLocati
         locationManager.stopUpdatingLocation()
     }
     
+    
+    @objc func onDidLoadStationsSuccess(_ notification:Notification) {
+        self.stopLoding()
+//        print(AppDelegate.shareDelegate.stations.count)
+//        print(AppDelegate.shareDelegate.last_data_search.count)
+    }
     
 }

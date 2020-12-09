@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import Moya
+import SwiftyXMLParser
 
 
 class InfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
 //    var sections = sectionsData
-    var sections = Section.sectionsData()
+    var sections: [Section] = []
+    
+    let APIServiceProvider = MoyaProvider<APIService>()
     
     let cellId = "cellInfo"
     let headerId = "headerInfo"
@@ -57,12 +61,59 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         
+        getResponseInfo()
         
     }
     
     @objc func handleClose(){
         dismiss(animated: true, completion: nil)
         
+    }
+    
+    
+    func getResponseInfo() {
+        self.startLoding()
+        
+        APIServiceProvider.rx.request(.GetInfo).subscribe { event in
+            switch event {
+            case let .success(response):
+                
+                let xml = try! XML.parse(response.data)
+                
+                let titleDerivation: String = xml["ews", "ews01"].text!
+                let detailDerivation1: String = xml["ews", "ews02"].text!
+                let detailDerivation2: String = xml["ews", "ews03"].text!
+                let titleObjective: String = xml["ews", "ews04"].text!
+                let detailObjective: String = xml["ews", "ews05"].text!
+                let titleDeveloper: String = xml["ews", "ews06"].text!
+                let detailDeveloper: String = xml["ews", "ews07"].text!
+                
+
+                //ความเป็นมา
+                self.sections.append(Section(name: titleDerivation, items: [
+                    Item(name: "", detail: detailDerivation1),
+                    Item(name: "", detail: detailDerivation2)
+                ], collapsed: true))
+                
+                //วัตถุประสงค์
+                self.sections.append(Section(name: titleObjective, items: [
+                    Item(name: "", detail: detailObjective)
+                ], collapsed: true))
+                
+                //ผู้พัฒนา
+                self.sections.append(Section(name: titleDeveloper, items: [
+                    Item(name: "", detail: detailDeveloper),
+                ], collapsed: true))
+                
+                self.tableView.reloadData()
+                self.stopLoding()
+                break
+            case let .error(error):
+                self.stopLoding()
+                print(error)
+            }
+            
+        }
     }
     
 }

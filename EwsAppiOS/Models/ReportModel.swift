@@ -36,7 +36,6 @@ struct ReportModel {
     static func reports() -> [ReportModel] {
         var reports = [ReportModel]()
         
-        
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
         let urlString = URL(string: "\(baseURL)/warn_report.xml")
         

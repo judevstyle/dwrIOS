@@ -61,9 +61,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = rootVC
         window?.makeKeyAndVisible()
         
+        
         DispatchQueue.global(qos: .background).async {
-            AppDelegate.shareDelegate.stations = StationModel.FetchStations()
-            AppDelegate.shareDelegate.last_data_search = LastDataModel.SearchData()
+            StationModel.FetchStations()
         }
         
         

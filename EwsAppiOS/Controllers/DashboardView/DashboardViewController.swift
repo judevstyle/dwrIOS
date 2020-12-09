@@ -10,6 +10,7 @@
 import UIKit
 import SideMenu
 import SwiftyXMLParser
+import Moya
 
 protocol DashboardDelegateProtocol {
     func ToastLoading()
@@ -23,6 +24,8 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     var ValueWarningStations:[String] = ["0","0","0","0"]
     var TitleWarningStations:[String] = ["อพยพ","เตือนภัย","เฝ้าระวัง","มีฝน"]
+    
+    let APIServiceProvider = MoyaProvider<APIService>()
     
     lazy var viewAllButton: UIButton = {
         let button = UIButton()
@@ -104,13 +107,13 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
         
         
-        self.startLoding()
+        //        self.startLoding()
         DispatchQueue.global(qos: .background).async {
             self.dashboards = DashboardCardModel.getCountStatus()
             
             
             DispatchQueue.main.async {
-                self.stopLoding()
+                //                self.stopLoding()
                 self.tableview.reloadData()
             }
         }
@@ -122,26 +125,31 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     }
     
     @objc func handleAllEws()  {
-        getLastData(type: "all")
+        getDataByType(type: "all")
     }
     
     
     func getCountStatus() {
-        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
-        let urlString = URL(string: "\(baseURL)/count_status_vill.xml")
-        let xml = try! XML.parse(Data(contentsOf: urlString!))
-        
-        let status3 = xml["ews"]["status1"]
-        let status2 = xml["ews"]["status2"]
-        let status1 = xml["ews"]["status3"]
-        let status4 = xml["ews"]["status9"]
-        
-        dashboards[0].value = status1.text ?? ""
-        dashboards[1].value = status2.text ?? ""
-        dashboards[2].value = status3.text ?? ""
-        dashboards[3].value = status4.text ?? ""
-        
-        self.tableview.reloadData()
+        APIServiceProvider.rx.request(.GetCountStatus).subscribe { event in
+            switch event {
+            case let .success(response):
+                
+                let xml = XML.parse(response.data)
+                let status3 = xml["ews"]["status1"]
+                let status2 = xml["ews"]["status2"]
+                let status1 = xml["ews"]["status3"]
+                let status4 = xml["ews"]["status9"]
+                
+                self.dashboards[0].value = status1.text ?? ""
+                self.dashboards[1].value = status2.text ?? ""
+                self.dashboards[2].value = status3.text ?? ""
+                self.dashboards[3].value = status4.text ?? ""
+                self.tableview.reloadData()
+                
+            case let .error(error):
+                print(error)
+            }
+        }
     }
     
     
@@ -184,15 +192,15 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
             
             switch indexPath.row {
             case 0:
-                getLastData(type: "สถานการณ์ อพยพ")
+                getLastData(type: "สถานการณ์ อพยพ", index: indexPath.row)
             case 1:
-                getLastData(type: "สถานการณ์ เตือนภัย")
+                getLastData(type: "สถานการณ์ เตือนภัย", index: indexPath.row)
             case 2:
-                getLastData(type: "สถานการณ์ เฝ้าระวัง")
+                getLastData(type: "สถานการณ์ เฝ้าระวัง", index: indexPath.row)
             case 3:
-                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย", index: indexPath.row)
             default:
-                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย", index: indexPath.row)
             }
             
         }else {
@@ -201,35 +209,163 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
     }
     
-    func getLastData(type: String) {
-        self.startLoding()
-        DispatchQueue.global(qos: .background).async {
-            var stations_last = LastDataModel.FetchLastDataV2(type: type)
-            DispatchQueue.main.async {
-                if stations_last.count != 0 {
-                    let rootVC = StationListViewController()
-                    rootVC.last_data = stations_last
-                    let rootNC = UINavigationController(rootViewController: rootVC)
-                    rootNC.modalPresentationStyle = .fullScreen
-                    rootNC.modalTransitionStyle = .crossDissolve
-                    self.present(rootNC, animated: true, completion: nil)
+    func getLastData(type: String, index: Int) {
+        
+        if dashboards[index].value.toDouble() != 0 {
+            getDataByType(type: type)
+        }else {
+            
+        }
+        
+    }
+    
+    
+    func getDataByType(type: String){
+        
+        if type == "สถานการณ์ ฝนตกเล็กน้อย" {
+            self.startLoding()
+            APIServiceProvider.rx.request(.GetLastData).subscribe { event in
+                switch event {
+                case let .success(response):
+                    var last_data = [LastDataModel]()
+                    let xml = XML.parse(response.data)
+                    
+                    if let count = xml["ews", "station"].all?.count {
+                        if count > 0 {
+                            for item_station in xml["ews", "station"].all! {
+                                if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
+                                    let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                                    let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                                    let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                    last_data.append(
+                                        LastDataModel(
+                                            stn: item_station.attributes["stn"]!,
+                                            warning_type: item_station.childElements[0].text ?? "",
+                                            date: item_station.childElements[1].text ?? "",
+                                            temp: item_station.childElements[2].text ?? "",
+                                            rain: item_station.childElements[3].text ?? "",
+                                            rain12h: myDouble ?? 0.0,
+                                            rain07h: item_station.childElements[5].text ?? "",
+                                            rain24h: item_station.childElements[6].text ?? "",
+                                            wl: item_station.childElements[7].text ?? "",
+                                            wl07h: item_station.childElements[8].text ?? "",
+                                            soil: item_station.childElements[9].text ?? "",
+                                            pm25: item_station.childElements[10].text ?? "",
+                                            status: item_station.childElements[11].text ?? "",
+                                            warn_rf: rainDouble ?? 0.0,
+                                            warn_wl: wlDouble ?? 0.0,
+                                            stn_cover: item_station.childElements[14].text ?? "")
+                                    )
+                                }
+                            }
+                            self.stopLoding()
+                            if last_data.count > 0 {
+                                self.goToStationList(stations_last: last_data)
+                            }
+                        }
+                        
+                    }
+                    break
+                case let .error(error):
+                    print(error)
                     self.stopLoding()
-                }else {
+                }
+            }
+        }else {
+            self.startLoding()
+            APIServiceProvider.rx.request(.GetWarnData).subscribe { event in
+                switch event {
+                case let .success(response):
+                    var last_data = [LastDataModel]()
+                    let xml = XML.parse(response.data)
+                    if type == "all" {
+                        let all = xml["ews", "station"].all
+                        if all?.count != nil {
+                            for item_station in xml["ews", "station"].all! {
+                                if item_station.childElements[11].name == "status" && item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[11].text! != "สถานการณ์ ปกติ" {
+                                    
+                                    let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                                    let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                                    let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                    last_data.append(
+                                        LastDataModel(
+                                            stn: item_station.attributes["stn"]!,
+                                            warning_type: item_station.childElements[0].text ?? "",
+                                            date: item_station.childElements[1].text ?? "",
+                                            temp: item_station.childElements[2].text ?? "",
+                                            rain: item_station.childElements[3].text ?? "",
+                                            rain12h: myDouble ?? 0.0,
+                                            rain07h: item_station.childElements[5].text ?? "",
+                                            rain24h: item_station.childElements[6].text ?? "",
+                                            wl: item_station.childElements[7].text ?? "",
+                                            wl07h: item_station.childElements[8].text ?? "",
+                                            soil: item_station.childElements[9].text ?? "",
+                                            pm25: item_station.childElements[10].text ?? "",
+                                            status: item_station.childElements[11].text ?? "",
+                                            warn_rf: rainDouble ?? 0.0,
+                                            warn_wl: wlDouble ?? 0.0,
+                                            stn_cover: item_station.childElements[14].text ?? "")
+                                    )
+                                    
+                                }
+                            }
+                        }
+                        
+                        self.stopLoding()
+                        if last_data.count > 0 {
+                            self.goToStationList(stations_last: last_data)
+                        }
+                    }else {
+                        for item_station in xml["ews", "station"].all! {
+                            if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
+                                let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                                let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                                let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                last_data.append(
+                                    LastDataModel(
+                                        stn: item_station.attributes["stn"]!,
+                                        warning_type: item_station.childElements[0].text ?? "",
+                                        date: item_station.childElements[1].text ?? "",
+                                        temp: item_station.childElements[2].text ?? "",
+                                        rain: item_station.childElements[3].text ?? "",
+                                        rain12h: myDouble ?? 0.0,
+                                        rain07h: item_station.childElements[5].text ?? "",
+                                        rain24h: item_station.childElements[6].text ?? "",
+                                        wl: item_station.childElements[7].text ?? "",
+                                        wl07h: item_station.childElements[8].text ?? "",
+                                        soil: item_station.childElements[9].text ?? "",
+                                        pm25: item_station.childElements[10].text ?? "",
+                                        status: item_station.childElements[11].text ?? "",
+                                        warn_rf: rainDouble ?? 0.0,
+                                        warn_wl: wlDouble ?? 0.0,
+                                        stn_cover: item_station.childElements[14].text ?? "")
+                                )
+                            }
+                        }
+                        self.stopLoding()
+                        if last_data.count > 0 {
+                            self.goToStationList(stations_last: last_data)
+                        }
+                    }
+                    
+                    break
+                case let .error(error):
                     self.stopLoding()
+                    print(error)
                 }
             }
         }
     }
     
     
-//    func goToStationList(type: String) {
-//        let rootVC = StationListViewController()
-//        rootVC.typeLastdata = "\(type)"
-//        let rootNC = UINavigationController(rootViewController: rootVC)
-//        rootNC.modalPresentationStyle = .fullScreen
-//        rootNC.modalTransitionStyle = .crossDissolve
-//        self.present(rootNC, animated: true, completion: nil)
-//    }
+    func goToStationList(stations_last: [LastDataModel]) {
+        let rootVC = StationListViewController()
+        rootVC.last_data = stations_last
+        let rootNC = UINavigationController(rootViewController: rootVC)
+        rootNC.modalPresentationStyle = .fullScreen
+        rootNC.modalTransitionStyle = .crossDissolve
+        self.present(rootNC, animated: true, completion: nil)
+    }
     
     func ToastLoading() {
         delegateMainApp!.ToastLoading()
