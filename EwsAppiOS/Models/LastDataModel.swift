@@ -239,10 +239,11 @@ struct LastDataModel : Codable {
             if count > 0 {
                 
                 for item_station in xmlLastData["ews", "station"].all! {
-                    if (item_station.childElements[11].name == "status" &&  item_station.childElements[11].text! == "สถานการณ์ ฝนตกเล็กน้อย"
+                    if (item_station.childElements[11].name == "status" &&  item_station.childElements[11].text! == "สถานการณ์ ฝนตกเล็กน้อย" ||
 //                        item_station.childElements[11].text! != "สถานการณ์ เตือนภัย" &&
 //                        item_station.childElements[11].text! != "สถานการณ์ เฝ้าระวัง" &&
-//                        item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน"
+//                        item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน" ||
+                        item_station.childElements[11].text! != "สถานการณ์ ปกติ"
                         ){
                         
                         let myDouble = Double(item_station.childElements[4].text ?? "0.0")
