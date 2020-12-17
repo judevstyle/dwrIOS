@@ -135,5 +135,24 @@ class ListCardStationViewCell: UITableViewCell {
         
         valueStation.attributedText = attributedText
         valueStation.numberOfLines = 0
+        
+        switch station!.status! {
+        case "สถานการณ์ อพยพ":
+            iconImage.image = UIImage(named: "rain_tornado")!
+            break
+        case "สถานการณ์ เตือนภัย":
+            iconImage.image = UIImage(named: "rain_thunder")!
+            break
+        case "สถานการณ์ เฝ้าระวัง":
+            iconImage.image = UIImage(named: "rain")!
+            break
+        case "สถานการณ์ ฝนตกเล็กน้อย":
+            iconImage.image = UIImage(named: "overcast")!
+            break
+        default:
+            iconImage.image = UIImage(named: "overcast")!
+        }
+        
+        
     }
 }

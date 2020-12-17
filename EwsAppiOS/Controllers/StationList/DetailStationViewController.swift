@@ -171,9 +171,13 @@ class DetailStationViewController: UIViewController, UICollectionViewDelegate, U
         if currentPage == 0 {
             previousBtn.tintColor = .whiteAlpha(alpha: 0.5)
             previousBtn.isEnabled = false
+            nextBtn.tintColor = .white
+            nextBtn.isEnabled = true
         }else if currentPage == (self.stations_last!.count-1)  {
             nextBtn.tintColor = .whiteAlpha(alpha: 0.5)
             nextBtn.isEnabled = false
+            previousBtn.tintColor = .white
+            previousBtn.isEnabled = true
         }else {
             previousBtn.tintColor = .white
             previousBtn.isEnabled = true

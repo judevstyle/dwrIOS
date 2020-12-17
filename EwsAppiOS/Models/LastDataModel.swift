@@ -167,6 +167,8 @@ struct LastDataModel : Codable {
         switch type {
         case "all":
             getMethodAllMap(viewModel: viewModel)
+        case "all_warn":
+            getMethodAllWarnMap(viewModel: viewModel)
         case "สถานการณ์ ฝนตกเล็กน้อย":
             getMethodMap(pathUrl: "/lastdata.xml", type: type, viewModel: viewModel)
         default:
@@ -297,6 +299,60 @@ struct LastDataModel : Codable {
                 
                 for item_station in xml["ews", "station"].all! {
                     if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
+                        
+                        let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+                        let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+                        let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                        last_data.append(
+                            LastDataModel(
+                                stn: item_station.attributes["stn"]!,
+                                warning_type: item_station.childElements[0].text ?? "",
+                                date: item_station.childElements[1].text ?? "",
+                                temp: item_station.childElements[2].text ?? "",
+                                rain: item_station.childElements[3].text ?? "",
+                                rain12h: myDouble ?? 0.0,
+                                rain07h: item_station.childElements[5].text ?? "",
+                                rain24h: item_station.childElements[6].text ?? "",
+                                wl: item_station.childElements[7].text ?? "",
+                                wl07h: item_station.childElements[8].text ?? "",
+                                soil: item_station.childElements[9].text ?? "",
+                                pm25: item_station.childElements[10].text ?? "",
+                                status: item_station.childElements[11].text ?? "",
+                                warn_rf: rainDouble ?? 0.0,
+                                warn_wl: wlDouble ?? 0.0,
+                                stn_cover: item_station.childElements[14].text ?? "")
+                        )
+                    }
+                }
+            }
+        }
+        
+        var list_ew07 = Ews07Model.FetchEws07()
+        
+        let sortedLast_data = last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
+        
+        StationXLastDataModel.mixStationXLastData(last_data: sortedLast_data, list_ew07: list_ew07, viewModel: viewModel)
+        
+    }
+    
+    
+    static func getMethodAllWarnMap(viewModel: LastDataViewModel) {
+        
+        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+        
+        var pathUrl:String = "/warn.xml"
+        
+        let urlString = URL(string: "\(baseURL)\(pathUrl)")
+        
+        let xml = try! XML.parse(Data(contentsOf: urlString!))
+        
+        var last_data = [LastDataModel]()
+        
+        if let count = xml["ews", "station"].all?.count {
+            if count > 0 {
+                
+                for item_station in xml["ews", "station"].all! {
+                    if item_station.childElements[11].name == "status"{
                         
                         let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                         let rainDouble = Double(item_station.childElements[12].text ?? "0.0")

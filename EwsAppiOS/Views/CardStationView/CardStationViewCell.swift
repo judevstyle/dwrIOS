@@ -133,6 +133,8 @@ class CardStationViewCell: UITableViewCell {
     }
     
     func setupValue() {
+        
+        
         titleLabel.text = "\(station!.title!)"
         addressLabel.attributedText = self.withTextParagraph(text: "\(station!.address!)", fonSize: 15)
         
@@ -149,6 +151,30 @@ class CardStationViewCell: UITableViewCell {
         }
         
         valueLabel.text = "\(value)"
+        
+        switch station!.status! {
+        case "สถานการณ์ อพยพ":
+            iconView.image = UIImage(named: "rain_tornado")!
+            viewCard.backgroundColor = UIColor.systemRed.withAlphaComponent(0.3)
+            break
+        case "สถานการณ์ เตือนภัย":
+            iconView.image = UIImage(named: "rain_thunder")!
+            viewCard.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.3)
+            break
+        case "สถานการณ์ เฝ้าระวัง":
+            iconView.image = UIImage(named: "rain")!
+            viewCard.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+            break
+        case "สถานการณ์ ฝนตกเล็กน้อย":
+            iconView.image = UIImage(named: "overcast")!
+            viewCard.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.3)
+            break
+        default:
+            iconView.image = UIImage(named: "overcast")!
+            viewCard.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.3)
+        }
+        
+        
     }
     
     

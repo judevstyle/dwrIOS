@@ -13,7 +13,7 @@ class DashboardView: UITableViewCell {
 
     lazy var viewCard: UIView = {
         let view = UIView()
-        view.backgroundColor = .whiteAlpha(alpha: 0.2)
+        view.backgroundColor = .whiteAlpha(alpha: 0.0)
         view.layer.cornerRadius = 8
         return view
     }()
@@ -76,6 +76,7 @@ class DashboardView: UITableViewCell {
         
         titleLabel.text = dashboard!.name
         valueLabel.text = dashboard!.value
+        viewCard.backgroundColor = dashboard!.color.withAlphaComponent(0.3)
         viewLine.backgroundColor = dashboard!.color
         iconView.image = dashboard!.icon
         
@@ -95,7 +96,7 @@ class DashboardView: UITableViewCell {
         viewCard.addSubview(valueLabel)
         viewCard.addSubview(iconView)
         
-        viewLine.anchor(viewCard.topAnchor, left: viewCard.leftAnchor, bottom: viewCard.bottomAnchor, right: nil, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 0, widthConstant: 10, heightConstant: 0)
+        viewLine.anchor(viewCard.topAnchor, left: viewCard.leftAnchor, bottom: viewCard.bottomAnchor, right: nil, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 0, widthConstant: 11, heightConstant: 0)
         
         
         titleLabel.anchor(viewCard.topAnchor, left: viewLine.rightAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 150, heightConstant: 0)

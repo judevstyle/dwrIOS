@@ -28,6 +28,14 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         return tableview
     }()
     
+    var viewImageBg: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "overcast")?.withRenderingMode(.alwaysTemplate)
+        image.tintColor = UIColor.white.withAlphaComponent(0.1)
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+    
     var last_data: [LastDataModel]? = []
     var stations_last: [StationXLastDataModel]? = []
     
@@ -49,6 +57,10 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         
         
         tableview.register(CardStationViewCell.self, forCellReuseIdentifier: cellId)
+        
+        
+        view.addSubview(viewImageBg)
+        viewImageBg.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         view.addSubview(tableview)
         tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)

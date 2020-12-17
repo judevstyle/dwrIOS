@@ -48,6 +48,8 @@
 		EFB3159525482EBA00B2E4E9 /* ListCardStationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3159425482EBA00B2E4E9 /* ListCardStationViewCell.swift */; };
 		EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */; };
 		EFBBB5072539DBBF002AA238 /* StationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBB5062539DBBF002AA238 /* StationListViewController.swift */; };
+		EFC09624258B5061004BE921 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFC09623258B5061004BE921 /* Splash.storyboard */; };
+		EFC09627258B5073004BE921 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC09626258B5073004BE921 /* SplashViewController.swift */; };
 		EFC62B8F2547378200F19217 /* MenuSlideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B8E2547378200F19217 /* MenuSlideModel.swift */; };
 		EFC62B9225473FDF00F19217 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B9125473FDF00F19217 /* SettingViewController.swift */; };
 		EFC62B942547448800F19217 /* DetailStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC62B932547448800F19217 /* DetailStationViewController.swift */; };
@@ -101,6 +103,8 @@
 		EFB3159425482EBA00B2E4E9 /* ListCardStationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardStationViewCell.swift; sourceTree = "<group>"; };
 		EFBBB5032539DB7F002AA238 /* MapStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStationViewController.swift; sourceTree = "<group>"; };
 		EFBBB5062539DBBF002AA238 /* StationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListViewController.swift; sourceTree = "<group>"; };
+		EFC09623258B5061004BE921 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		EFC09626258B5073004BE921 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		EFC62B8E2547378200F19217 /* MenuSlideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideModel.swift; sourceTree = "<group>"; };
 		EFC62B9125473FDF00F19217 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		EFC62B932547448800F19217 /* DetailStationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStationViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +191,7 @@
 		C452CE452530839F004CDC0A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EFC09622258B504B004BE921 /* SplashView */,
 				EFAF56482551064400E881A6 /* SearchView */,
 				EFC8F4F3254AC363003FCB44 /* InfoView */,
 				EF7396412548874600A0266C /* ReportView */,
@@ -396,6 +401,15 @@
 			path = StationList;
 			sourceTree = "<group>";
 		};
+		EFC09622258B504B004BE921 /* SplashView */ = {
+			isa = PBXGroup;
+			children = (
+				EFC09623258B5061004BE921 /* Splash.storyboard */,
+				EFC09626258B5073004BE921 /* SplashViewController.swift */,
+			);
+			path = SplashView;
+			sourceTree = "<group>";
+		};
 		EFC62B9025473FC700F19217 /* SettingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -516,6 +530,7 @@
 				C452CE4D253084D8004CDC0A /* Kanit-Medium.ttf in Resources */,
 				C452CE4E253084D8004CDC0A /* Kanit-Bold.ttf in Resources */,
 				C452CE4C253084D8004CDC0A /* Kanit-Light.ttf in Resources */,
+				EFC09624258B5061004BE921 /* Splash.storyboard in Resources */,
 				C452CE3B25308037004CDC0A /* Assets.xcassets in Resources */,
 				EF5E7FF125433D3D0054D025 /* style.json in Resources */,
 				C452CE4F253084D8004CDC0A /* Kanit-Regular.ttf in Resources */,
@@ -592,6 +607,7 @@
 				EF35B888254B078000DA4244 /* DetailMapStationViewController.swift in Sources */,
 				EF4003C8254FFBD100BBE499 /* LastDataViewModel.swift in Sources */,
 				EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */,
+				EFC09627258B5073004BE921 /* SplashViewController.swift in Sources */,
 				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
 				EF7396432548876000A0266C /* ReportViewController.swift in Sources */,
 				EFC8F4F8254ACB22003FCB44 /* CollapsibleTableViewCell.swift in Sources */,
@@ -765,7 +781,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -791,7 +807,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

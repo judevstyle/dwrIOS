@@ -274,7 +274,12 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     override func viewWillAppear(_ animated: Bool) {
         
-        
+        DispatchQueue.global(qos: .background).async {
+            self.getCountStatus()
+            DispatchQueue.main.async {
+                self.tableview.reloadData()
+            }
+        }
     }
     
     func getCountStatus() {
@@ -295,6 +300,17 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
                 self.dashboards[3].value = status4.text ?? ""
                 self.tableview.reloadData()
                 
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+                    if Int(self.dashboards[0].value)! == 0 && Int(self.dashboards[1].value)! == 0 && Int(self.dashboards[2].value)! == 0 {
+                        
+                        let alert = UIAlertController(title: "ไม่มีการเตือนภัย", message: "", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
+                    
+                   
+                }
+                
             case let .error(error):
                 print(error)
             }
@@ -308,17 +324,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         loadMapView()
-        
-        DispatchQueue.global(qos: .background).async {
-            self.getCountStatus()
-            DispatchQueue.main.async {
-                self.tableview.reloadData()
-            }
-        }
-        
-        
     }
     
     // Set the status bar style to complement night-mode.
@@ -360,7 +366,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     func configure(_ interface: LastDataStationProtocol) {
         self.viewModel = interface
         bindToViewModel()
-        self.getLastData(type: "all")
+        self.getLastData(type: "all_warn")
     }
     
     fileprivate func showAlert(data: StationXLastDataModel) {

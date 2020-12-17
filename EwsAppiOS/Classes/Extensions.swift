@@ -529,6 +529,12 @@ extension UIViewController: NVActivityIndicatorViewable {
         stopAnimating()
     }
     
+    
+    func startLodingCircle() {
+        let size = CGSize(width: 35.0, height: 35.0)
+        startAnimating(size, message: "", messageFont: .PrimaryRegular(size: 17), type: .circleStrokeSpin,color: .whiteAlpha(alpha: 0.7), backgroundColor: .blackAlpha(alpha: 0.3), textColor: .white, fadeInAnimation: nil)
+    }
+    
     func errorDialog(title: String, message: String) {
         let dialogMessage = UIAlertController(title: "\(title)", message: "\(message)", preferredStyle: .alert)
         

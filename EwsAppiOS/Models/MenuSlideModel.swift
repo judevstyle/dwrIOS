@@ -19,7 +19,7 @@ struct MenuSlideModel {
     static func menus() -> [MenuSlideModel] {
         var menus = [MenuSlideModel]()
         
-        menus.append(MenuSlideModel(icon: UIImage(named: "IconApp")))
+        menus.append(MenuSlideModel(icon: UIImage(named: "iconAppNew")))
         menus.append(MenuSlideModel(icon:  UIImage(systemName: "house")))
         menus.append(MenuSlideModel(icon:  UIImage(systemName: "magnifyingglass")))
         menus.append(MenuSlideModel(icon:  UIImage(systemName: "mappin.and.ellipse")))
