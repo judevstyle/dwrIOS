@@ -58,6 +58,9 @@
 		EFC8F4F8254ACB22003FCB44 /* CollapsibleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8F4F7254ACB22003FCB44 /* CollapsibleTableViewCell.swift */; };
 		EFC8F4FA254ACB52003FCB44 /* CollapsibleTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8F4F9254ACB52003FCB44 /* CollapsibleTableViewHeader.swift */; };
 		EFC8F4FD254ACC00003FCB44 /* InfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8F4FC254ACC00003FCB44 /* InfoModel.swift */; };
+		EFFD461225939D3300D5738C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = EFFD461125939D3300D5738C /* Toast */; };
+		EFFD46152593B15600D5738C /* DetailReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFD46142593B15600D5738C /* DetailReportViewController.swift */; };
+		EFFD46192593B23C00D5738C /* DetailReportViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFD46182593B23C00D5738C /* DetailReportViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +116,8 @@
 		EFC8F4F7254ACB22003FCB44 /* CollapsibleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewCell.swift; sourceTree = "<group>"; };
 		EFC8F4F9254ACB52003FCB44 /* CollapsibleTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewHeader.swift; sourceTree = "<group>"; };
 		EFC8F4FC254ACC00003FCB44 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
+		EFFD46142593B15600D5738C /* DetailReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportViewController.swift; sourceTree = "<group>"; };
+		EFFD46182593B23C00D5738C /* DetailReportViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFFD461225939D3300D5738C /* Toast in Frameworks */,
 				C452CE5725308573004CDC0A /* NVActivityIndicatorViewExtended in Frameworks */,
 				C452CE5525308573004CDC0A /* NVActivityIndicatorView in Frameworks */,
 				6C485DBA615099ACE6B43ABF /* Pods_EwsAppiOS.framework in Frameworks */,
@@ -244,6 +250,7 @@
 		C452CE5E25309455004CDC0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EFFD46172593B20A00D5738C /* DetailReportViewCell */,
 				EFA0C3962551BA62008A45B2 /* CardSearchItemViewCell */,
 				EFC8F4F6254ACAFC003FCB44 /* Info */,
 				EF73964625488AD300A0266C /* CardReportViewCell */,
@@ -339,6 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				EF7396422548876000A0266C /* ReportViewController.swift */,
+				EFFD46142593B15600D5738C /* DetailReportViewController.swift */,
 			);
 			path = ReportView;
 			sourceTree = "<group>";
@@ -453,6 +461,14 @@
 			path = Info;
 			sourceTree = "<group>";
 		};
+		EFFD46172593B20A00D5738C /* DetailReportViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				EFFD46182593B23C00D5738C /* DetailReportViewCell.swift */,
+			);
+			path = DetailReportViewCell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -477,6 +493,7 @@
 				C452CE5625308573004CDC0A /* NVActivityIndicatorViewExtended */,
 				C490D30A253577F4004CF6BE /* SwiftyXMLParser */,
 				EF2DB9AA257A314B00B45F03 /* SkeletonView */,
+				EFFD461125939D3300D5738C /* Toast */,
 			);
 			productName = EwsAppiOS;
 			productReference = C452CE2B25308031004CDC0A /* EWSTHAI.app */;
@@ -510,6 +527,7 @@
 				C452CE5325308573004CDC0A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 				C490D309253577F4004CF6BE /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */,
 				EF2DB9A9257A314B00B45F03 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				EFFD461025939D3300D5738C /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = C452CE2C25308031004CDC0A /* Products */;
 			projectDirPath = "";
@@ -610,6 +628,7 @@
 				EFC09627258B5073004BE921 /* SplashViewController.swift in Sources */,
 				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
 				EF7396432548876000A0266C /* ReportViewController.swift in Sources */,
+				EFFD46192593B23C00D5738C /* DetailReportViewCell.swift in Sources */,
 				EFC8F4F8254ACB22003FCB44 /* CollapsibleTableViewCell.swift in Sources */,
 				EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */,
 				EF739645254888FA00A0266C /* ReportModel.swift in Sources */,
@@ -631,6 +650,7 @@
 				EF4003C5254FF9F800BBE499 /* LastDataStationProtocol.swift in Sources */,
 				EFA0C3982551BA8A008A45B2 /* CardSearchItemViewCell.swift in Sources */,
 				C452CE612530947A004CDC0A /* MenuSideViewCell.swift in Sources */,
+				EFFD46152593B15600D5738C /* DetailReportViewController.swift in Sources */,
 				EF1A1E9C253C2957009DBBEF /* MainAppViewController.swift in Sources */,
 				EFC62B8F2547378200F19217 /* MenuSlideModel.swift in Sources */,
 				EFC62B9225473FDF00F19217 /* SettingViewController.swift in Sources */,
@@ -781,7 +801,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -807,7 +827,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -871,6 +891,14 @@
 				minimumVersion = 1.11.0;
 			};
 		};
+		EFFD461025939D3300D5738C /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -893,6 +921,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EF2DB9A9257A314B00B45F03 /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
+		};
+		EFFD461125939D3300D5738C /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EFFD461025939D3300D5738C /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 

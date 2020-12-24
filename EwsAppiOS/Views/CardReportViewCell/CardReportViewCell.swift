@@ -126,6 +126,8 @@ class CardReportViewCell: UITableViewCell {
     func setupValue()  {
         titleLabel.text = "\(report!.title!)"
         addressLabel.text = "\(report!.address!)"
+        let formateDateTh = "\(report!.date!)".DateThFormateReport()
+        dateLabel.text = "\(formateDateTh)"
         
         UIView.animate(withDuration: 0.2) {
             self.contentView.layoutIfNeeded()

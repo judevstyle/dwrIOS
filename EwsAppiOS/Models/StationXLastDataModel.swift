@@ -30,6 +30,7 @@ struct StationXLastDataModel : Codable {
     let pm25: String?
     let warn_rf : Double?
     let warn_wl: Double?
+    let value: Double?
     
     init(stn: String,
          warning_type:String,
@@ -48,7 +49,8 @@ struct StationXLastDataModel : Codable {
          dept: String,
          pm25: String,
          warn_rf: Double,
-         warn_wl: Double
+         warn_wl: Double,
+         value: Double
         
     ) {
         self.stn = stn
@@ -69,6 +71,7 @@ struct StationXLastDataModel : Codable {
         self.pm25 = pm25
         self.warn_rf = warn_rf
         self.warn_wl = warn_wl
+        self.value = value
     }
     
     static func mixStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model], viewModel: LastDataViewModel) {
@@ -95,7 +98,8 @@ struct StationXLastDataModel : Codable {
                         dept: station.dept!,
                         pm25: lastdata.pm25!,
                         warn_rf: lastdata.warn_rf!,
-                        warn_wl: lastdata.warn_wl!
+                        warn_wl: lastdata.warn_wl!,
+                        value: lastdata.value!
                     ))
                     
                 }
@@ -129,7 +133,8 @@ struct StationXLastDataModel : Codable {
                         dept: station.dept!,
                         pm25: lastdata.pm25!,
                         warn_rf: lastdata.warn_rf!,
-                        warn_wl: lastdata.warn_wl!
+                        warn_wl: lastdata.warn_wl!,
+                        value: lastdata.value!
                     ))
                 }
             }
@@ -160,7 +165,8 @@ struct StationXLastDataModel : Codable {
                         dept: station.dept!,
                         pm25: lastdata.pm25!,
                         warn_rf: lastdata.warn_rf!,
-                        warn_wl: lastdata.warn_wl!
+                        warn_wl: lastdata.warn_wl!,
+                        value: lastdata.value!
                     ))
                     break
                 }

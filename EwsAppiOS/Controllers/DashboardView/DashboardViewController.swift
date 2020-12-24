@@ -11,6 +11,7 @@ import UIKit
 import SideMenu
 import SwiftyXMLParser
 import Moya
+import Toast_Swift
 
 protocol DashboardDelegateProtocol {
     func ToastLoading()
@@ -214,7 +215,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         if dashboards[index].value.toDouble() != 0 {
             getDataByType(type: type)
         }else {
-            
+            ToastAlert(text: "ไม่มีข้อมูล", duration: 1.5)
         }
         
     }
@@ -237,6 +238,18 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                     let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                                     let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
                                     let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                    
+                                    var valueTitle:Double = 0
+                                    if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                                        valueTitle = myDouble!
+                                    }else {
+                                        if item_station.childElements[0].text == "rain" {
+                                            valueTitle = rainDouble!
+                                        }else if item_station.childElements[0].text == "wl" {
+                                            valueTitle = wlDouble!
+                                        }
+                                    }
+                                    
                                     last_data.append(
                                         LastDataModel(
                                             stn: item_station.attributes["stn"]!,
@@ -254,13 +267,17 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                             status: item_station.childElements[11].text ?? "",
                                             warn_rf: rainDouble ?? 0.0,
                                             warn_wl: wlDouble ?? 0.0,
-                                            stn_cover: item_station.childElements[14].text ?? "")
+                                            stn_cover: item_station.childElements[14].text ?? "",
+                                            value: valueTitle
+                                        )
                                     )
                                 }
                             }
                             self.stopLoding()
                             if last_data.count > 0 {
                                 self.goToStationList(stations_last: last_data)
+                            }else{
+                                self.ToastAlert(text: "ไม่มีข้อมูล", duration: 1.5)
                             }
                         }
                         
@@ -287,6 +304,18 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                     let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                                     let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
                                     let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                    
+                                    var valueTitle:Double = 0
+                                    if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                                        valueTitle = myDouble!
+                                    }else {
+                                        if item_station.childElements[0].text == "rain" {
+                                            valueTitle = rainDouble!
+                                        }else if item_station.childElements[0].text == "wl" {
+                                            valueTitle = wlDouble!
+                                        }
+                                    }
+                                    
                                     last_data.append(
                                         LastDataModel(
                                             stn: item_station.attributes["stn"]!,
@@ -304,7 +333,9 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                             status: item_station.childElements[11].text ?? "",
                                             warn_rf: rainDouble ?? 0.0,
                                             warn_wl: wlDouble ?? 0.0,
-                                            stn_cover: item_station.childElements[14].text ?? "")
+                                            stn_cover: item_station.childElements[14].text ?? "",
+                                            value: valueTitle
+                                            )
                                     )
                                     
                                 }
@@ -314,6 +345,8 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                         self.stopLoding()
                         if last_data.count > 0 {
                             self.goToStationList(stations_last: last_data)
+                        }else{
+                            self.ToastAlert(text: "ไม่มีข้อมูล", duration: 1.5)
                         }
                     }else {
                         for item_station in xml["ews", "station"].all! {
@@ -321,6 +354,18 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                 let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                                 let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
                                 let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                
+                                var valueTitle:Double = 0
+                                if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                                    valueTitle = myDouble!
+                                }else {
+                                    if item_station.childElements[0].text == "rain" {
+                                        valueTitle = rainDouble!
+                                    }else if item_station.childElements[0].text == "wl" {
+                                        valueTitle = wlDouble!
+                                    }
+                                }
+                                
                                 last_data.append(
                                     LastDataModel(
                                         stn: item_station.attributes["stn"]!,
@@ -338,13 +383,17 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                         status: item_station.childElements[11].text ?? "",
                                         warn_rf: rainDouble ?? 0.0,
                                         warn_wl: wlDouble ?? 0.0,
-                                        stn_cover: item_station.childElements[14].text ?? "")
+                                        stn_cover: item_station.childElements[14].text ?? "",
+                                        value: valueTitle
+                                    )
                                 )
                             }
                         }
                         self.stopLoding()
                         if last_data.count > 0 {
                             self.goToStationList(stations_last: last_data)
+                        }else {
+                            self.ToastAlert(text: "ไม่มีข้อมูล", duration: 1.5)
                         }
                     }
                     

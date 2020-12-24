@@ -138,19 +138,19 @@ class CardStationViewCell: UITableViewCell {
         titleLabel.text = "\(station!.title!)"
         addressLabel.attributedText = self.withTextParagraph(text: "\(station!.address!)", fonSize: 15)
         
-        var value = "N/A"
+//        var value = "N/A"
+//
+//        if station!.status == "สถานการณ์ ฝนตกเล็กน้อย" {
+//            value = "\(station!.rain12h!)"
+//        }else {
+//            if station!.warning_type == "rain" {
+//                value = "\(station!.warn_rf!)"
+//            }else if station!.warning_type == "wl" {
+//                value = "\(station!.warn_wl!)"
+//            }
+//        }
         
-        if station!.status == "สถานการณ์ ฝนตกเล็กน้อย" {
-            value = "\(station!.rain12h!)"
-        }else {
-            if station!.warning_type == "rain" {
-                value = "\(station!.warn_rf!)"
-            }else if station!.warning_type == "wl" {
-                value = "\(station!.warn_wl!)"
-            }
-        }
-        
-        valueLabel.text = "\(value)"
+        valueLabel.text = "\(station!.value!)"
         
         switch station!.status! {
         case "สถานการณ์ อพยพ":

@@ -28,6 +28,7 @@ struct LastDataModel : Codable {
     let warn_rf : Double?
     let warn_wl : Double?
     let stn_cover : String?
+    let value : Double?
     
     init(stn: String,
          warning_type:String,
@@ -44,7 +45,8 @@ struct LastDataModel : Codable {
          status:String,
          warn_rf:Double,
          warn_wl:Double,
-         stn_cover:String
+         stn_cover:String,
+         value: Double
     ) {
         self.stn = stn
         self.warning_type = warning_type
@@ -62,6 +64,7 @@ struct LastDataModel : Codable {
         self.warn_rf = warn_rf
         self.warn_wl = warn_wl
         self.stn_cover = stn_cover
+        self.value = value
         
     }
     
@@ -84,6 +87,18 @@ struct LastDataModel : Codable {
                                 let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                                 let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
                                 let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                
+                                var valueTitle:Double = 0
+                                if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                                    valueTitle = myDouble!
+                                }else {
+                                    if item_station.childElements[0].text == "rain" {
+                                        valueTitle = rainDouble!
+                                    }else if item_station.childElements[0].text == "wl" {
+                                        valueTitle = wlDouble!
+                                    }
+                                }
+                                
                                 last_data.append(
                                     LastDataModel(
                                         stn: item_station.attributes["stn"]!,
@@ -101,7 +116,8 @@ struct LastDataModel : Codable {
                                         status: item_station.childElements[11].text ?? "",
                                         warn_rf: rainDouble ?? 0.0,
                                         warn_wl: wlDouble ?? 0.0,
-                                        stn_cover: item_station.childElements[14].text ?? "")
+                                        stn_cover: item_station.childElements[14].text ?? "",
+                                        value: valueTitle)
                                 )
                                 
                             }
@@ -202,6 +218,18 @@ struct LastDataModel : Codable {
                         let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                         let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
                         let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                        
+                        var valueTitle:Double = 0
+                        if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                            valueTitle = myDouble!
+                        }else {
+                            if item_station.childElements[0].text == "rain" {
+                                valueTitle = rainDouble!
+                            }else if item_station.childElements[0].text == "wl" {
+                                valueTitle = wlDouble!
+                            }
+                        }
+                        
                         last_data.append(
                             LastDataModel(
                                 stn: item_station.attributes["stn"]!,
@@ -219,7 +247,9 @@ struct LastDataModel : Codable {
                                 status: item_station.childElements[11].text ?? "",
                                 warn_rf: rainDouble ?? 0.0,
                                 warn_wl: wlDouble ?? 0.0,
-                                stn_cover: item_station.childElements[14].text ?? "")
+                                stn_cover: item_station.childElements[14].text ?? "",
+                                value: valueTitle
+                                )
                         )
                     }
                 }
@@ -251,6 +281,19 @@ struct LastDataModel : Codable {
                         let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                         let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
                         let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                        
+                        
+                        var valueTitle:Double = 0
+                        if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                            valueTitle = myDouble!
+                        }else {
+                            if item_station.childElements[0].text == "rain" {
+                                valueTitle = rainDouble!
+                            }else if item_station.childElements[0].text == "wl" {
+                                valueTitle = wlDouble!
+                            }
+                        }
+                        
                         last_data.append(
                             LastDataModel(
                                 stn: item_station.attributes["stn"]!,
@@ -268,7 +311,9 @@ struct LastDataModel : Codable {
                                 status: item_station.childElements[11].text ?? "",
                                 warn_rf: rainDouble ?? 0.0,
                                 warn_wl: wlDouble ?? 0.0,
-                                stn_cover: item_station.childElements[14].text ?? "")
+                                stn_cover: item_station.childElements[14].text ?? "",
+                                value: valueTitle
+                            )
                         )
                     }
                 }
@@ -303,6 +348,18 @@ struct LastDataModel : Codable {
                         let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                         let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
                         let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                        
+                        var valueTitle:Double = 0
+                        if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                            valueTitle = myDouble!
+                        }else {
+                            if item_station.childElements[0].text == "rain" {
+                                valueTitle = rainDouble!
+                            }else if item_station.childElements[0].text == "wl" {
+                                valueTitle = wlDouble!
+                            }
+                        }
+                        
                         last_data.append(
                             LastDataModel(
                                 stn: item_station.attributes["stn"]!,
@@ -320,7 +377,9 @@ struct LastDataModel : Codable {
                                 status: item_station.childElements[11].text ?? "",
                                 warn_rf: rainDouble ?? 0.0,
                                 warn_wl: wlDouble ?? 0.0,
-                                stn_cover: item_station.childElements[14].text ?? "")
+                                stn_cover: item_station.childElements[14].text ?? "",
+                                value: valueTitle
+                            )
                         )
                     }
                 }
@@ -357,6 +416,18 @@ struct LastDataModel : Codable {
                         let myDouble = Double(item_station.childElements[4].text ?? "0.0")
                         let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
                         let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                        
+                        var valueTitle:Double = 0
+                        if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                            valueTitle = myDouble!
+                        }else {
+                            if item_station.childElements[0].text == "rain" {
+                                valueTitle = rainDouble!
+                            }else if item_station.childElements[0].text == "wl" {
+                                valueTitle = wlDouble!
+                            }
+                        }
+                        
                         last_data.append(
                             LastDataModel(
                                 stn: item_station.attributes["stn"]!,
@@ -374,7 +445,9 @@ struct LastDataModel : Codable {
                                 status: item_station.childElements[11].text ?? "",
                                 warn_rf: rainDouble ?? 0.0,
                                 warn_wl: wlDouble ?? 0.0,
-                                stn_cover: item_station.childElements[14].text ?? "")
+                                stn_cover: item_station.childElements[14].text ?? "",
+                                value: valueTitle
+                            )
                         )
                     }
                 }
@@ -390,96 +463,124 @@ struct LastDataModel : Codable {
     }
     
     
-    static func FetchLastDataV2(type:String) -> [LastDataModel]{
-        
-        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
-        
-        var pathUrl:String = "/lastdata.xml"
-        
-        switch type {
-        case "สถานการณ์ ฝนตกเล็กน้อย":
-            pathUrl = "/lastdata.xml"
-        default:
-            pathUrl = "/warn.xml"
-        }
-        
-        let urlString = URL(string: "\(baseURL)\(pathUrl)")
-        
-        let xml = try! XML.parse(Data(contentsOf: urlString!))
-        
-        var last_data = [LastDataModel]()
-        
-        if let count = xml["ews", "station"].all?.count {
-            if count > 0 {
-                if type == "all" {
-                    for item_station in xml["ews", "station"].all! {
-                        
-                        if item_station.childElements[11].name == "status" && item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[11].text! != "สถานการณ์ ปกติ" {
-                            
-                            let myDouble = Double(item_station.childElements[4].text ?? "0.0")
-                            let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
-                            let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
-                            last_data.append(
-                                LastDataModel(
-                                    stn: item_station.attributes["stn"]!,
-                                    warning_type: item_station.childElements[0].text ?? "",
-                                    date: item_station.childElements[1].text ?? "",
-                                    temp: item_station.childElements[2].text ?? "",
-                                    rain: item_station.childElements[3].text ?? "",
-                                    rain12h: myDouble ?? 0.0,
-                                    rain07h: item_station.childElements[5].text ?? "",
-                                    rain24h: item_station.childElements[6].text ?? "",
-                                    wl: item_station.childElements[7].text ?? "",
-                                    wl07h: item_station.childElements[8].text ?? "",
-                                    soil: item_station.childElements[9].text ?? "",
-                                    pm25: item_station.childElements[10].text ?? "",
-                                    status: item_station.childElements[11].text ?? "",
-                                    warn_rf: rainDouble ?? 0.0,
-                                    warn_wl: wlDouble ?? 0.0,
-                                    stn_cover: item_station.childElements[14].text ?? "")
-                            )
-                            
-                        }
-                    }
-                }else {
-                    for item_station in xml["ews", "station"].all! {
-                        if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
-                            let myDouble = Double(item_station.childElements[4].text ?? "0.0")
-                            let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
-                            let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
-                            last_data.append(
-                                LastDataModel(
-                                    stn: item_station.attributes["stn"]!,
-                                    warning_type: item_station.childElements[0].text ?? "",
-                                    date: item_station.childElements[1].text ?? "",
-                                    temp: item_station.childElements[2].text ?? "",
-                                    rain: item_station.childElements[3].text ?? "",
-                                    rain12h: myDouble ?? 0.0,
-                                    rain07h: item_station.childElements[5].text ?? "",
-                                    rain24h: item_station.childElements[6].text ?? "",
-                                    wl: item_station.childElements[7].text ?? "",
-                                    wl07h: item_station.childElements[8].text ?? "",
-                                    soil: item_station.childElements[9].text ?? "",
-                                    pm25: item_station.childElements[10].text ?? "",
-                                    status: item_station.childElements[11].text ?? "",
-                                    warn_rf: rainDouble ?? 0.0,
-                                    warn_wl: wlDouble ?? 0.0,
-                                    stn_cover: item_station.childElements[14].text ?? "")
-                            )
-                        }
-                    }
-                }
-                
-            }
-        }
- 
-        switch type {
-        case "สถานการณ์ ฝนตกเล็กน้อย":
-            return last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
-        default:
-            return last_data.sorted(by: {$1.warn_rf! < $0.warn_rf!})
-        }
-    }
-    
+//    static func FetchLastDataV2(type:String) -> [LastDataModel]{
+//
+//        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+//
+//        var pathUrl:String = "/lastdata.xml"
+//
+//        switch type {
+//        case "สถานการณ์ ฝนตกเล็กน้อย":
+//            pathUrl = "/lastdata.xml"
+//        default:
+//            pathUrl = "/warn.xml"
+//        }
+//
+//        let urlString = URL(string: "\(baseURL)\(pathUrl)")
+//
+//        let xml = try! XML.parse(Data(contentsOf: urlString!))
+//
+//        var last_data = [LastDataModel]()
+//
+//        if let count = xml["ews", "station"].all?.count {
+//            if count > 0 {
+//                if type == "all" {
+//                    for item_station in xml["ews", "station"].all! {
+//
+//                        if item_station.childElements[11].name == "status" && item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[11].text! != "สถานการณ์ ปกติ" {
+//
+//                            let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+//                            let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+//                            let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+//
+//                            var valueTitle:Double = 0
+//                            if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+//                                valueTitle = myDouble!
+//                            }else {
+//                                if item_station.childElements[0].text == "rain" {
+//                                    valueTitle = rainDouble!
+//                                }else if item_station.childElements[0].text == "wl" {
+//                                    valueTitle = wlDouble!
+//                                }
+//                            }
+//
+//                            last_data.append(
+//                                LastDataModel(
+//                                    stn: item_station.attributes["stn"]!,
+//                                    warning_type: item_station.childElements[0].text ?? "",
+//                                    date: item_station.childElements[1].text ?? "",
+//                                    temp: item_station.childElements[2].text ?? "",
+//                                    rain: item_station.childElements[3].text ?? "",
+//                                    rain12h: myDouble ?? 0.0,
+//                                    rain07h: item_station.childElements[5].text ?? "",
+//                                    rain24h: item_station.childElements[6].text ?? "",
+//                                    wl: item_station.childElements[7].text ?? "",
+//                                    wl07h: item_station.childElements[8].text ?? "",
+//                                    soil: item_station.childElements[9].text ?? "",
+//                                    pm25: item_station.childElements[10].text ?? "",
+//                                    status: item_station.childElements[11].text ?? "",
+//                                    warn_rf: rainDouble ?? 0.0,
+//                                    warn_wl: wlDouble ?? 0.0,
+//                                    stn_cover: item_station.childElements[14].text ?? "",
+//                                    value: valueTitle
+//                                )
+//                            )
+//
+//                        }
+//                    }
+//                }else {
+//                    for item_station in xml["ews", "station"].all! {
+//                        if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
+//                            let myDouble = Double(item_station.childElements[4].text ?? "0.0")
+//                            let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
+//                            let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+//
+//                            var valueTitle:Double = 0
+//                            if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+//                                valueTitle = myDouble!
+//                            }else {
+//                                if item_station.childElements[0].text == "rain" {
+//                                    valueTitle = rainDouble!
+//                                }else if item_station.childElements[0].text == "wl" {
+//                                    valueTitle = wlDouble!
+//                                }
+//                            }
+//
+//                            last_data.append(
+//                                LastDataModel(
+//                                    stn: item_station.attributes["stn"]!,
+//                                    warning_type: item_station.childElements[0].text ?? "",
+//                                    date: item_station.childElements[1].text ?? "",
+//                                    temp: item_station.childElements[2].text ?? "",
+//                                    rain: item_station.childElements[3].text ?? "",
+//                                    rain12h: myDouble ?? 0.0,
+//                                    rain07h: item_station.childElements[5].text ?? "",
+//                                    rain24h: item_station.childElements[6].text ?? "",
+//                                    wl: item_station.childElements[7].text ?? "",
+//                                    wl07h: item_station.childElements[8].text ?? "",
+//                                    soil: item_station.childElements[9].text ?? "",
+//                                    pm25: item_station.childElements[10].text ?? "",
+//                                    status: item_station.childElements[11].text ?? "",
+//                                    warn_rf: rainDouble ?? 0.0,
+//                                    warn_wl: wlDouble ?? 0.0,
+//                                    stn_cover: item_station.childElements[14].text ?? "",
+//                                    value: valueTitle
+//                                )
+//                            )
+//                        }
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//        switch type {
+//        case "สถานการณ์ ฝนตกเล็กน้อย":
+//            return last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
+//        default:
+//            return last_data.sorted(by: {$1.warn_rf! < $0.warn_rf!})
+//        }
+//    }
+//
     
 }

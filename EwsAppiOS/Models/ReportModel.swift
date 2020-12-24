@@ -25,12 +25,14 @@ struct ReportModel {
     var address: String?
     var date: String?
     var status: TypeStatusWeather?
+    var body: String?
     
-    init(title: String?, address:String?, date: String?, status: TypeStatusWeather?) {
+    init(title: String?, address:String?, date: String?, status: TypeStatusWeather?, body: String?) {
         self.title = title
         self.address = address
         self.date = date
         self.status = status
+        self.body = body
     }
     
     static func reports() -> [ReportModel] {
@@ -50,6 +52,10 @@ struct ReportModel {
                     
                     var status: TypeStatusWeather = .Caution
                     
+                    var date: String = item_report.childElements[0].text!
+                    
+                    var body: String = item_report.childElements[3].text!
+                    
                     switch statusStr {
                     case "อพยพ":
                         status = .Evacuate
@@ -63,7 +69,7 @@ struct ReportModel {
                         status = .Normal
                     }
                     
-                    reports.append(ReportModel(title: "\(title[0])", address: "สถานี \(title[1])", date: "วันที่ 22 เดือน ตุลาคม พ.ศ. 2563 เวลา 19.57.00", status: status))
+                    reports.append(ReportModel(title: "\(title[0])", address: "สถานี \(title[1])", date: "\(date)", status: status, body: "\(body)"))
                 }
                 
             }

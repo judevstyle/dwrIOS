@@ -444,6 +444,12 @@ extension UIFont {
 
 extension UIViewController: NVActivityIndicatorViewable {
     
+    func ToastAlert(text: String, duration: Double) {
+        self.view.makeToast("\(text)", duration: duration, position: .bottom)
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            self.view.hideToast()
+        }
+    }
     
     func convertRectOfInterest(rect: CGRect) -> CGRect {
         let screenRect = self.view.frame
@@ -612,6 +618,67 @@ extension NSAttributedString {
 import Foundation
 
 extension String {
+    
+    
+    func DateThFormateReport() -> String {
+        
+        let dateAndtime = self.components(separatedBy: " ")
+        let date = dateAndtime[0].components(separatedBy: "-")
+        let time = dateAndtime[1].components(separatedBy: ":")
+        
+    
+        let dayTH = date[2]
+        
+        var mountTH = "มกราคม"
+        
+        switch Int(date[1]) {
+        case 1:
+            mountTH = "มกราคม"
+            break
+        case 2:
+            mountTH = "กุมภาพันธ์"
+            break
+        case 3:
+            mountTH = "มีนาคม"
+            break
+        case 4:
+            mountTH = "เมษายน"
+            break
+        case 5:
+            mountTH = "พฤษภาคม"
+            break
+        case 6:
+            mountTH = "มิถุนายน"
+            break
+        case 7:
+            mountTH = "กรกฎาคม"
+            break
+        case 8:
+            mountTH = "สิงหาคม"
+            break
+        case 9:
+            mountTH = "กันยายน"
+            break
+        case 10:
+            mountTH = "ตุลาคม"
+            break
+        case 11:
+            mountTH = "พฤศจิกายน"
+            break
+        case 12:
+            mountTH = "ธันวาคม"
+            break
+        default:
+            mountTH = "มกราคม"
+        }
+        
+        let yearTH = "\(Int(date[0])! + 543)"
+        
+        //    "วันที่ 22 เดือน ตุลาคม พ.ศ. 2563 เวลา 19.57.00"
+        let fullDate = "วันที่ \(dayTH) เดือน \(mountTH) พ.ศ. \(yearTH) เวลา \(time[0]).\(time[1]).\(time[2])"
+        
+        return fullDate
+    }
     
     func isBase64() -> Bool {
         guard Data(base64Encoded: self) != nil else {

@@ -41,8 +41,8 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.setTitleNavigation(title: "รายงาน")
         
         
-         let leftbutton = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleClose))
-                   leftbutton.tintColor = .white
+        let leftbutton = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleClose))
+        leftbutton.tintColor = .white
         
         navigationItem.leftBarButtonItem = leftbutton
         tableview.register(CardReportViewCell.self, forCellReuseIdentifier: cellId)
@@ -70,46 +70,52 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         APIServiceProvider.rx.request(.GetWarnReport).subscribe { event in
             switch event {
-                case let .success(response):
-                    
-                    let xml = XML.parse(response.data)
-                    var reports = [ReportModel]()
-                    
-                    if let count = xml["ews", "station"].all?.count {
-                        if count > 0 {
-                            for item_report in xml["ews", "station"].all! {
-                                let title = item_report.childElements[1].text!.subStringReport()
-                                
-                                let statusStr = title[0].subStringReportStatus()
-                                
-                                var status: TypeStatusWeather = .Caution
-                                
-                                switch statusStr {
-                                case "อพยพ":
-                                    status = .Evacuate
-                                case "เตือนภัย":
-                                    status = .Caution
-                                case "เฝ้าระวัง":
-                                    status = .Watchout
-                                case "ฝนตกเล็กน้อย":
-                                    status = .Rain
-                                default:
-                                    status = .Normal
-                                }
-                                
-                                reports.append(ReportModel(title: "\(title[0])", address: "สถานี \(title[1])", date: "วันที่ 22 เดือน ตุลาคม พ.ศ. 2563 เวลา 19.57.00", status: status))
+            case let .success(response):
+                
+                let xml = XML.parse(response.data)
+                var reports = [ReportModel]()
+                
+                if let count = xml["ews", "station"].all?.count {
+                    if count > 0 {
+                        for item_report in xml["ews", "station"].all! {
+                            let title = item_report.childElements[1].text!.subStringReport()
+                            
+                            let statusStr = title[0].subStringReportStatus()
+                            
+                            var status: TypeStatusWeather = .Caution
+                            
+                            var date: String = item_report.childElements[0].text!
+                            
+                            var body: String = item_report.childElements[3].text!
+                            
+                            
+                            switch statusStr {
+                            case "อพยพ":
+                                status = .Evacuate
+                            case "เตือนภัย":
+                                status = .Caution
+                            case "เฝ้าระวัง":
+                                status = .Watchout
+                            case "ฝนตกเล็กน้อย":
+                                status = .Rain
+                            default:
+                                status = .Normal
                             }
                             
-                            self.reports_list = reports
-                            self.tableview.reloadData()
-                            self.stopLoding()
+                            
+                            reports.append(ReportModel(title: "\(title[0])", address: "สถานี \(title[1])", date: "\(date)", status: status, body: "\(body)"))
                         }
+                        
+                        self.reports_list = reports
+                        self.tableview.reloadData()
+                        self.stopLoding()
                     }
-                    
-                case let .error(error):
-                    self.stopLoding()
-                    print(error)
                 }
+                
+            case let .error(error):
+                self.stopLoding()
+                print(error)
+            }
         }
     }
     
@@ -132,15 +138,16 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return UITableView.automaticDimension
     }
     
-    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //        let rootVC = DetailStationViewController()
-    ////        rootVC.stations_last = self.stations_last
-    //        let rootNC = UINavigationController(rootViewController: rootVC)
-    //        rootNC.modalPresentationStyle = .overFullScreen
-    //        rootNC.modalTransitionStyle = .crossDissolve
-    //        present(rootNC, animated: true, completion: nil)
-    //    }
-    //
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let rootVC = DetailReportViewController()
+        rootVC.reports = self.reports_list
+        rootVC.currentPage = indexPath.item
+        let rootNC = UINavigationController(rootViewController: rootVC)
+        rootNC.modalPresentationStyle = .overFullScreen
+        rootNC.modalTransitionStyle = .crossDissolve
+        present(rootNC, animated: true, completion: nil)
+    }
+
     
     
 }

@@ -120,7 +120,8 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
           self.stations_last!.removeAll()
            DispatchQueue.global(qos: .background).async {
             var list_ew07 = Ews07Model.FetchEws07()
-            StationXLastDataModel.mixStationXLastDataV2(last_data: last_data, list_ew07: list_ew07, viewModel: self.viewModel as! LastDataViewModel)
+            let sortedLast_data = last_data.sorted(by: {$1.value! < $0.value!})
+            StationXLastDataModel.mixStationXLastDataV2(last_data: sortedLast_data, list_ew07: list_ew07, viewModel: self.viewModel as! LastDataViewModel)
            }
        }
     

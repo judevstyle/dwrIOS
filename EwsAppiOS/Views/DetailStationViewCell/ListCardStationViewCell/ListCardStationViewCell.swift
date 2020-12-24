@@ -108,15 +108,17 @@ class ListCardStationViewCell: UITableViewCell {
         
         var value = "\nN/A"
         
-        if station!.status == "สถานการณ์ ฝนตกเล็กน้อย" {
-            value = "\n\(station!.rain12h!)"
-        }else {
-            if station!.warning_type == "rain" {
-                value = "\n\(station!.warn_rf!)"
-            }else if station!.warning_type == "wl" {
-                value = "\n\(station!.warn_wl!)"
-            }
-        }
+//        if station!.status == "สถานการณ์ ฝนตกเล็กน้อย" {
+//            value = "\n\(station!.rain12h!)"
+//        }else {
+//            if station!.warning_type == "rain" {
+//                value = "\n\(station!.warn_rf!)"
+//            }else if station!.warning_type == "wl" {
+//                value = "\n\(station!.warn_wl!)"
+//            }
+//        }
+        
+        value = "\n\(station!.rain12h!)"
         
         let name = "\n\(station!.title!)"
         let address = "\n\(station!.address!)"

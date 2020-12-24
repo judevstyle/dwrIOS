@@ -76,6 +76,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             StationModel.FetchStations()
         }
         
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore  {
+            print("Not first launch.")
+        } else {
+            print("First launch, setting UserDefault.")
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            UserDefaults.standard.set(true, forKey: "status_notification")
+            
+            Messaging.messaging().subscribe(toTopic: "ews") { error in
+              print("Subscribed to ews topic")
+            }
+        }
+        
         return true
     }
     
