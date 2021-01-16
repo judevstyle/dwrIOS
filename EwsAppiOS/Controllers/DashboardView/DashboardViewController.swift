@@ -109,15 +109,14 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
         
         //        self.startLoding()
-        DispatchQueue.global(qos: .background).async {
-            self.dashboards = DashboardCardModel.getCountStatus()
-            
-            
-            DispatchQueue.main.async {
-                //                self.stopLoding()
-                self.tableview.reloadData()
-            }
-        }
+//        DispatchQueue.global(qos: .background).async {
+//            self.dashboards = DashboardCardModel.getCountStatus()
+//
+//
+//            DispatchQueue.main.async {
+//                self.tableview.reloadData()
+//            }
+//        }
         
         DispatchQueue.main.async {
             self.getCountStatus()
@@ -134,21 +133,23 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         APIServiceProvider.rx.request(.GetCountStatus).subscribe { event in
             switch event {
             case let .success(response):
-                
                 let xml = XML.parse(response.data)
                 let status3 = xml["ews"]["status1"]
                 let status2 = xml["ews"]["status2"]
                 let status1 = xml["ews"]["status3"]
                 let status4 = xml["ews"]["status9"]
                 
-                self.dashboards[0].value = status1.text ?? ""
-                self.dashboards[1].value = status2.text ?? ""
-                self.dashboards[2].value = status3.text ?? ""
-                self.dashboards[3].value = status4.text ?? ""
+                self.dashboards[0].value = status1.text ?? "0"
+                self.dashboards[1].value = status2.text ?? "0"
+                self.dashboards[2].value = status3.text ?? "0"
+                self.dashboards[3].value = status4.text ?? "0"
                 self.tableview.reloadData()
                 
             case let .error(error):
-                print(error)
+                self.dashboards[0].value = "0"
+                self.dashboards[1].value = "0"
+                self.dashboards[2].value = "0"
+                self.dashboards[3].value = "0"
             }
         }
     }

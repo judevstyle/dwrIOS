@@ -294,14 +294,14 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
                 let status1 = xml["ews"]["status3"]
                 let status4 = xml["ews"]["status9"]
                 
-                self.dashboards[0].value = status1.text ?? ""
-                self.dashboards[1].value = status2.text ?? ""
-                self.dashboards[2].value = status3.text ?? ""
-                self.dashboards[3].value = status4.text ?? ""
+                self.dashboards[0].value = status1.text ?? "0"
+                self.dashboards[1].value = status2.text ?? "0"
+                self.dashboards[2].value = status3.text ?? "0"
+                self.dashboards[3].value = status4.text ?? "0"
                 self.tableview.reloadData()
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
-                    if Int(self.dashboards[0].value)! == 0 && Int(self.dashboards[1].value)! == 0 && Int(self.dashboards[2].value)! == 0 {
+                    if Int(self.dashboards[0].value ?? "0")! == 0 && Int(self.dashboards[1].value ?? "0")! == 0 && Int(self.dashboards[2].value ?? "0")! == 0 {
                         
                         let alert = UIAlertController(title: "ไม่มีการเตือนภัย", message: "", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -312,7 +312,10 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
                 }
                 
             case let .error(error):
-                print(error)
+                self.dashboards[0].value = "0"
+                self.dashboards[1].value = "0"
+                self.dashboards[2].value = "0"
+                self.dashboards[3].value = "0"
             }
         }
     }

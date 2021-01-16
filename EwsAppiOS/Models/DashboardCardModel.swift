@@ -48,6 +48,8 @@ struct DashboardCardModel {
     }
     
     static func getCountStatus() -> [DashboardCardModel] {
+        
+        
         var dashboards = [DashboardCardModel]()
         
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
@@ -59,10 +61,10 @@ struct DashboardCardModel {
         let status1 = xml["ews"]["status3"]
         let status4 = xml["ews"]["status9"]
         
-        dashboards.append(DashboardCardModel(name: "อพยพ", value: status1.text! ?? "0", color: .systemRed, icon: UIImage(named: "rain_tornado")!))
-        dashboards.append(DashboardCardModel(name: "เตือนภัย", value: status2.text! ?? "0", color: .systemYellow, icon: UIImage(named: "rain_thunder")!))
-        dashboards.append(DashboardCardModel(name: "เฝ้าระวัง", value: status3.text! ?? "0", color: .systemGreen, icon: UIImage(named: "rain")!))
-        dashboards.append(DashboardCardModel(name: "มีฝน", value: status4.text! ?? "0", color: .mediumBlue, icon: UIImage(named: "overcast")!))
+        dashboards.append(DashboardCardModel(name: "อพยพ", value: status1.text ?? "0", color: .systemRed, icon: UIImage(named: "rain_tornado")!))
+        dashboards.append(DashboardCardModel(name: "เตือนภัย", value: status2.text ?? "0", color: .systemYellow, icon: UIImage(named: "rain_thunder")!))
+        dashboards.append(DashboardCardModel(name: "เฝ้าระวัง", value: status3.text ?? "0", color: .systemGreen, icon: UIImage(named: "rain")!))
+        dashboards.append(DashboardCardModel(name: "มีฝน", value: status4.text ?? "0", color: .mediumBlue, icon: UIImage(named: "overcast")!))
         
         return dashboards
     }
