@@ -236,18 +236,18 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                         if count > 0 {
                             for item_station in xml["ews", "station"].all! {
                                 if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
-                                    let myDouble = Double(item_station.childElements[4].text ?? "0.0")
-                                    let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
-                                    let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                    let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
+                                    let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
+                                    let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
                                     
                                     var valueTitle:Double = 0
                                     if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
-                                        valueTitle = myDouble!
+                                        valueTitle = myDouble
                                     }else {
                                         if item_station.childElements[0].text == "rain" {
-                                            valueTitle = rainDouble!
+                                            valueTitle = rainDouble
                                         }else if item_station.childElements[0].text == "wl" {
-                                            valueTitle = wlDouble!
+                                            valueTitle = wlDouble
                                         }
                                     }
                                     
@@ -258,7 +258,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                             date: item_station.childElements[1].text ?? "",
                                             temp: item_station.childElements[2].text ?? "",
                                             rain: item_station.childElements[3].text ?? "",
-                                            rain12h: myDouble ?? 0.0,
+                                            rain12h: myDouble,
                                             rain07h: item_station.childElements[5].text ?? "",
                                             rain24h: item_station.childElements[6].text ?? "",
                                             wl: item_station.childElements[7].text ?? "",
@@ -266,8 +266,8 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                             soil: item_station.childElements[9].text ?? "",
                                             pm25: item_station.childElements[10].text ?? "",
                                             status: item_station.childElements[11].text ?? "",
-                                            warn_rf: rainDouble ?? 0.0,
-                                            warn_wl: wlDouble ?? 0.0,
+                                            warn_rf: rainDouble,
+                                            warn_wl: wlDouble,
                                             stn_cover: item_station.childElements[14].text ?? "",
                                             value: valueTitle
                                         )
@@ -302,18 +302,18 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                             for item_station in xml["ews", "station"].all! {
                                 if item_station.childElements[11].name == "status" && item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[11].text! != "สถานการณ์ ปกติ" {
                                     
-                                    let myDouble = Double(item_station.childElements[4].text ?? "0.0")
-                                    let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
-                                    let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                    let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
+                                    let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
+                                    let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
                                     
                                     var valueTitle:Double = 0
                                     if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
-                                        valueTitle = myDouble!
+                                        valueTitle = myDouble
                                     }else {
                                         if item_station.childElements[0].text == "rain" {
-                                            valueTitle = rainDouble!
+                                            valueTitle = rainDouble
                                         }else if item_station.childElements[0].text == "wl" {
-                                            valueTitle = wlDouble!
+                                            valueTitle = wlDouble
                                         }
                                     }
                                     
@@ -324,7 +324,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                             date: item_station.childElements[1].text ?? "",
                                             temp: item_station.childElements[2].text ?? "",
                                             rain: item_station.childElements[3].text ?? "",
-                                            rain12h: myDouble ?? 0.0,
+                                            rain12h: myDouble,
                                             rain07h: item_station.childElements[5].text ?? "",
                                             rain24h: item_station.childElements[6].text ?? "",
                                             wl: item_station.childElements[7].text ?? "",
@@ -332,8 +332,8 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                             soil: item_station.childElements[9].text ?? "",
                                             pm25: item_station.childElements[10].text ?? "",
                                             status: item_station.childElements[11].text ?? "",
-                                            warn_rf: rainDouble ?? 0.0,
-                                            warn_wl: wlDouble ?? 0.0,
+                                            warn_rf: rainDouble,
+                                            warn_wl: wlDouble,
                                             stn_cover: item_station.childElements[14].text ?? "",
                                             value: valueTitle
                                             )
@@ -352,18 +352,18 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                     }else {
                         for item_station in xml["ews", "station"].all! {
                             if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
-                                let myDouble = Double(item_station.childElements[4].text ?? "0.0")
-                                let rainDouble = Double(item_station.childElements[12].text ?? "0.0")
-                                let wlDouble = Double(item_station.childElements[13].text ?? "0.0")
+                                let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
+                                let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
+                                let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
                                 
-                                var valueTitle:Double = 0
+                                var valueTitle:Double = 0.0
                                 if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
-                                    valueTitle = myDouble!
+                                    valueTitle = myDouble
                                 }else {
                                     if item_station.childElements[0].text == "rain" {
-                                        valueTitle = rainDouble!
+                                        valueTitle = rainDouble
                                     }else if item_station.childElements[0].text == "wl" {
-                                        valueTitle = wlDouble!
+                                        valueTitle = wlDouble
                                     }
                                 }
                                 
@@ -374,7 +374,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                         date: item_station.childElements[1].text ?? "",
                                         temp: item_station.childElements[2].text ?? "",
                                         rain: item_station.childElements[3].text ?? "",
-                                        rain12h: myDouble ?? 0.0,
+                                        rain12h: myDouble,
                                         rain07h: item_station.childElements[5].text ?? "",
                                         rain24h: item_station.childElements[6].text ?? "",
                                         wl: item_station.childElements[7].text ?? "",
@@ -382,8 +382,8 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                         soil: item_station.childElements[9].text ?? "",
                                         pm25: item_station.childElements[10].text ?? "",
                                         status: item_station.childElements[11].text ?? "",
-                                        warn_rf: rainDouble ?? 0.0,
-                                        warn_wl: wlDouble ?? 0.0,
+                                        warn_rf: rainDouble,
+                                        warn_wl: wlDouble,
                                         stn_cover: item_station.childElements[14].text ?? "",
                                         value: valueTitle
                                     )
