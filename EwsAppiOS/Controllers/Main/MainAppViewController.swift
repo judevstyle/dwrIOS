@@ -8,16 +8,13 @@
 
 import UIKit
 import SideMenu
-import CoreLocation
 
 protocol MainAppDelegateProtocol {
     func openr(name: String)
     func ToastLoading()
 }
 
-class MainAppViewController: UIViewController, MainAppDelegateProtocol, CLLocationManagerDelegate {
-
-     let locationManager = CLLocationManager()
+class MainAppViewController: UIViewController, MainAppDelegateProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,21 +51,7 @@ class MainAppViewController: UIViewController, MainAppDelegateProtocol, CLLocati
       }
     
     override func viewWillAppear(_ animated: Bool) {
-          locationManager.requestAlwaysAuthorization()
-            locationManager.requestWhenInUseAuthorization()
-              
-              if CLLocationManager.locationServicesEnabled() {
-                  locationManager.delegate = self
-                  locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-                  locationManager.startUpdatingLocation()
-              }
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        AppDelegate.shareDelegate.currentLocation = locValue
-        locationManager.stopUpdatingLocation()
+   
     }
     
     
