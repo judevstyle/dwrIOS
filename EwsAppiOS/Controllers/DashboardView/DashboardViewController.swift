@@ -30,7 +30,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     lazy var viewAllButton: UIButton = {
         let button = UIButton()
-        button.setTitle("ดูสถานการ์ณทั้งหมด", for: .normal)
+        button.setTitle("ดูสถานการณ์ทั้งหมด", for: .normal)
         
         button.titleLabel?.font = .PrimaryRegular(size: 20)
         button.addTarget(self, action: #selector(handleAllEws), for: .touchUpInside)
@@ -84,9 +84,9 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         view.backgroundColor = .AppPrimary()
         self.setHideBorderNavigation(status: true)
         self.setBarStyleNavigation(style: .black)
-        self.setTitleNavigation(title: "สรุปสถานการ์ณฝน")
+        self.setTitleNavigation(title: "สรุปสถานการณ์ฝน")
         
-        let leftbutton = UIBarButtonItem(image: UIImage(named: "menu"), style: .done, target: self, action: #selector(handleSlide))
+        let leftbutton = UIBarButtonItem(image: UIImage(named: "ic_menu"), style: .done, target: self, action: #selector(handleSlide))
         
         leftbutton.tintColor = .white
         

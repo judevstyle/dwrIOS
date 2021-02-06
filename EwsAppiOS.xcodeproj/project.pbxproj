@@ -66,7 +66,7 @@
 /* Begin PBXFileReference section */
 		5A90D6DCBD6825A8E250803A /* Pods_EwsAppiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EwsAppiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		70EF7AD5828DF5FB899BCC69 /* Pods-EwsAppiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.release.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.release.xcconfig"; sourceTree = "<group>"; };
-		C452CE2B25308031004CDC0A /* EWSTHAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EWSTHAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C452CE2B25308031004CDC0A /* EWS DWR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EWS DWR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C452CE2E25308031004CDC0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C452CE3825308031004CDC0A /* EwsAppiOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EwsAppiOS.xcdatamodel; sourceTree = "<group>"; };
 		C452CE3A25308037004CDC0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 		C452CE2C25308031004CDC0A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C452CE2B25308031004CDC0A /* EWSTHAI.app */,
+				C452CE2B25308031004CDC0A /* EWS DWR.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -496,7 +496,7 @@
 				EFFD461125939D3300D5738C /* Toast */,
 			);
 			productName = EwsAppiOS;
-			productReference = C452CE2B25308031004CDC0A /* EWSTHAI.app */;
+			productReference = C452CE2B25308031004CDC0A /* EWS DWR.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -801,7 +801,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -809,8 +809,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = th.go.dwr.ews4thai;
-				PRODUCT_NAME = EWSTHAI;
+				PRODUCT_NAME = "EWS DWR";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -827,7 +828,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -835,8 +836,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = th.go.dwr.ews4thai;
-				PRODUCT_NAME = EWSTHAI;
+				PRODUCT_NAME = "EWS DWR";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
