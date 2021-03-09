@@ -10,23 +10,25 @@ import UIKit
 
 struct MenuSlideModel {
     var icon: UIImage?
+    var index: Int?
     
-    init(icon: UIImage?) {
+    init(icon: UIImage?, index: Int?) {
         self.icon = icon
+        self.index = index
     }
     
     
     static func menus() -> [MenuSlideModel] {
         var menus = [MenuSlideModel]()
         
-        menus.append(MenuSlideModel(icon: UIImage(named: "iconAppNew")))
-        menus.append(MenuSlideModel(icon:  UIImage(systemName: "house")))
-        menus.append(MenuSlideModel(icon:  UIImage(systemName: "mappin.and.ellipse")))
-        menus.append(MenuSlideModel(icon:  UIImage(systemName: "map")))
-        menus.append(MenuSlideModel(icon:  UIImage(systemName: "magnifyingglass")))
+        menus.append(MenuSlideModel(icon: UIImage(named: "iconAppNew"), index: 0))
+        menus.append(MenuSlideModel(icon:  UIImage(systemName: "house"), index: 1))
+        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_maps"), index: 2))
+        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_map_view"), index: 3))
+        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_search-location"), index: 4))
         
-        menus.append(MenuSlideModel(icon:  UIImage(systemName: "text.append")))
-        menus.append(MenuSlideModel(icon: UIImage(systemName: "info.circle")))
+        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_setting_sound"), index: 5))
+        menus.append(MenuSlideModel(icon: UIImage(named: "ic_informaiton"), index: 6))
         
         return menus
     }

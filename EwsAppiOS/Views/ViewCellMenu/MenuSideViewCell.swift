@@ -33,7 +33,12 @@ class MenuSideViewCell: UITableViewCell {
     
     var menu: MenuSlideModel? {
         didSet {
-            btnMenu.image = menu?.icon
+            if menu?.index == 0 {
+                btnMenu.image = menu?.icon?.withRenderingMode(.alwaysOriginal)
+            }else {
+                btnMenu.image = menu?.icon?.withRenderingMode(.alwaysTemplate)
+                btnMenu.tintColor = .white
+            }
         }
     }
     

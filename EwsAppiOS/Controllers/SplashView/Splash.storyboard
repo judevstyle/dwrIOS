@@ -12,7 +12,7 @@
         <!--Splash View Controller-->
         <scene sceneID="GpX-IC-lhj">
             <objects>
-                <viewController id="vLM-yE-b9b" customClass="SplashViewController" customModule="EWSTHAI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vLM-yE-b9b" customClass="SplashViewController" customModule="EWS_DWR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jfl-z5-H0V">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,7 +39,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="iconAppNew" width="400" height="495"/>
+        <image name="iconAppNew" width="4961" height="7016"/>
         <namedColor name="AppPrimary">
             <color red="0.054901960784313725" green="0.13725490196078433" blue="0.29019607843137257" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
