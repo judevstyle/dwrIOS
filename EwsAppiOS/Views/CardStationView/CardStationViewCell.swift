@@ -58,16 +58,37 @@ class CardStationViewCell: UITableViewCell {
         return label
     }()
     
-    let valueLabel: UILabel = {
+    lazy var valueLabel: UILabel = {
         let label = UILabel()
         
         label.numberOfLines = 1
         label.text = "0"
         label.textColor = .white
         label.font = .PrimaryRegular(size: 40)
-        label.textAlignment = .center
+        label.textAlignment = .right
         return label
     }()
+    
+    lazy var valueUnitLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.text = "มม."
+        label.textColor = .white
+        label.font = .PrimaryRegular(size: 16)
+        label.textAlignment = .right
+        return label
+    }()
+    
+//    lazy var valueStack: UIStackView = {
+//        let stackView = UIStackView()
+//        stackView.axis  = .horizontal
+//        stackView.distribution  = .fill
+//        stackView.alignment = UIStackView.Alignment.bottom
+//        stackView.spacing   = 0
+//        stackView.addArrangedSubview(valueLabel)
+//        stackView.addArrangedSubview(valueUnitLabel)
+//        return stackView
+//    }()
     
     let iconView: UIImageView = {
         let image = UIImageView()
@@ -117,8 +138,9 @@ class CardStationViewCell: UITableViewCell {
         viewCard.addSubview(addressLabel)
         viewCard.addSubview(iconView)
         viewCard.addSubview(rainLabel)
+
+        viewCard.addSubview(valueUnitLabel)
         viewCard.addSubview(valueLabel)
-        
         
         titleLabel.anchor(viewCard.topAnchor, left: viewCard.leftAnchor, bottom: nil, right: viewCard.rightAnchor, topConstant: 5, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
@@ -128,7 +150,9 @@ class CardStationViewCell: UITableViewCell {
         
         rainLabel.anchor(addressLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: viewCard.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
-        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: viewCard.bottomAnchor, right: viewCard.rightAnchor, topConstant: 3, leftConstant: 5, bottomConstant: 8, rightConstant: 5, widthConstant: 0, heightConstant: 0)
+        valueUnitLabel.anchor(nil, left: nil, bottom: viewCard.bottomAnchor, right: viewCard.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 18, rightConstant: 16, widthConstant: 25, heightConstant: 0)
+        
+        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: viewCard.bottomAnchor, right: valueUnitLabel.leftAnchor, topConstant: 3, leftConstant: 5, bottomConstant: 8, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
     }
     
@@ -137,18 +161,20 @@ class CardStationViewCell: UITableViewCell {
         
         titleLabel.text = "\(station!.title!)"
         addressLabel.attributedText = self.withTextParagraph(text: "\(station!.address!)", fonSize: 15)
+
         
-//        var value = "N/A"
-//
-//        if station!.status == "สถานการณ์ ฝนตกเล็กน้อย" {
-//            value = "\(station!.rain12h!)"
-//        }else {
-//            if station!.warning_type == "rain" {
-//                value = "\(station!.warn_rf!)"
-//            }else if station!.warning_type == "wl" {
-//                value = "\(station!.warn_wl!)"
-//            }
-//        }
+        if station!.status == "สถานการณ์ ฝนตกเล็กน้อย" {
+            rainLabel.text = "ปริมาณน้ำฝนสะสม"
+            valueUnitLabel.text = "มม."
+        }else {
+            if station!.warning_type == "rain" {
+                rainLabel.text = "ปริมาณน้ำฝนสะสม"
+                valueUnitLabel.text = "มม."
+            } else {
+                rainLabel.text = "ระดับน้ำ"
+                valueUnitLabel.text = "ม."
+            }
+        }
         
         valueLabel.text = "\(station!.value!)"
         

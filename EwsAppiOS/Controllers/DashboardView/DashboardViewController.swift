@@ -239,14 +239,14 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                     let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
                                     let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
                                     let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
-                                    
+
                                     var valueTitle:Double = 0
                                     if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
                                         valueTitle = myDouble
                                     }else {
                                         if item_station.childElements[0].text == "rain" {
                                             valueTitle = rainDouble
-                                        }else if item_station.childElements[0].text == "wl" {
+                                        } else {
                                             valueTitle = wlDouble
                                         }
                                     }
@@ -312,7 +312,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                     }else {
                                         if item_station.childElements[0].text == "rain" {
                                             valueTitle = rainDouble
-                                        }else if item_station.childElements[0].text == "wl" {
+                                        } else {
                                             valueTitle = wlDouble
                                         }
                                     }
@@ -362,7 +362,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                 }else {
                                     if item_station.childElements[0].text == "rain" {
                                         valueTitle = rainDouble
-                                    }else if item_station.childElements[0].text == "wl" {
+                                    }else {
                                         valueTitle = wlDouble
                                     }
                                 }

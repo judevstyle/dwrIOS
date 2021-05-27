@@ -194,11 +194,21 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         label.attributedText = attributedString
         
-        label.textAlignment = .center
+        label.textAlignment = .right
         
         return label
     }()
     
+    
+    lazy var valueUnitLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.text = "มม."
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.font = .PrimaryRegular(size: 16)
+        label.textAlignment = .right
+        return label
+    }()
     
     lazy var viewRecenty: UIView = {
         let view = UIView()
@@ -458,6 +468,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         customView.addSubview(viewRecenty)
         customView.addSubview(rainLabel)
         customView.addSubview(valueLabel)
+        customView.addSubview(valueUnitLabel)
         customView.addSubview(Pm25Label)
         
         titleLabel.anchor(customView.topAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
@@ -474,7 +485,10 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         rainLabel.anchor(addressLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
-        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 5, widthConstant: 0, heightConstant: 0)
+        
+        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: valueUnitLabel.leftAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        
+        valueUnitLabel.anchor(nil, left: valueLabel.rightAnchor, bottom: valueLabel.bottomAnchor, right: customView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 8, widthConstant: 25, heightConstant: 0)
         
         Pm25Label.anchor(nil, left: nil, bottom: alertController.view.bottomAnchor, right: alertController.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 3, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
@@ -493,7 +507,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     
     func setValueAlert(station: StationXLastDataModel) {
-        
+        #imageLiteral(resourceName: "simulator_screenshot_229382E6-0BEB-463F-B77E-2672A65E4046.png")
         selectedStation = station
         
         titleLabel.text = station.title!
@@ -519,19 +533,21 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         addressLabel.attributedText = attributedString
         
         
-        var value = "N/A"
-        
         if station.status == "สถานการณ์ ฝนตกเล็กน้อย" {
-            value = "\(station.rain12h!)"
+            rainLabel.text = "ปริมาณน้ำฝนสะสม"
+//            valueUnitLabel.text = "มม."
         }else {
             if station.warning_type == "rain" {
-                value = "\(station.warn_rf!)"
-            }else if station.warning_type == "wl" {
-                value = "\(station.warn_wl!)"
+                rainLabel.text = "ปริมาณน้ำฝนสะสม"
+//                valueUnitLabel.text = "มม."
+            } else {
+                rainLabel.text = "ระดับน้ำ"
+//                valueUnitLabel.text = "ม."
             }
         }
         
-        valueLabel.text = "\(value)"
+        valueLabel.text = "\(station.value!)"
+
         
         if let pm2Double = station.pm25!.toDouble() {
             Pm25Label.text = "PM 2.5 = \(pm2Double)"
