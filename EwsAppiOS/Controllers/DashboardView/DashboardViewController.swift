@@ -109,14 +109,14 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         
         
         //        self.startLoding()
-//        DispatchQueue.global(qos: .background).async {
-//            self.dashboards = DashboardCardModel.getCountStatus()
-//
-//
-//            DispatchQueue.main.async {
-//                self.tableview.reloadData()
-//            }
-//        }
+        //        DispatchQueue.global(qos: .background).async {
+        //            self.dashboards = DashboardCardModel.getCountStatus()
+        //
+        //
+        //            DispatchQueue.main.async {
+        //                self.tableview.reloadData()
+        //            }
+        //        }
         
         DispatchQueue.main.async {
             self.getCountStatus()
@@ -234,44 +234,46 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                     
                     if let count = xml["ews", "station"].all?.count {
                         if count > 0 {
-                            for item_station in xml["ews", "station"].all! {
-                                if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
-                                    let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
-                                    let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
-                                    let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
-
-                                    var valueTitle:Double = 0
-                                    if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
-                                        valueTitle = myDouble
-                                    }else {
-                                        if item_station.childElements[0].text == "rain" {
-                                            valueTitle = rainDouble
-                                        } else {
-                                            valueTitle = wlDouble
+                            if let lisXml = xml["ews", "station"].all {
+                                for item_station in lisXml {
+                                    if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
+                                        let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
+                                        let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
+                                        let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
+                                        
+                                        var valueTitle:Double = 0
+                                        if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                                            valueTitle = myDouble
+                                        }else {
+                                            if item_station.childElements[0].text == "rain" {
+                                                valueTitle = rainDouble
+                                            } else {
+                                                valueTitle = wlDouble
+                                            }
                                         }
-                                    }
-                                    
-                                    last_data.append(
-                                        LastDataModel(
-                                            stn: item_station.attributes["stn"]!,
-                                            warning_type: item_station.childElements[0].text ?? "",
-                                            date: item_station.childElements[1].text ?? "",
-                                            temp: item_station.childElements[2].text ?? "",
-                                            rain: item_station.childElements[3].text ?? "",
-                                            rain12h: myDouble,
-                                            rain07h: item_station.childElements[5].text ?? "",
-                                            rain24h: item_station.childElements[6].text ?? "",
-                                            wl: item_station.childElements[7].text ?? "",
-                                            wl07h: item_station.childElements[8].text ?? "",
-                                            soil: item_station.childElements[9].text ?? "",
-                                            pm25: item_station.childElements[10].text ?? "",
-                                            status: item_station.childElements[11].text ?? "",
-                                            warn_rf: rainDouble,
-                                            warn_wl: wlDouble,
-                                            stn_cover: item_station.childElements[14].text ?? "",
-                                            value: valueTitle
+                                        
+                                        last_data.append(
+                                            LastDataModel(
+                                                stn: item_station.attributes["stn"]!,
+                                                warning_type: item_station.childElements[0].text ?? "",
+                                                date: item_station.childElements[1].text ?? "",
+                                                temp: item_station.childElements[2].text ?? "",
+                                                rain: item_station.childElements[3].text ?? "",
+                                                rain12h: myDouble,
+                                                rain07h: item_station.childElements[5].text ?? "",
+                                                rain24h: item_station.childElements[6].text ?? "",
+                                                wl: item_station.childElements[7].text ?? "",
+                                                wl07h: item_station.childElements[8].text ?? "",
+                                                soil: item_station.childElements[9].text ?? "",
+                                                pm25: item_station.childElements[10].text ?? "",
+                                                status: item_station.childElements[11].text ?? "",
+                                                warn_rf: rainDouble,
+                                                warn_wl: wlDouble,
+                                                stn_cover: item_station.childElements[14].text ?? "",
+                                                value: valueTitle
+                                            )
                                         )
-                                    )
+                                    }
                                 }
                             }
                             self.stopLoding()
@@ -299,20 +301,74 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                     if type == "all" {
                         let all = xml["ews", "station"].all
                         if all?.count != nil {
-                            for item_station in xml["ews", "station"].all! {
-                                if item_station.childElements[11].name == "status" && item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[11].text! != "สถานการณ์ ปกติ" {
-                                    
+                            if let lisXml = xml["ews", "station"].all {
+                                for item_station in lisXml {
+                                    if item_station.childElements[11].name == "status" && item_station.childElements[11].text! != "กำลังเชื่อมต่อสัญญาน" && item_station.childElements[11].text! != "สถานการณ์ ปกติ" {
+                                        
+                                        let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
+                                        let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
+                                        let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
+                                        
+                                        var valueTitle:Double = 0
+                                        if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
+                                            valueTitle = myDouble
+                                        }else {
+                                            if item_station.childElements[0].text == "rain" {
+                                                valueTitle = rainDouble
+                                            } else {
+                                                valueTitle = wlDouble
+                                            }
+                                        }
+                                        
+                                        last_data.append(
+                                            LastDataModel(
+                                                stn: item_station.attributes["stn"]!,
+                                                warning_type: item_station.childElements[0].text ?? "",
+                                                date: item_station.childElements[1].text ?? "",
+                                                temp: item_station.childElements[2].text ?? "",
+                                                rain: item_station.childElements[3].text ?? "",
+                                                rain12h: myDouble,
+                                                rain07h: item_station.childElements[5].text ?? "",
+                                                rain24h: item_station.childElements[6].text ?? "",
+                                                wl: item_station.childElements[7].text ?? "",
+                                                wl07h: item_station.childElements[8].text ?? "",
+                                                soil: item_station.childElements[9].text ?? "",
+                                                pm25: item_station.childElements[10].text ?? "",
+                                                status: item_station.childElements[11].text ?? "",
+                                                warn_rf: rainDouble,
+                                                warn_wl: wlDouble,
+                                                stn_cover: item_station.childElements[14].text ?? "",
+                                                value: valueTitle
+                                            )
+                                        )
+                                        
+                                    }
+                                }
+                            }
+                        }
+                        
+                        self.stopLoding()
+                        if last_data.count > 0 {
+                            self.goToStationList(stations_last: last_data)
+                        }else{
+                            self.ToastAlert(text: "ไม่มีข้อมูล", duration: 1.5)
+                        }
+                    }else {
+                        
+                        if let lisXml = xml["ews", "station"].all {
+                            for item_station in lisXml {
+                                if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
                                     let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
                                     let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
                                     let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
                                     
-                                    var valueTitle:Double = 0
+                                    var valueTitle:Double = 0.0
                                     if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
                                         valueTitle = myDouble
                                     }else {
                                         if item_station.childElements[0].text == "rain" {
                                             valueTitle = rainDouble
-                                        } else {
+                                        }else {
                                             valueTitle = wlDouble
                                         }
                                     }
@@ -336,58 +392,9 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                                             warn_wl: wlDouble,
                                             stn_cover: item_station.childElements[14].text ?? "",
                                             value: valueTitle
-                                            )
+                                        )
                                     )
-                                    
                                 }
-                            }
-                        }
-                        
-                        self.stopLoding()
-                        if last_data.count > 0 {
-                            self.goToStationList(stations_last: last_data)
-                        }else{
-                            self.ToastAlert(text: "ไม่มีข้อมูล", duration: 1.5)
-                        }
-                    }else {
-                        for item_station in xml["ews", "station"].all! {
-                            if item_station.childElements[11].name == "status" && item_station.childElements[11].text! == "\(type)"{
-                                let myDouble = Double(item_station.childElements[4].text ?? "0.0") ?? 0.0
-                                let rainDouble = Double(item_station.childElements[12].text ?? "0.0") ?? 0.0
-                                let wlDouble = Double(item_station.childElements[13].text ?? "0.0") ?? 0.0
-                                
-                                var valueTitle:Double = 0.0
-                                if item_station.childElements[11].text == "สถานการณ์ ฝนตกเล็กน้อย" {
-                                    valueTitle = myDouble
-                                }else {
-                                    if item_station.childElements[0].text == "rain" {
-                                        valueTitle = rainDouble
-                                    }else {
-                                        valueTitle = wlDouble
-                                    }
-                                }
-                                
-                                last_data.append(
-                                    LastDataModel(
-                                        stn: item_station.attributes["stn"]!,
-                                        warning_type: item_station.childElements[0].text ?? "",
-                                        date: item_station.childElements[1].text ?? "",
-                                        temp: item_station.childElements[2].text ?? "",
-                                        rain: item_station.childElements[3].text ?? "",
-                                        rain12h: myDouble,
-                                        rain07h: item_station.childElements[5].text ?? "",
-                                        rain24h: item_station.childElements[6].text ?? "",
-                                        wl: item_station.childElements[7].text ?? "",
-                                        wl07h: item_station.childElements[8].text ?? "",
-                                        soil: item_station.childElements[9].text ?? "",
-                                        pm25: item_station.childElements[10].text ?? "",
-                                        status: item_station.childElements[11].text ?? "",
-                                        warn_rf: rainDouble,
-                                        warn_wl: wlDouble,
-                                        stn_cover: item_station.childElements[14].text ?? "",
-                                        value: valueTitle
-                                    )
-                                )
                             }
                         }
                         self.stopLoding()
