@@ -15,6 +15,8 @@ enum APIService {
     case GetLastData
     case GetEws07
     case GetCountStatus
+    case GetCountStationStatus
+
     case GetWarnData
     case GetWarnReport
     case GetInfo
@@ -37,6 +39,8 @@ extension APIService: TargetType, AccessTokenAuthorizable {
             return "/ews07.xml"
         case .GetCountStatus:
             return "/count_status_vill.xml"
+        case .GetCountStationStatus:
+            return "/count_status_station.xml"
         case .GetWarnData:
             return "/warn.xml"
         case .GetWarnReport:

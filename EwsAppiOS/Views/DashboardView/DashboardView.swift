@@ -36,13 +36,47 @@ class DashboardView: UITableViewCell {
     }()
     
     
+    
+    let titleBannLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 1
+        label.font = .PrimaryRegular(size: 14)
+        label.textColor = .white
+        label.text = "หมู่บ้าน"
+        return label
+    }()
+    
+    let titleStationLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 1
+        label.font = .PrimaryRegular(size: 20)
+        label.textColor = .white
+        label.text = "สถานี"
+        return label
+    }()
+    
+    let valueBannLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 1
+        label.font = .PrimaryRegular(size: 18)
+        label.textColor = .white
+        label.text = "0"
+
+        return label
+    }()
+    
+    
+    
     let valueLabel: UILabel = {
         let label = UILabel()
         
         label.numberOfLines = 1
         label.text = "0"
         label.textColor = .white
-        label.font = .PrimaryRegular(size: 35)
+        label.font = .PrimaryRegular(size: 28)
         
         return label
     }()
@@ -76,6 +110,8 @@ class DashboardView: UITableViewCell {
         
         titleLabel.text = dashboard!.name
         valueLabel.text = dashboard!.value
+        valueBannLabel.text = dashboard!.valueBann
+
         viewCard.backgroundColor = dashboard!.color.withAlphaComponent(0.3)
         viewLine.backgroundColor = dashboard!.color
         iconView.image = dashboard!.icon
@@ -95,16 +131,27 @@ class DashboardView: UITableViewCell {
         viewCard.addSubview(titleLabel)
         viewCard.addSubview(valueLabel)
         viewCard.addSubview(iconView)
+        viewCard.addSubview(titleStationLabel)
         
+        viewCard.addSubview(valueBannLabel)
+        viewCard.addSubview(titleBannLabel)
+
         viewLine.anchor(viewCard.topAnchor, left: viewCard.leftAnchor, bottom: viewCard.bottomAnchor, right: nil, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 0, widthConstant: 11, heightConstant: 0)
         
         
         titleLabel.anchor(viewCard.topAnchor, left: viewLine.rightAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 150, heightConstant: 0)
         
-        valueLabel.anchor(nil, left: viewLine.rightAnchor, bottom: viewCard.bottomAnchor, right: nil, topConstant: 0, leftConstant: 16, bottomConstant: 16, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        valueLabel.anchor(titleLabel.bottomAnchor, left: viewLine.rightAnchor, bottom: nil, right: nil, topConstant: -6, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         
         iconView.anchor(viewCard.topAnchor, left: titleLabel.rightAnchor, bottom: viewCard.bottomAnchor, right: viewCard.rightAnchor, topConstant: 20, leftConstant: 20, bottomConstant: 20, rightConstant: 20, widthConstant: 0, heightConstant: 0)
+        
+        titleStationLabel.anchor(nil, left: valueLabel.rightAnchor, bottom: valueLabel.bottomAnchor, right: nil, topConstant: 0, leftConstant: 8, bottomConstant: 4, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        
+        valueBannLabel.anchor(nil, left: titleStationLabel.rightAnchor, bottom: titleStationLabel.bottomAnchor, right: nil, topConstant: -6, leftConstant: 8, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        titleBannLabel.anchor(nil, left: valueBannLabel.rightAnchor, bottom: valueBannLabel.bottomAnchor, right: nil, topConstant: 0, leftConstant: 8, bottomConstant: 2, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         
         addSubview(viewCard)

@@ -112,7 +112,7 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 
-            case let .error(error):
+            case let .failure(error):
                 self.stopLoding()
                 print(error)
             }

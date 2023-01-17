@@ -18,6 +18,13 @@ class DashboardMapView: UITableViewCell {
         return view
     }()
     
+//    lazy var viewSelectCard: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .blackAlpha(alpha: 0.5)
+//        view.layer.cornerRadius = 8
+//        return view
+//    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         
@@ -68,7 +75,7 @@ class DashboardMapView: UITableViewCell {
     
     func setupValue() {
         
-        titleLabel.text = dashboard!.name
+        titleLabel.text = "\(dashboard!.name)"
         valueLabel.text = dashboard!.value
         
         titleLabel.textColor = dashboard!.color

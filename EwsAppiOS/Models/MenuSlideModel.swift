@@ -24,11 +24,13 @@ struct MenuSlideModel {
         menus.append(MenuSlideModel(icon: UIImage(named: "iconAppNew"), index: 0))
         menus.append(MenuSlideModel(icon:  UIImage(systemName: "house"), index: 1))
         menus.append(MenuSlideModel(icon:  UIImage(named: "ic_maps"), index: 2))
-        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_map_view"), index: 3))
-        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_search-location"), index: 4))
+        menus.append(MenuSlideModel(icon:  UIImage(named: "radar"), index: 3))
+
+        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_map_view"), index: 4))
+        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_search-location"), index: 5))
         
-        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_setting_sound"), index: 5))
-        menus.append(MenuSlideModel(icon: UIImage(named: "ic_informaiton"), index: 6))
+        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_setting_sound"), index: 6))
+        menus.append(MenuSlideModel(icon: UIImage(named: "ic_informaiton"), index: 7))
         
         return menus
     }

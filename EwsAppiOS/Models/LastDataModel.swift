@@ -158,7 +158,7 @@ struct LastDataModel : Codable {
                                 
                                 AppDelegate.shareDelegate.last_data_search = StationXLastDataModel.mixSearchStationXLastData(last_data: last_data, list_ew07: list_ews07)
                                 NotificationCenter.default.post(name: .didLoadStationsSuccess, object: nil)
-                            case let .error(error):
+                            case let .failure(error):
                                 print(error)
                             }
                     }
@@ -187,12 +187,17 @@ struct LastDataModel : Codable {
             getMethodAllWarnMap(viewModel: viewModel)
         case "สถานการณ์ ฝนตกเล็กน้อย":
             getMethodMap(pathUrl: "/lastdata.xml", type: type, viewModel: viewModel)
+//        case "type":
+//            setMethodAllWarnMap(viewModel: <#T##LastDataViewModel#>, stations: <#T##[StationDataResponse]#>)
         default:
             getMethodMap(pathUrl: "/warn.xml", type: type, viewModel: viewModel)
         }
         
         
     }
+    
+
+    
     
     static func getMethodAllMap(viewModel: LastDataViewModel) {
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
@@ -461,6 +466,80 @@ struct LastDataModel : Codable {
         StationXLastDataModel.mixStationXLastData(last_data: sortedLast_data, list_ew07: list_ew07, viewModel: viewModel)
         
     }
+    
+    
+    
+    static func setMethodAllWarnMap(viewModel: LastDataViewModel,stations:[StationDataResponse]) {
+        
+      
+        var last_data = [LastDataModel]()
+        
+    
+                for item_station in stations {
+//                    if item_station.childElements[11].name == "status"{
+                        
+                    let myDouble = Double(item_station.rain12H ?? "0.0")
+                    let rainDouble =  Double(item_station.warnWl ?? "0.0")
+                        let wlDouble = Double(item_station.warnRF ?? "0.0")
+                        
+                        var valueTitle:Double = 0
+                        if item_station.showStatus == -999 {
+                            valueTitle = myDouble!
+                        }else {
+                            if item_station.warningType == "rain" {
+                                valueTitle = rainDouble!
+                            }else if item_station.warningType == "wl" {
+                                valueTitle = wlDouble!
+                            }
+                        }
+                        
+                        last_data.append(
+                            LastDataModel(
+                                stn: item_station.stn!,
+                                warning_type: item_station.warningType ?? "",
+                                date: item_station.stnDate ?? "",
+                                temp: item_station.temp ?? "",
+                                rain: item_station.rain ?? "",
+                                rain12h: myDouble ?? 0.0,
+                                rain07h: item_station.rain07H ?? "",
+                                rain24h: item_station.rain24H ?? "",
+                                wl: item_station.wl ?? "",
+                                wl07h: item_station.wl07H ?? "",
+                                soil: item_station.soil2 ?? "",
+                                pm25: item_station.soil2 ?? "",
+                                status: getStatus(status: item_station.showStatus ?? 0),
+                                warn_rf: rainDouble ?? 0.0,
+                                warn_wl: wlDouble ?? 0.0,
+                                stn_cover: "0",
+                                value: valueTitle
+                            )
+                        )
+//                    }
+                }//end for
+          
+        
+        let list_ew07 = Ews07Model.FetchEws07()
+        
+        let sortedLast_data = last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
+        
+        StationXLastDataModel.mixStationXLastData(last_data: sortedLast_data, list_ew07: list_ew07, viewModel: viewModel)
+        
+    }
+    
+    
+    static func getStatus(status:Int) -> String {
+        switch status {
+        case 3: return "สถานการณ์ อพยพ"
+        case  2: return "สถานการณ์ เตือนภัย"
+        case  1: return "สถานการณ์ เฝ้าระวัง"
+        case  -999: return "สถานการณ์ ฝนตกเล็กน้อย"
+        default: return "ไม่พบข้อมูล"
+            
+        }
+        
+    }
+    
+    
     
     
 //    static func FetchLastDataV2(type:String) -> [LastDataModel]{

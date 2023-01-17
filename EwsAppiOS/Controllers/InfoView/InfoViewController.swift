@@ -108,7 +108,7 @@ class InfoViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.tableView.reloadData()
                 self.stopLoding()
                 break
-            case let .error(error):
+            case let .failure(error):
                 self.stopLoding()
                 print(error)
             }

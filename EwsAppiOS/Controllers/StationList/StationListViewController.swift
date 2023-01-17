@@ -25,6 +25,8 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         tableview.showsVerticalScrollIndicator = false
         tableview.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
         tableview.layer.cornerRadius = 8
+        tableview.estimatedRowHeight = 40
+        tableview.rowHeight = UITableView.automaticDimension
         return tableview
     }()
     
@@ -47,7 +49,7 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         view.backgroundColor = .AppPrimary()
         self.setHideBorderNavigation(status: true)
         self.setBarStyleNavigation(style: .black)
-        self.setTitleNavigation(title: "สรุปสถานการ์ณฝน")
+        self.setTitleNavigation(title: "สรุปสถานการณ์ฝน")
         
         
          let leftbutton = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysTemplate), style: .done, target: self, action: #selector(handleClose))
@@ -76,6 +78,7 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     fileprivate func showAlert(data: StationXLastDataModel) {
+        print("---")
         DispatchQueue.main.async {
             self.stations_last!.append(data)
             self.tableview.reloadData()
@@ -102,7 +105,7 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.height/4.0
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -35,8 +35,9 @@ class CardStationViewCell: UITableViewCell {
         let label = UILabel()
         
         label.numberOfLines = 2
-        label.textColor = .blackAlpha(alpha: 0.6)
-        
+//        label.textColor = .blackAlpha(alpha: 0.6)
+        label.textColor = .white
+
         let stringValue = "ต.หนองไผ่ อ.ด่านมะขามเตี้ย จ.กาญจนบุรี\nหมู่บ้านคลอบคลุมจำนวน 3 หมู่บ้าน"
         
         label.attributedText = self.withTextParagraph(text: stringValue, fonSize: 15)
@@ -64,7 +65,7 @@ class CardStationViewCell: UITableViewCell {
         label.numberOfLines = 1
         label.text = "0"
         label.textColor = .white
-        label.font = .PrimaryRegular(size: 40)
+        label.font = .PrimaryRegular(size: 32)
         label.textAlignment = .right
         return label
     }()
@@ -146,19 +147,20 @@ class CardStationViewCell: UITableViewCell {
         
         addressLabel.anchor(titleLabel.bottomAnchor, left: viewCard.leftAnchor, bottom: nil, right: viewCard.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
-        iconView.anchor(addressLabel.bottomAnchor, left: viewCard.leftAnchor, bottom: viewCard.bottomAnchor, right: nil, topConstant: 5, leftConstant: 16, bottomConstant: 8, rightConstant: 16, widthConstant: frame.width/2, heightConstant: 0)
+        iconView.anchor(addressLabel.bottomAnchor, left: viewCard.leftAnchor, bottom: nil, right: nil, topConstant: 0, leftConstant: 16, bottomConstant: 8, rightConstant: 16, widthConstant: frame.width/2, heightConstant: 70)
         
         rainLabel.anchor(addressLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: viewCard.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
         valueUnitLabel.anchor(nil, left: nil, bottom: viewCard.bottomAnchor, right: viewCard.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 18, rightConstant: 16, widthConstant: 25, heightConstant: 0)
         
-        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: viewCard.bottomAnchor, right: valueUnitLabel.leftAnchor, topConstant: 3, leftConstant: 5, bottomConstant: 8, rightConstant: 10, widthConstant: 0, heightConstant: 0)
+        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: viewCard.bottomAnchor, right: valueUnitLabel.leftAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 8, rightConstant: 10, widthConstant: 0, heightConstant: 0)
         
     }
     
     func setupValue() {
         
         
+        print("address \(station!.address!)")
         titleLabel.text = "\(station!.title!)"
         addressLabel.attributedText = self.withTextParagraph(text: "\(station!.address!)", fonSize: 15)
 

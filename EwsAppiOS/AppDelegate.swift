@@ -13,6 +13,7 @@ import GoogleMaps
 import GooglePlaces
 import Firebase
 import FirebaseMessaging
+import AppTrackingTransparency
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.PrimaryRegular(size: 18)
         ]
+        
+        if #available(iOS 13.0, *) {
+            print("dok")
+            window?.overrideUserInterfaceStyle = .light
+            
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle =  .light
+
+            
+        }
+        
         
         UINavigationBar.appearance().titleTextAttributes = attrs
         
@@ -75,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DispatchQueue.global(qos: .background).async {
             StationModel.FetchStations()
         }
-        
+      
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
         if launchedBefore  {
             print("Not first launch.")
@@ -84,10 +95,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             UserDefaults.standard.set(true, forKey: "status_notification")
             
-            Messaging.messaging().subscribe(toTopic: "ews") { error in
+            print("ddl ews1")
+            Messaging.messaging().subscribe(toTopic: "ews1") { error in
               print("Subscribed to ews topic")
             }
         }
+        
+        
+        let statusNotification = UserDefaults.standard.bool(forKey: "status_notification")
+        if statusNotification {
+            Messaging.messaging().subscribe(toTopic: "ews1") { error in
+              print("Subscribed to ews topic")
+            }
+        }else {
+            Messaging.messaging().unsubscribe(fromTopic: "ews1") {error in
+                print("UnSubscribed to ews topic")
+            }
+        }
+        
+        
+        
         
         return true
     }
@@ -154,6 +181,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         completionHandler(UIBackgroundFetchResult.newData)
     }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        requestDataPermission()
+    }
+
+    func requestDataPermission() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                switch status {
+                case .authorized:
+                    // Tracking authorization dialog was shown
+                    // and we are authorized
+                    print("Authorized")
+                case .denied:
+                    // Tracking authorization dialog was
+                    // shown and permission is denied
+                    print("Denied")
+                case .notDetermined:
+                    // Tracking authorization dialog has not been shown
+                    print("Not Determined")
+                case .restricted:
+                    print("Restricted")
+                @unknown default:
+                    print("Unknown")
+                }
+            })
+        } else {
+            //you got permission to track, iOS 14 is not yet installed
+        }
+    }
+    
+    
     
 }
 

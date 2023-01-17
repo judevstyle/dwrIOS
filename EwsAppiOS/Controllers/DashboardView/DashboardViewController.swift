@@ -22,7 +22,8 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     
     var delegateMainApp: MainAppDelegateProtocol? = nil
-    
+    var ValueBannWarningStations:[String] = ["0","0","0","0"]
+
     var ValueWarningStations:[String] = ["0","0","0","0"]
     var TitleWarningStations:[String] = ["อพยพ","เตือนภัย","เฝ้าระวัง","มีฝน"]
     
@@ -130,7 +131,10 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     
     func getCountStatus() {
-        APIServiceProvider.rx.request(.GetCountStatus).subscribe { event in
+  
+        
+        
+        APIServiceProvider.rx.request(.GetCountStationStatus).subscribe { event in
             switch event {
             case let .success(response):
                 let xml = XML.parse(response.data)
@@ -145,13 +149,39 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                 self.dashboards[3].value = status4.text ?? "0"
                 self.tableview.reloadData()
                 
-            case let .error(error):
+            case let .failure(error):
                 self.dashboards[0].value = "0"
                 self.dashboards[1].value = "0"
                 self.dashboards[2].value = "0"
                 self.dashboards[3].value = "0"
             }
         }
+        APIServiceProvider.rx.request(.GetCountStatus).subscribe { event in
+            switch event {
+            case let .success(response):
+
+                let xml = XML.parse(response.data)
+                let status3 = xml["ews"]["status1"]
+                let status2 = xml["ews"]["status2"]
+                let status1 = xml["ews"]["status3"]
+                let status4 = xml["ews"]["status9"]
+                print("llll \(status4.text)")
+
+                self.dashboards[0].valueBann = status1.text ?? "0"
+                self.dashboards[1].valueBann = status2.text ?? "0"
+                self.dashboards[2].valueBann = status3.text ?? "0"
+                self.dashboards[3].valueBann = status4.text ?? "0"
+                self.tableview.reloadData()
+                
+            case let .failure(error):
+                print("ooooo")
+                self.dashboards[0].valueBann = "0"
+                self.dashboards[1].valueBann = "0"
+                self.dashboards[2].valueBann = "0"
+                self.dashboards[3].valueBann = "0"
+            }
+        }
+        
     }
     
     
@@ -286,7 +316,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                         
                     }
                     break
-                case let .error(error):
+                case let .failure(error):
                     print(error)
                     self.stopLoding()
                 }
@@ -406,7 +436,7 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
                     }
                     
                     break
-                case let .error(error):
+                case let .failure(error):
                     self.stopLoding()
                     print(error)
                 }

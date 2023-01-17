@@ -1,22 +1,30 @@
 //
-//  MapStationViewController.swift
+//  MapRadarViewController.swift
 //  EwsAppiOS
 //
-//  Created by Nontawat Kanboon on 16/10/2563 BE.
-//  Copyright © 2563 ssoft. All rights reserved.
+//  Created by Ssoft_dev on 12/11/22.
+//  Copyright © 2022 ssoft. All rights reserved.
 //
+
 
 import UIKit
 import GoogleMaps
 import GoogleMapsUtils
 import Moya
-import AlamofireImage
+import GoogleMaps
+import CoreLocation
+
+//import AlamofireImage
 import SwiftyXMLParser
-
-
-class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     let APIServiceProvider = MoyaProvider<APIService>()
+    var locationCurrent:CLLocationCoordinate2D? = nil
+    private let locationManager = CLLocationManager()
+
+    
+    let apiServiceJsonProvider = MoyaProvider<APIJsonService>()
+
     
     private var mapView: GMSMapView!
     private var clusterManager: GMUClusterManager!
@@ -24,7 +32,9 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     var markerCustom: GMSMarker?
     
     var marker: GMSMarker!
-    
+    var raduins:Int = 12
+
+    var select = 0
     let viewMain : UIView = {
         let view = UIView()
         
@@ -227,6 +237,16 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         return image
     }()
     
+    let sliderRadar: UISlider = {
+        let slider = UISlider()
+        slider.maximumValue = 800
+        slider.minimumValue = 1
+
+        
+        return slider
+    }()
+    
+    
     
     let textRecenty: UILabel = {
         let label = UILabel()
@@ -239,7 +259,28 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         return label
     }()
     
-    var dashboards = DashboardCardModel.dashboardsMap()
+    
+    let viewSlideMain: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
+        
+        return view
+    }()
+    
+    let textRadar: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.text = "สถานีภายใน 12 km."
+        label.font = .PrimaryLight(size: 15)
+        label.textAlignment = .center
+        
+        return label
+    }()
+    
+    var dashboards = DashboardCardModel.dashboardsMapRadar()
     
     var listMarker: [StationXLastDataModel] = []
     var selectedStation: StationXLastDataModel? = nil
@@ -250,7 +291,9 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+
+        print("baseURL \(baseURL)")
         view.backgroundColor = .white
         self.setTitleNavigation(title: "แผนที่")
         self.setHideBorderNavigation(status: true)
@@ -278,23 +321,136 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         view.addSubview(tableview)
         
-        tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: -16, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 100, heightConstant: self.view.frame.height/1.5)
-        loadMapView()
+        tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 100, heightConstant: 200)
+        
+        
+        
+        
+        viewSlideMain.addSubview(textRadar)
+        viewSlideMain.addSubview(sliderRadar)
+        sliderRadar.value = 12
+        
+        sliderRadar.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: .valueChanged)
 
+        textRadar.anchor(viewSlideMain.topAnchor, left: viewSlideMain.leftAnchor, bottom: nil, right: viewSlideMain.rightAnchor, topConstant: 12, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    
+        sliderRadar.anchor(textRadar.bottomAnchor, left: viewSlideMain.leftAnchor, bottom: nil, right: viewSlideMain.rightAnchor, topConstant: 4, leftConstant: 12, bottomConstant: 0, rightConstant: 12, widthConstant: 0, heightConstant: 0)
+    
+        
+        view.addSubview(viewSlideMain)
+        viewSlideMain.anchor(nil, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 26, bottomConstant: 26, rightConstant: 26, widthConstant: 0, heightConstant: 80)
+        
+        
+        
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        loadMapView()
+
         DispatchQueue.global(qos: .background).async {
-            self.getCountStatus()
+//            self.getCountStatus()
             DispatchQueue.main.async {
                 self.tableview.reloadData()
             }
         }
     }
     
-    func getCountStatus() {
+    
+    @objc func onSliderValChanged(slider: UISlider, event: UIEvent) {
         
+        let step: Float = 1
+
+        let roundedValue = round(slider.value / step) * step
+//        slider.value = roundedValue
+        print("slider.value \(roundedValue)")
+        textRadar.text = "สถานีภายใน \(Int(roundedValue)) km."
+
+        if let touchEvent = event.allTouches?.first {
+            switch touchEvent.phase {
+            case .began:
+                // handle drag began
+                print("aaaa")
+            case .moved:
+                // handle drag moved
+                print("aaaa")
+
+            case .ended:
+                // handle drag ended
+                print("ccccc")
+
+                raduins = (Int(roundedValue))
+                getProvince()
+            default:
+                break
+            }
+        }
+    }
+    
+    
+    func getProvince() {
+    
+        
+        var type = "all"
+        if select == 0 {
+            type = "warn" }
+        apiServiceJsonProvider.rx.request(.GetRadarService(type: type, radius: self.raduins, lat: locationCurrent!.latitude, lng: locationCurrent!.longitude)).subscribe { event in
+            self.mapView.clear()
+
+            let km = self.raduins*1000
+            let circleCenter = CLLocationCoordinate2DMake(13.7194367, 100.6164316)//change to your center point
+            let circ = GMSCircle(position: circleCenter, radius: CLLocationDistance(km) )//radius in meters
+
+            circ.fillColor = UIColor(red: 0, green: 0, blue: 0.5, alpha: 0.05)
+            circ.strokeColor = UIColor.blue
+            circ.strokeWidth = 1
+            circ.map = self.mapView
+            switch event {
+            case let .success(response):
+                print("ddd -- \(response.data)")
+
+                do {
+                    let result = try JSONDecoder().decode([StationDataResponse].self, from: response.data)
+                  //  print("ddd -- \(result[0].stn)")
+                    
+                    DispatchQueue.main.async {
+
+                    
+                    self.startLoding()
+                    self.listMarker.removeAll()
+                    self.index = 0
+                    DispatchQueue.global(qos: .background).async {
+                        LastDataModel.setMethodAllWarnMap(viewModel: self.viewModel as! LastDataViewModel,stations: result)
+                        DispatchQueue.main.async {
+                            self.stopLoding()
+                        }
+                    }
+                    }
+                    
+                    
+                    
+                } catch { print("err --- \(error)") }
+//                print("data ---- \(response.data)")
+//                let root = try? strongSelf.jsonDecoder.decode(Root.self, from: response.data)
+            case let .failure(error):
+                self.dashboards[0].value = "0"
+                self.dashboards[1].value = "0"
+//                self.dashboards[2].value = "0"
+//                self.dashboards[3].value = "0"
+            }
+        
+        }
+
+        
+        
+        
+    }
+    
+    
+    
+    func getCountStatus() {
         APIServiceProvider.rx.request(.GetCountStatus).subscribe { event in
             switch event {
             case let .success(response):
@@ -307,8 +463,8 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
                 
                 self.dashboards[0].value = status1.text ?? "0"
                 self.dashboards[1].value = status2.text ?? "0"
-                self.dashboards[2].value = status3.text ?? "0"
-                self.dashboards[3].value = status4.text ?? "0"
+//                self.dashboards[2].value = status3.text ?? "0"
+//                self.dashboards[3].value = status4.text ?? "0"
                 self.tableview.reloadData()
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
@@ -325,8 +481,8 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
             case let .failure(error):
                 self.dashboards[0].value = "0"
                 self.dashboards[1].value = "0"
-                self.dashboards[2].value = "0"
-                self.dashboards[3].value = "0"
+//                self.dashboards[2].value = "0"
+//                self.dashboards[3].value = "0"
             }
         }
     }
@@ -348,6 +504,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     func loadMapView() {
         
+        print("00000-----")
         let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
         
         
@@ -362,6 +519,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
             // Set the map style by passing the URL of the local file.
             if let styleURL = Bundle.main.url(forResource: "style", withExtension: "json") {
                 mapView.mapStyle = try GMSMapStyle(contentsOfFileURL: styleURL)
+                
             } else {
                 NSLog("Unable to find style.json")
             }
@@ -369,17 +527,37 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
             NSLog("One or more of the map styles failed to load. \(error)")
         }
         
+        
         self.mapView.delegate = self
+     
         
         configure(LastDataViewModel())
+        initLLocation()
+
+//        getProvince()
+
         
     }
+    
+    
+    
+    func initLLocation(){
+        
+        //initializing CLLocationManager
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
+        
+    }
+    
+    
+    
     
     
     func configure(_ interface: LastDataStationProtocol) {
         self.viewModel = interface
         bindToViewModel()
-        self.getLastData(type: "all_warn")
+//        self.getLastData(type: "all_warn")
     }
     
     fileprivate func showAlert(data: StationXLastDataModel) {
@@ -438,11 +616,19 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         }else {
             cell.iconView.isHidden = false
         }
+        if indexPath.row == select {
+            cell.viewCard.backgroundColor = UIColor(named: "RadarSelect")
+        }else{
+            cell.viewCard.backgroundColor = .whiteAlpha(alpha: 0.5)
+
+        }
+        cell.iconView.isHidden = false
+        cell.valueLabel.isHidden = true
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.frame.height/CGFloat(dashboards.count)
+        return 95
     }
     
     
@@ -599,20 +785,28 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if AppDelegate.shareDelegate.stations != nil {
-            switch indexPath.row {
-            case 0:
-                getLastData(type: "สถานการณ์ อพยพ")
-            case 1:
-                getLastData(type: "สถานการณ์ เตือนภัย")
-            case 2:
-                getLastData(type: "สถานการณ์ เฝ้าระวัง")
-            case 3:
-                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
-            default:
-                getLastData(type: "all")
-            }
+        
+        if(self.select != indexPath.row){
+            self.select = indexPath.row
+            tableview.reloadData()
+            getProvince()
+            
         }
+        
+//        if AppDelegate.shareDelegate.stations != nil {
+//            switch indexPath.row {
+//            case 0:
+//                getLastData(type: "สถานการณ์ อพยพ")
+//            case 1:
+//                getLastData(type: "สถานการณ์ เตือนภัย")
+//            case 2:
+//                getLastData(type: "สถานการณ์ เฝ้าระวัง")
+//            case 3:
+//                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+//            default:
+//                getLastData(type: "all")
+//            }
+//        }
         
     }
     
@@ -666,7 +860,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
 }
 
 
-extension MapStationViewController {
+extension MapRadarViewController {
     
     func bindToViewModel() {
         viewModel.output.showMessageAlert = showAlert()
@@ -678,5 +872,39 @@ extension MapStationViewController {
             guard let weakSelf = self else { return }
             weakSelf.showAlert(data: data)
         }
+    }
+}
+
+
+
+
+extension MapRadarViewController: CLLocationManagerDelegate {
+    
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        guard status == .authorizedWhenInUse else {
+            return
+        }
+        locationManager.startUpdatingLocation()
+        self.mapView?.isMyLocationEnabled = true
+    }
+    
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else {
+            return
+        }
+        
+        
+        locationCurrent = location.coordinate
+        print("location \(locationCurrent)")
+        let camera  = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 10)
+        self.mapView.camera = camera
+
+//        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+//            mapView.animate(toLocation: CLLocationCoordinate2D(latitude: locValue.latitude, longitude: locValue.longitude))
+//
+//            mapView.setMinZoom(4.6, maxZoom: 20)
+        
+        locationManager.stopUpdatingLocation()
+        getProvince()
     }
 }
