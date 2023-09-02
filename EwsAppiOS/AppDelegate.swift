@@ -14,6 +14,7 @@ import GooglePlaces
 import Firebase
 import FirebaseMessaging
 import AppTrackingTransparency
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,7 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let gcmMessageIDKey = "gcm.Message_ID"
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        IQKeyboardManager.shared.enable = true
+
         let attrs = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.PrimaryRegular(size: 18)
@@ -96,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(true, forKey: "status_notification")
             
             print("ddl ews1")
-            Messaging.messaging().subscribe(toTopic: "ews1") { error in
+            Messaging.messaging().subscribe(toTopic: "ews") { error in
               print("Subscribed to ews topic")
             }
         }
@@ -104,11 +106,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let statusNotification = UserDefaults.standard.bool(forKey: "status_notification")
         if statusNotification {
-            Messaging.messaging().subscribe(toTopic: "ews1") { error in
+            Messaging.messaging().subscribe(toTopic: "ews") { error in
               print("Subscribed to ews topic")
             }
         }else {
-            Messaging.messaging().unsubscribe(fromTopic: "ews1") {error in
+            Messaging.messaging().unsubscribe(fromTopic: "ews") {error in
                 print("UnSubscribed to ews topic")
             }
         }

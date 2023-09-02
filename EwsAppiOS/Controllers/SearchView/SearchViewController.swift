@@ -33,7 +33,8 @@ struct ItemSearchModel {
     
     let title : String?
     let type : TypeSearch.Status?
-    
+    var valuePosition : Int = 0
+
     init(title: String, type: TypeSearch.Status) {
         self.title = title
         self.type = type
@@ -94,18 +95,25 @@ struct ItemSearchModel {
                 listRegion.append(item.region!)
                 list.append(ItemSearchModel(title: item.region!, type: .region))
             }else {
-                var isCheckRegion = false
-                for region in listRegion {
-                    if region == item.region {
-                        isCheckRegion = true
+                
+                if item.region != " " || item.region != "" {
+                    var isCheckRegion = false
+                    for region in listRegion {
+                        if region.trim() == item.region?.trim() {
+                            isCheckRegion = true
+                        }
+                    }
+                    if !isCheckRegion {
+                        listRegion.append(item.region!)
+                        list.append(ItemSearchModel(title: item.region!, type: .region))
                     }
                 }
-                if !isCheckRegion {
-                    listRegion.append(item.region!)
-                    list.append(ItemSearchModel(title: item.region!, type: .region))
-                }
+               
             }
         }
+        
+        
+        print("region \(list)")
         
         return list
     }
@@ -113,27 +121,52 @@ struct ItemSearchModel {
     static func filterDept() -> [ItemSearchModel] {
         var list:[ItemSearchModel] = []
         
-        var listDept:[String] = []
-        
+        var listDept:[Int] = []
+        print("filterDept --- \(AppDelegate.shareDelegate.last_data_search.count)")
+
+        var ok = 0
         for (index,item) in AppDelegate.shareDelegate.last_data_search.enumerated() {
+            
+            
             if index == 0 {
-                listDept.append(item.dept!)
-                list.append(ItemSearchModel(title: item.dept!, type: .dept))
+                var model  = ItemSearchModel(title: item.dept!, type: .dept)
+                let fullNameArr = item.dept!.components(separatedBy: " ")
+                listDept.append(Int(fullNameArr[1].trim())!)
+
+
+                model.valuePosition = Int(fullNameArr[1].trim())!
+                list.append(model)
             }else {
                 var isCheckDept = false
+            var model  = ItemSearchModel(title: item.dept!, type: .dept)
+            let fullNameArr = item.dept!.components(separatedBy: " ")
+
                 for dept in listDept {
-                    if dept == item.dept {
+                    
+                    if dept == Int(fullNameArr[1].trim())! {
                         isCheckDept = true
+                        break
                     }
                 }
+                print("filterDept --- \(ok) || \(isCheckDept)")
+
                 if !isCheckDept {
-                    listDept.append(item.dept!)
-                    list.append(ItemSearchModel(title: item.dept!, type: .dept))
+                    listDept.append(Int(fullNameArr[1].trim())!)
+                 
+                    model.valuePosition = Int(fullNameArr[1].trim())!
+
+                    list.append(model)
+//                    list.append(ItemSearchModel(title: item.dept!, type: .dept))
+                    
                 }
+                ok += 1
             }
         }
+//        list.sorted { $0.fileId > $1.fileID }
+//        let sorted = list.sort()
+        let io = list.sorted (by: {$0.valuePosition < $1.valuePosition})
         
-        return list
+        return io
     }
     
     
@@ -438,6 +471,9 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CardSearchItemViewCell
+        
+        
+    
         
         cell.item = self.list[indexPath.row]
         

@@ -86,17 +86,20 @@ class MenuSlideViewController: UIViewController, UITableViewDelegate, UITableVie
             case 4 :
                     openMenuView(controller: ReportViewController())
                 break
-            case 5:
+            case 5 :
+                    openMenuView(controller: NewsViewController())
+                break
+            case 6:
                 if  AppDelegate.shareDelegate.last_data_search != nil && AppDelegate.shareDelegate.stations != nil  {
                        openMenuView(controller: SearchViewController())
                  }else {
                       delegateDashboard!.ToastLoading()
                  }
                 break
-            case 6:
+            case 7:
                 openMenuView(controller: SettingViewController())
                 break
-            case 7:
+            case 8:
                 openMenuView(controller: InfoViewController())
                 break
             default:

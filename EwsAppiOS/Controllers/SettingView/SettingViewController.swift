@@ -96,11 +96,11 @@ class SettingViewController: UIViewController {
     @objc func switchButton(){
         UserDefaults.standard.set(switchOnOff.isOn, forKey: "status_notification")
         if switchOnOff.isOn {
-            Messaging.messaging().subscribe(toTopic: "ews1") { error in
+            Messaging.messaging().subscribe(toTopic: "ews") { error in
               print("Subscribed to ews topic")
             }
         }else {
-            Messaging.messaging().unsubscribe(fromTopic: "ews1") {error in
+            Messaging.messaging().unsubscribe(fromTopic: "ews") {error in
                 print("UnSubscribed to ews topic")
             }
         }

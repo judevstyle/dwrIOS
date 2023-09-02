@@ -18,7 +18,9 @@ class MainAppViewController: UIViewController, MainAppDelegateProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UIApplication.shared.applicationIconBadgeNumber = 0
+
         view.backgroundColor = .AppPrimary()
         
         let rootVC = DashboardViewController()

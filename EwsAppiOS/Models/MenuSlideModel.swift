@@ -27,6 +27,8 @@ struct MenuSlideModel {
         menus.append(MenuSlideModel(icon:  UIImage(named: "radar"), index: 3))
 
         menus.append(MenuSlideModel(icon:  UIImage(named: "ic_map_view"), index: 4))
+        menus.append(MenuSlideModel(icon:  UIImage(named: "ic_alert"), index: 8))
+
         menus.append(MenuSlideModel(icon:  UIImage(named: "ic_search-location"), index: 5))
         
         menus.append(MenuSlideModel(icon:  UIImage(named: "ic_setting_sound"), index: 6))

@@ -11,11 +11,12 @@ import Moya
 
 
 enum APIJsonService {
-    case UploadFile
-    case GetTambon
-    case GetAmphone
+    case UploadFile(image: UIImage, fileName: String?)
+    case GetTambon(am:String)
+    case GetAmphone(pv:String)
     case GetProvince
     case GetRadarService(type:String,radius:Int,lat:Double,lng:Double)
+    case CreateNews(stn:String,stn_name:String,tambon:String,amphone:String,province:String,latitude:Double,longitude:Double,text_news:String,pic_news:String)
 }
 
 extension APIJsonService: TargetType, AccessTokenAuthorizable {
@@ -37,11 +38,17 @@ extension APIJsonService: TargetType, AccessTokenAuthorizable {
             return "/api/province_data.php"
         case .GetRadarService:
             return "/warning_radar_service.php"
+        case .CreateNews:
+            return "/api/news.php"
         }
     }
     
     var method: Moya.Method {
         switch self {
+        case .CreateNews :
+            return .post
+        case .UploadFile :
+            return .post
         default:
             return .get
         }
@@ -49,9 +56,34 @@ extension APIJsonService: TargetType, AccessTokenAuthorizable {
     
     var task: Task {
         switch self {
+        case let .GetAmphone(pv):
+            return .requestParameters(
+                parameters: [ "province": pv], encoding: URLEncoding.queryString)
+        case let .GetTambon(am):
+            return .requestParameters(
+                parameters: [ "amphoe": am], encoding: URLEncoding.queryString)
         case let .GetRadarService(type, radius, lat, lng):
             return .requestParameters(
                 parameters: [ "type": type,"radius":radius,"lat":lat,"lng":lng], encoding: URLEncoding.queryString)
+            
+        case let .UploadFile(image, fileName):
+            let imageData = image.jpegData(compressionQuality: 1.0)
+            let formData: [Moya.MultipartFormData] = [Moya.MultipartFormData(provider: .data(imageData!), name: "fileToUpload", fileName: fileName ?? "", mimeType: "image/jpeg")]
+            return .uploadMultipart(formData)
+        case let .CreateNews(stn, stn_name, tambon, amphone, province, latitude, longitude, text_news, pic_news):
+            var params: [String: Any] = [:]
+            params["stn"] = stn
+            params["stn_name"] = stn_name
+            params["tambon"] = tambon
+            params["amphone"] = amphone
+            params["province"] = province
+            params["latitude"] = latitude
+            params["longitude"] = longitude
+            params["text_news"] = text_news
+            params["pic_news"] = pic_news
+
+           return .requestParameters(parameters: params, encoding: URLEncoding.default)
+            
         default:
             return .requestPlain
         }

@@ -19,11 +19,12 @@ import SwiftyXMLParser
 class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     let APIServiceProvider = MoyaProvider<APIService>()
+    let apiServiceJsonProvider = MoyaProvider<APIJsonService>()
+
     var locationCurrent:CLLocationCoordinate2D? = nil
     private let locationManager = CLLocationManager()
 
     
-    let apiServiceJsonProvider = MoyaProvider<APIJsonService>()
 
     
     private var mapView: GMSMapView!

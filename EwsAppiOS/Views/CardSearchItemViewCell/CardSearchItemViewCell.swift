@@ -63,6 +63,12 @@ class CardSearchItemViewCell: UITableViewCell {
     func setupValueCell() {
         titleLabel.text = "\(item!.title!)"
         switch item!.type! {
+        case .dept :
+            let aString = "\(item!.title!)"
+            let newString = aString.replacingOccurrences(of: "สทภ", with: "สทน")
+            titleLabel.text = newString
+
+            break
         case .main:
             titleLabel.numberOfLines = 2
             titleLabel.font = UIFont.PrimaryRegular(size: 25)

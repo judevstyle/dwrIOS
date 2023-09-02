@@ -7,10 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18416DAC2AA3CAE100E61AE2 /* ImagePickerHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18416DAB2AA3CAE100E61AE2 /* ImagePickerHelp.swift */; };
+		18416DAF2AA3CC0700E61AE2 /* CameraPermission in Frameworks */ = {isa = PBXBuildFile; productRef = 18416DAE2AA3CC0700E61AE2 /* CameraPermission */; };
+		18416DB12AA3CC0700E61AE2 /* LocationAlwaysPermission in Frameworks */ = {isa = PBXBuildFile; productRef = 18416DB02AA3CC0700E61AE2 /* LocationAlwaysPermission */; };
+		18416DB32AA3CC0700E61AE2 /* LocationWhenInUsePermission in Frameworks */ = {isa = PBXBuildFile; productRef = 18416DB22AA3CC0700E61AE2 /* LocationWhenInUsePermission */; };
+		18416DB52AA3CC0700E61AE2 /* PhotoLibraryPermission in Frameworks */ = {isa = PBXBuildFile; productRef = 18416DB42AA3CC0700E61AE2 /* PhotoLibraryPermission */; };
+		18416DB72AA3CC0700E61AE2 /* TrackingPermission in Frameworks */ = {isa = PBXBuildFile; productRef = 18416DB62AA3CC0700E61AE2 /* TrackingPermission */; };
+		18416DB92AA3CD5100E61AE2 /* ImagePickerHelpConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18416DB82AA3CD5100E61AE2 /* ImagePickerHelpConfig.swift */; };
+		18416DBB2AA3DC8D00E61AE2 /* GetAmPhurRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18416DBA2AA3DC8D00E61AE2 /* GetAmPhurRequest.swift */; };
+		18416DBD2AA3DCBF00E61AE2 /* GetDistricRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18416DBC2AA3DCBF00E61AE2 /* GetDistricRequest.swift */; };
+		18416DBF2AA3DF4700E61AE2 /* TambonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18416DBE2AA3DF4700E61AE2 /* TambonData.swift */; };
+		1877C8062AA27B87005C202E /* TextFieldSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877C8052AA27B87005C202E /* TextFieldSelectView.swift */; };
+		1877C8082AA27BB8005C202E /* SelectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877C8072AA27BB8005C202E /* SelectionModel.swift */; };
+		1877C80A2AA27DBF005C202E /* ToolbarPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877C8092AA27DBF005C202E /* ToolbarPickerView.swift */; };
+		1877C80D2AA28005005C202E /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1877C80C2AA28005005C202E /* NewsViewController.swift */; };
 		189BDA8A29460D880056FA6B /* MapRadarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189BDA8929460D880056FA6B /* MapRadarViewController.swift */; };
 		189BDA8C294616930056FA6B /* APIJsonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189BDA8B294616930056FA6B /* APIJsonService.swift */; };
 		189BDA8E29461BC30056FA6B /* JsonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189BDA8D29461BC30056FA6B /* JsonModel.swift */; };
-		6C485DBA615099ACE6B43ABF /* Pods_EwsAppiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A90D6DCBD6825A8E250803A /* Pods_EwsAppiOS.framework */; };
+		1DC1DA4BA9E5C9E7B4F3C07B /* Pods_EwsAppiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D6CF9A77F0399FEC7DD3B /* Pods_EwsAppiOS.framework */; };
 		C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE2E25308031004CDC0A /* AppDelegate.swift */; };
 		C452CE3925308031004CDC0A /* EwsAppiOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C452CE3725308031004CDC0A /* EwsAppiOS.xcdatamodeld */; };
 		C452CE3B25308037004CDC0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C452CE3A25308037004CDC0A /* Assets.xcassets */; };
@@ -67,11 +81,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18416DAB2AA3CAE100E61AE2 /* ImagePickerHelp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerHelp.swift; sourceTree = "<group>"; };
+		18416DB82AA3CD5100E61AE2 /* ImagePickerHelpConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerHelpConfig.swift; sourceTree = "<group>"; };
+		18416DBA2AA3DC8D00E61AE2 /* GetAmPhurRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAmPhurRequest.swift; sourceTree = "<group>"; };
+		18416DBC2AA3DCBF00E61AE2 /* GetDistricRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDistricRequest.swift; sourceTree = "<group>"; };
+		18416DBE2AA3DF4700E61AE2 /* TambonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TambonData.swift; sourceTree = "<group>"; };
+		1877C8052AA27B87005C202E /* TextFieldSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSelectView.swift; sourceTree = "<group>"; };
+		1877C8072AA27BB8005C202E /* SelectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionModel.swift; sourceTree = "<group>"; };
+		1877C8092AA27DBF005C202E /* ToolbarPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPickerView.swift; sourceTree = "<group>"; };
+		1877C80C2AA28005005C202E /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		189BDA8929460D880056FA6B /* MapRadarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRadarViewController.swift; sourceTree = "<group>"; };
 		189BDA8B294616930056FA6B /* APIJsonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIJsonService.swift; sourceTree = "<group>"; };
 		189BDA8D29461BC30056FA6B /* JsonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonModel.swift; sourceTree = "<group>"; };
-		5A90D6DCBD6825A8E250803A /* Pods_EwsAppiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EwsAppiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		70EF7AD5828DF5FB899BCC69 /* Pods-EwsAppiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.release.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.release.xcconfig"; sourceTree = "<group>"; };
+		1CC00E3E78A135CF2274AC84 /* Pods-EwsAppiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.release.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.release.xcconfig"; sourceTree = "<group>"; };
+		771D6CF9A77F0399FEC7DD3B /* Pods_EwsAppiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EwsAppiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C452CE2B25308031004CDC0A /* EWS DWR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EWS DWR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C452CE2E25308031004CDC0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C452CE3825308031004CDC0A /* EwsAppiOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EwsAppiOS.xcdatamodel; sourceTree = "<group>"; };
@@ -87,7 +110,6 @@
 		C452CE6A25309985004CDC0A /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		C490D307253570B9004CF6BE /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		C490D30D25358F25004CF6BE /* StationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationModel.swift; sourceTree = "<group>"; };
-		C76B148D4A0169BF3A63C10A /* Pods-EwsAppiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.debug.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		EF1A1E9B253C2957009DBBEF /* MainAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppViewController.swift; sourceTree = "<group>"; };
 		EF1A1E9E253C2AFC009DBBEF /* MenuSlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideViewController.swift; sourceTree = "<group>"; };
 		EF1A1EA1253C39D0009DBBEF /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +146,7 @@
 		EFC8F4FC254ACC00003FCB44 /* InfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoModel.swift; sourceTree = "<group>"; };
 		EFFD46142593B15600D5738C /* DetailReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportViewController.swift; sourceTree = "<group>"; };
 		EFFD46182593B23C00D5738C /* DetailReportViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportViewCell.swift; sourceTree = "<group>"; };
+		FDCDC0DD09836CD4378ABF44 /* Pods-EwsAppiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.debug.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,22 +156,46 @@
 			files = (
 				EFFD461225939D3300D5738C /* Toast in Frameworks */,
 				C452CE5725308573004CDC0A /* NVActivityIndicatorViewExtended in Frameworks */,
+				18416DB32AA3CC0700E61AE2 /* LocationWhenInUsePermission in Frameworks */,
+				18416DB72AA3CC0700E61AE2 /* TrackingPermission in Frameworks */,
 				C452CE5525308573004CDC0A /* NVActivityIndicatorView in Frameworks */,
-				6C485DBA615099ACE6B43ABF /* Pods_EwsAppiOS.framework in Frameworks */,
+				18416DB52AA3CC0700E61AE2 /* PhotoLibraryPermission in Frameworks */,
+				18416DB12AA3CC0700E61AE2 /* LocationAlwaysPermission in Frameworks */,
 				C490D30B253577F4004CF6BE /* SwiftyXMLParser in Frameworks */,
+				18416DAF2AA3CC0700E61AE2 /* CameraPermission in Frameworks */,
 				EF2DB9AB257A314B00B45F03 /* SkeletonView in Frameworks */,
+				1DC1DA4BA9E5C9E7B4F3C07B /* Pods_EwsAppiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A76DAF140CD784D92A9CE2E /* Frameworks */ = {
+		0C0BD702A8E87F6DEFAEF24D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5A90D6DCBD6825A8E250803A /* Pods_EwsAppiOS.framework */,
+				771D6CF9A77F0399FEC7DD3B /* Pods_EwsAppiOS.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1877C8042AA27B73005C202E /* Componant */ = {
+			isa = PBXGroup;
+			children = (
+				1877C8052AA27B87005C202E /* TextFieldSelectView.swift */,
+				1877C8092AA27DBF005C202E /* ToolbarPickerView.swift */,
+				18416DAB2AA3CAE100E61AE2 /* ImagePickerHelp.swift */,
+				18416DB82AA3CD5100E61AE2 /* ImagePickerHelpConfig.swift */,
+			);
+			path = Componant;
+			sourceTree = "<group>";
+		};
+		1877C80B2AA27FD9005C202E /* NewsView */ = {
+			isa = PBXGroup;
+			children = (
+				1877C80C2AA28005005C202E /* NewsViewController.swift */,
+			);
+			path = NewsView;
 			sourceTree = "<group>";
 		};
 		189BDA8829460D480056FA6B /* RadarMap */ = {
@@ -162,8 +209,8 @@
 		866B834C35E92E0D15E1D4CA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C76B148D4A0169BF3A63C10A /* Pods-EwsAppiOS.debug.xcconfig */,
-				70EF7AD5828DF5FB899BCC69 /* Pods-EwsAppiOS.release.xcconfig */,
+				FDCDC0DD09836CD4378ABF44 /* Pods-EwsAppiOS.debug.xcconfig */,
+				1CC00E3E78A135CF2274AC84 /* Pods-EwsAppiOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -174,7 +221,7 @@
 				C452CE2D25308031004CDC0A /* EwsAppiOS */,
 				C452CE2C25308031004CDC0A /* Products */,
 				866B834C35E92E0D15E1D4CA /* Pods */,
-				0A76DAF140CD784D92A9CE2E /* Frameworks */,
+				0C0BD702A8E87F6DEFAEF24D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,6 +258,7 @@
 		C452CE452530839F004CDC0A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1877C80B2AA27FD9005C202E /* NewsView */,
 				189BDA8829460D480056FA6B /* RadarMap */,
 				EFC09622258B504B004BE921 /* SplashView */,
 				EFAF56482551064400E881A6 /* SearchView */,
@@ -265,6 +313,7 @@
 		C452CE5E25309455004CDC0A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1877C8042AA27B73005C202E /* Componant */,
 				EFFD46172593B20A00D5738C /* DetailReportViewCell */,
 				EFA0C3962551BA62008A45B2 /* CardSearchItemViewCell */,
 				EFC8F4F6254ACAFC003FCB44 /* Info */,
@@ -315,6 +364,10 @@
 				EF739644254888FA00A0266C /* ReportModel.swift */,
 				EF344A2E25497BA900E85F6D /* Ews07Model.swift */,
 				189BDA8D29461BC30056FA6B /* JsonModel.swift */,
+				1877C8072AA27BB8005C202E /* SelectionModel.swift */,
+				18416DBA2AA3DC8D00E61AE2 /* GetAmPhurRequest.swift */,
+				18416DBC2AA3DCBF00E61AE2 /* GetDistricRequest.swift */,
+				18416DBE2AA3DF4700E61AE2 /* TambonData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -493,12 +546,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C452CE4225308037004CDC0A /* Build configuration list for PBXNativeTarget "EwsAppiOS" */;
 			buildPhases = (
-				03A568D95F69F2718F4F641A /* [CP] Check Pods Manifest.lock */,
+				EAA9F53D3E593C4C7623EAE0 /* [CP] Check Pods Manifest.lock */,
 				C452CE2725308031004CDC0A /* Sources */,
 				C452CE2825308031004CDC0A /* Frameworks */,
 				C452CE2925308031004CDC0A /* Resources */,
-				147D9D9A9F4C494403C5E6C6 /* [CP] Embed Pods Frameworks */,
-				4575B03457129DCC58FD55A5 /* [CP] Copy Pods Resources */,
+				FE729924B15D1CDDDB8EAD45 /* [CP] Embed Pods Frameworks */,
+				202FB1705CD9DEEF2E6FF0AB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -511,6 +564,11 @@
 				C490D30A253577F4004CF6BE /* SwiftyXMLParser */,
 				EF2DB9AA257A314B00B45F03 /* SkeletonView */,
 				EFFD461125939D3300D5738C /* Toast */,
+				18416DAE2AA3CC0700E61AE2 /* CameraPermission */,
+				18416DB02AA3CC0700E61AE2 /* LocationAlwaysPermission */,
+				18416DB22AA3CC0700E61AE2 /* LocationWhenInUsePermission */,
+				18416DB42AA3CC0700E61AE2 /* PhotoLibraryPermission */,
+				18416DB62AA3CC0700E61AE2 /* TrackingPermission */,
 			);
 			productName = EwsAppiOS;
 			productReference = C452CE2B25308031004CDC0A /* EWS DWR.app */;
@@ -545,6 +603,7 @@
 				C490D309253577F4004CF6BE /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */,
 				EF2DB9A9257A314B00B45F03 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				EFFD461025939D3300D5738C /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				18416DAD2AA3CC0700E61AE2 /* XCRemoteSwiftPackageReference "PermissionsKit" */,
 			);
 			productRefGroup = C452CE2C25308031004CDC0A /* Products */;
 			projectDirPath = "";
@@ -575,7 +634,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03A568D95F69F2718F4F641A /* [CP] Check Pods Manifest.lock */ = {
+		202FB1705CD9DEEF2E6FF0AB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAA9F53D3E593C4C7623EAE0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -597,7 +673,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		147D9D9A9F4C494403C5E6C6 /* [CP] Embed Pods Frameworks */ = {
+		FE729924B15D1CDDDB8EAD45 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -614,23 +690,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4575B03457129DCC58FD55A5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -640,15 +699,20 @@
 			files = (
 				EFBBB5042539DB7F002AA238 /* MapStationViewController.swift in Sources */,
 				EF35B888254B078000DA4244 /* DetailMapStationViewController.swift in Sources */,
+				1877C8082AA27BB8005C202E /* SelectionModel.swift in Sources */,
 				EF4003C8254FFBD100BBE499 /* LastDataViewModel.swift in Sources */,
 				EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */,
 				EFC09627258B5073004BE921 /* SplashViewController.swift in Sources */,
+				18416DBB2AA3DC8D00E61AE2 /* GetAmPhurRequest.swift in Sources */,
+				18416DB92AA3CD5100E61AE2 /* ImagePickerHelpConfig.swift in Sources */,
+				1877C80A2AA27DBF005C202E /* ToolbarPickerView.swift in Sources */,
 				C490D30E25358F25004CF6BE /* StationModel.swift in Sources */,
 				189BDA8A29460D880056FA6B /* MapRadarViewController.swift in Sources */,
 				EF7396432548876000A0266C /* ReportViewController.swift in Sources */,
 				EFFD46192593B23C00D5738C /* DetailReportViewCell.swift in Sources */,
 				EFC8F4F8254ACB22003FCB44 /* CollapsibleTableViewCell.swift in Sources */,
 				EF1A1EA4253C59FE009DBBEF /* LastDataModel.swift in Sources */,
+				18416DBD2AA3DCBF00E61AE2 /* GetDistricRequest.swift in Sources */,
 				EF739645254888FA00A0266C /* ReportModel.swift in Sources */,
 				EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */,
 				EFC62B972547459A00F19217 /* DetailStationViewCell.swift in Sources */,
@@ -659,7 +723,9 @@
 				EFC8F4F5254AC37B003FCB44 /* InfoViewController.swift in Sources */,
 				EFAF564A2551065900E881A6 /* SearchViewController.swift in Sources */,
 				EFC62B942547448800F19217 /* DetailStationViewController.swift in Sources */,
+				1877C8062AA27B87005C202E /* TextFieldSelectView.swift in Sources */,
 				C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */,
+				1877C80D2AA28005005C202E /* NewsViewController.swift in Sources */,
 				EFB3159525482EBA00B2E4E9 /* ListCardStationViewCell.swift in Sources */,
 				EFB3159325482EAE00B2E4E9 /* ListCardRainViewCell.swift in Sources */,
 				EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */,
@@ -668,6 +734,7 @@
 				C490D308253570B9004CF6BE /* APIService.swift in Sources */,
 				EF4003C5254FF9F800BBE499 /* LastDataStationProtocol.swift in Sources */,
 				EFA0C3982551BA8A008A45B2 /* CardSearchItemViewCell.swift in Sources */,
+				18416DBF2AA3DF4700E61AE2 /* TambonData.swift in Sources */,
 				C452CE612530947A004CDC0A /* MenuSideViewCell.swift in Sources */,
 				EFFD46152593B15600D5738C /* DetailReportViewController.swift in Sources */,
 				EF1A1E9C253C2957009DBBEF /* MainAppViewController.swift in Sources */,
@@ -676,6 +743,7 @@
 				EFC62B9225473FDF00F19217 /* SettingViewController.swift in Sources */,
 				EFBBB5072539DBBF002AA238 /* StationListViewController.swift in Sources */,
 				EF1A1E9F253C2AFC009DBBEF /* MenuSlideViewController.swift in Sources */,
+				18416DAC2AA3CAE100E61AE2 /* ImagePickerHelp.swift in Sources */,
 				EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */,
 				EF73964825488AEE00A0266C /* CardReportViewCell.swift in Sources */,
 				EF9ABE43254179E0001EAA20 /* DashboardCardModel.swift in Sources */,
@@ -813,7 +881,7 @@
 		};
 		C452CE4325308037004CDC0A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C76B148D4A0169BF3A63C10A /* Pods-EwsAppiOS.debug.xcconfig */;
+			baseConfigurationReference = FDCDC0DD09836CD4378ABF44 /* Pods-EwsAppiOS.debug.xcconfig */;
 			buildSettings = {
 				API_BASE_URL = "http://ews.dwr.go.th/mobilexml";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -821,7 +889,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -829,7 +897,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = th.go.dwr.ews4thai;
 				PRODUCT_NAME = "EWS DWR";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -840,7 +908,7 @@
 		};
 		C452CE4425308037004CDC0A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 70EF7AD5828DF5FB899BCC69 /* Pods-EwsAppiOS.release.xcconfig */;
+			baseConfigurationReference = 1CC00E3E78A135CF2274AC84 /* Pods-EwsAppiOS.release.xcconfig */;
 			buildSettings = {
 				API_BASE_URL = "http://ews.dwr.go.th/mobilexml";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -848,7 +916,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -856,7 +924,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = th.go.dwr.ews4thai;
 				PRODUCT_NAME = "EWS DWR";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -889,6 +957,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		18416DAD2AA3CC0700E61AE2 /* XCRemoteSwiftPackageReference "PermissionsKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparrowcode/PermissionsKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		C452CE5325308573004CDC0A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView.git";
@@ -924,6 +1000,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		18416DAE2AA3CC0700E61AE2 /* CameraPermission */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18416DAD2AA3CC0700E61AE2 /* XCRemoteSwiftPackageReference "PermissionsKit" */;
+			productName = CameraPermission;
+		};
+		18416DB02AA3CC0700E61AE2 /* LocationAlwaysPermission */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18416DAD2AA3CC0700E61AE2 /* XCRemoteSwiftPackageReference "PermissionsKit" */;
+			productName = LocationAlwaysPermission;
+		};
+		18416DB22AA3CC0700E61AE2 /* LocationWhenInUsePermission */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18416DAD2AA3CC0700E61AE2 /* XCRemoteSwiftPackageReference "PermissionsKit" */;
+			productName = LocationWhenInUsePermission;
+		};
+		18416DB42AA3CC0700E61AE2 /* PhotoLibraryPermission */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18416DAD2AA3CC0700E61AE2 /* XCRemoteSwiftPackageReference "PermissionsKit" */;
+			productName = PhotoLibraryPermission;
+		};
+		18416DB62AA3CC0700E61AE2 /* TrackingPermission */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18416DAD2AA3CC0700E61AE2 /* XCRemoteSwiftPackageReference "PermissionsKit" */;
+			productName = TrackingPermission;
+		};
 		C452CE5425308573004CDC0A /* NVActivityIndicatorView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C452CE5325308573004CDC0A /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;

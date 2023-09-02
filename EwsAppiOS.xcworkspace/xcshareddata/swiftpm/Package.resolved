@@ -1,43 +1,50 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "NVActivityIndicatorView",
-        "repositoryURL": "https://github.com/ninjaprox/NVActivityIndicatorView.git",
-        "state": {
-          "branch": null,
-          "revision": "3a1876bc3ef1856aeaded54cc87260d84b4234ca",
-          "version": "5.1.0"
-        }
-      },
-      {
-        "package": "SkeletonView",
-        "repositoryURL": "https://github.com/Juanpe/SkeletonView.git",
-        "state": {
-          "branch": null,
-          "revision": "46e2180c4b034c576928a9c331952c0147011050",
-          "version": "1.11.0"
-        }
-      },
-      {
-        "package": "SwiftyXMLParser",
-        "repositoryURL": "https://github.com/yahoojapan/SwiftyXMLParser.git",
-        "state": {
-          "branch": null,
-          "revision": "0ca0e992ce0135169c715a6580b99f3e99c503e7",
-          "version": "5.2.1"
-        }
-      },
-      {
-        "package": "Toast",
-        "repositoryURL": "https://github.com/scalessec/Toast-Swift.git",
-        "state": {
-          "branch": null,
-          "revision": "0c9493eeacb102cc614da385cfaaf475379f4ab4",
-          "version": "5.0.1"
-        }
+  "pins" : [
+    {
+      "identity" : "nvactivityindicatorview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ninjaprox/NVActivityIndicatorView.git",
+      "state" : {
+        "revision" : "3a1876bc3ef1856aeaded54cc87260d84b4234ca",
+        "version" : "5.1.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "permissionskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sparrowcode/PermissionsKit",
+      "state" : {
+        "revision" : "d10e48fb51a49b1a8db2a814ff7f7353415b72a3",
+        "version" : "9.0.5"
+      }
+    },
+    {
+      "identity" : "skeletonview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Juanpe/SkeletonView.git",
+      "state" : {
+        "revision" : "46e2180c4b034c576928a9c331952c0147011050",
+        "version" : "1.11.0"
+      }
+    },
+    {
+      "identity" : "swiftyxmlparser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yahoojapan/SwiftyXMLParser.git",
+      "state" : {
+        "revision" : "0ca0e992ce0135169c715a6580b99f3e99c503e7",
+        "version" : "5.2.1"
+      }
+    },
+    {
+      "identity" : "toast-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scalessec/Toast-Swift.git",
+      "state" : {
+        "revision" : "0c9493eeacb102cc614da385cfaaf475379f4ab4",
+        "version" : "5.0.1"
+      }
+    }
+  ],
+  "version" : 2
 }

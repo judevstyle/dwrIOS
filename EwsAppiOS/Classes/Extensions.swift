@@ -13,6 +13,97 @@ import Toast_Swift
 import GoogleMaps
 extension UIView {
     
+    func setAllRounded(rounded: CGFloat) {
+//        print("ssize \(self.layer.frame.height)")
+        self.layer.cornerRadius = rounded
+    }
+    
+    
+    func setAllRounded(rounded: CGFloat,text:String) {
+//        self.layer.frame.height = 44
+        self.layer.cornerRadius = rounded/2
+        print("ssize \(text) --- \(self.layer.frame.height)")
+
+    }
+    
+    func setRoundedCircle() {
+        let width = self.frame.width/2
+        self.layer.cornerRadius = width
+    }
+    
+    func setShadowBoxView()  {
+        self.layer.shadowColor = UIColor.lightGray.cgColor
+        self.layer.shadowOpacity = 0.6
+        self.layer.shadowOffset = .zero
+        self.layer.shadowRadius = 2
+    }
+    
+    func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
+        if #available(iOS 11.0, *) {
+            clipsToBounds = true
+            layer.cornerRadius = radius
+            layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
+        } else {
+            let path = UIBezierPath(
+                roundedRect: bounds,
+                byRoundingCorners: corners,
+                cornerRadii: CGSize(width: radius, height: radius)
+            )
+            let mask = CAShapeLayer()
+            mask.path = path.cgPath
+            layer.mask = mask
+        }
+    }
+    
+    func roundedTop(radius: CGFloat){
+        let path = UIBezierPath(
+            roundedRect: bounds,
+            byRoundingCorners: [.topLeft, .topRight],
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        layer.mask = mask
+     }
+    
+    func roundedBottom(radius: CGFloat){
+        let path = UIBezierPath(
+            roundedRect: bounds,
+            byRoundingCorners: [.bottomLeft, .bottomRight],
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        layer.mask = mask
+     }
+    
+    func roundedLeft(radius: CGFloat){
+        let path = UIBezierPath(
+            roundedRect: bounds,
+            byRoundingCorners: [.topLeft, .bottomLeft],
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        layer.mask = mask
+     }
+    
+    func roundedRight(radius: CGFloat){
+        let path = UIBezierPath(
+            roundedRect: bounds,
+            byRoundingCorners: [.topRight, .bottomRight],
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        layer.mask = mask
+     }
+    
+    func setBorder(width: CGFloat, color: UIColor) {
+        self.layer.borderWidth = width
+        self.layer.borderColor = color.cgColor
+    }
+    
     func anchor(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) {
         
         _ = anchorPositionReturn(top, left: left, bottom: bottom, right: right, topConstant: topConstant, leftConstant: leftConstant, bottomConstant: bottomConstant, rightConstant: rightConstant, widthConstant: widthConstant, heightConstant: heightConstant)
@@ -418,6 +509,16 @@ extension UIColor {
     static var emerald = UIColor.rgb(red: 0, green: 222, blue: 182)
     static var lolipop = UIColor.rgb(red: 143, green: 20, blue: 108)
     static var ruby = UIColor.rgb(red: 235, green: 42, blue: 117)
+    
+    static var Color333333 = UIColor(named: "#333333")!
+    static var PrimaryRed = UIColor(named: "PrimaryRed")!
+    static var CED4D9 = UIColor(named: "#CED4D9")!
+    static var bgTrans = UIColor(named: "bgTrans")!
+
+    
+    
+    
+    
     
 }
 
@@ -969,6 +1070,21 @@ extension UIImageView {
     
 }
 
+extension NSLayoutXAxisAnchor {
+    func constraint(between anchor1: NSLayoutXAxisAnchor, and anchor2: NSLayoutXAxisAnchor) -> NSLayoutConstraint {
+        let anchor1Constraint = anchor1.anchorWithOffset(to: self)
+        let anchor2Constraint = anchorWithOffset(to: anchor2)
+        return anchor1Constraint.constraint(equalTo: anchor2Constraint)
+    }
+}
+
+extension NSLayoutYAxisAnchor {
+    func constraint(between anchor1: NSLayoutYAxisAnchor, and anchor2: NSLayoutYAxisAnchor) -> NSLayoutConstraint {
+        let anchor1Constraint = anchor1.anchorWithOffset(to: self)
+        let anchor2Constraint = anchorWithOffset(to: anchor2)
+        return anchor1Constraint.constraint(equalTo: anchor2Constraint)
+    }
+}
 
 extension UIAlertAction {
     static var propertyNames: [String] {
@@ -1048,4 +1164,28 @@ extension Notification.Name {
     static let didLoadStationsSuccess = Notification.Name("didLoadStationsSuccess")
 //    static let didCompleteTask = Notification.Name("didCompleteTask")
 //    static let completedLengthyDownload = Notification.Name("completedLengthyDownload")
+}
+
+extension String {
+    func trim() -> String {
+    return self.trimmingCharacters(in: NSCharacterSet.whitespaces)
+   }
+}
+
+
+extension UIApplication {
+
+    class func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+
+        if let nav = base as? UINavigationController {
+            return getTopViewController(base: nav.visibleViewController)
+
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getTopViewController(base: selected)
+
+        } else if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+        return base
+    }
 }

@@ -187,3 +187,30 @@ struct StationDataResponse: Decodable {
         case distance, count
     }
 }
+
+
+
+struct CallbackData: Decodable {
+    var success: Bool?
+    var msg: String?
+
+
+    
+    enum CodingKeys: String, CodingKey {
+        case success = "success"
+        case msg = "msg"
+    }
+}
+
+struct ProvinceData: Decodable {
+    var success: Bool?
+    var msg: String?
+
+
+    
+    enum CodingKeys: String, CodingKey {
+        case success = "success"
+        case msg = "msg"
+    }
+}
+
