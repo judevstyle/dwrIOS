@@ -75,7 +75,15 @@ class CardReportViewCell: UITableViewCell {
     
     
     
-    var report: ReportModel? {
+//    var report: ReportModel? {
+//        didSet {
+//            DispatchQueue.main.async { [weak self] in
+//                self?.setupValue()
+//            }
+//        }
+//    }
+//    
+    var report: ReportNVModel? {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.setupValue()
@@ -124,9 +132,11 @@ class CardReportViewCell: UITableViewCell {
     }
     
     func setupValue()  {
-        titleLabel.text = "\(report!.title!)"
-        addressLabel.text = "\(report!.address!)"
-        let formateDateTh = "\(report!.date!)".DateThFormateReport()
+        titleLabel.text = "\(splitTitle(text: "สถานี",msg: report!.report_title!))"
+        
+        addressLabel.text = "สถานี \(splitAddr(text: "สถานี",msg: report!.report_title!)) ต.\(splitAddr(text: "ตำบล",msg: report!.report_title!)) อ.\(splitAddr(text: "อำเภอ",msg: report!.report_title!)) จ.\(splitAddr(text: "จังหวัด",msg: report!.report_title!))"
+
+        let formateDateTh = "\(report!.report_date!)".DateThFormateReport()
         dateLabel.text = "\(formateDateTh)"
         
         UIView.animate(withDuration: 0.2) {
@@ -134,17 +144,17 @@ class CardReportViewCell: UITableViewCell {
         }
         
         
-        switch report!.status! {
-        case .Evacuate:
+        switch splitSpace(msg: "\(report!.report_title!)") {
+        case "อพยพ":
             circleView.backgroundColor = .systemRed
-        case .Caution:
+        case "เตือนภัย":
             circleView.backgroundColor = .systemYellow
-        case .Watchout:
+        case "เฝ้าระวัง":
             circleView.backgroundColor = .systemGreen
-        case .Rain:
-            circleView.backgroundColor = .mediumBlue
+//        case .Rain:
+//            circleView.backgroundColor = .mediumBlue
         default:
-            circleView.backgroundColor = .systemRed
+            circleView.backgroundColor = .mediumBlue
         }
         
         self.setNeedsDisplay()
@@ -152,4 +162,36 @@ class CardReportViewCell: UITableViewCell {
         
     }
     
+    
+    func splitAddr(text:String,msg:String)->String{
+
+        do {
+            let splits = ((msg.components(separatedBy: text))[1]).components(separatedBy: " ")[1]
+
+            return splits
+                 //return (msg.split("${text}")[1]).split(" ")[1]
+
+             }catch {
+                 return ""
+             }
+
+         }
+    func splitTitle(text:String,msg:String)->String{
+
+        return msg.components(separatedBy: text)[0]
+
+       }
+
+    
+    
+    func splitSpace(msg:String)->String{
+
+                do {
+                    return msg.components(separatedBy: " ")[1]
+
+                }catch {
+                    return ""
+                }
+
+            }
 }

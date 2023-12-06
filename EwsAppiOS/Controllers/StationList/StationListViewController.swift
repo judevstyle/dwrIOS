@@ -8,11 +8,13 @@
 
 import UIKit
 import SwiftyXMLParser
+import Moya
 
 class StationListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let cellId = "cellStation"
-    
+    let apiServiceJsonProvider = MoyaProvider<APIJsonService>()
+
     lazy var tableview: UITableView = {
         let tableview = UITableView()
         tableview.dataSource = self
@@ -41,6 +43,13 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     var last_data: [LastDataModel]? = []
     var stations_last: [StationXLastDataModel]? = []
     
+    
+    //new logic
+    var stationsWarnings: [WarningStation]? = []
+    var eventType: Int = 0
+
+    
+
     var viewModel: LastDataStationProtocol!
     
     override func viewDidLoad() {
@@ -58,7 +67,7 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         navigationItem.leftBarButtonItem = leftbutton
         
         
-        tableview.register(CardStationViewCell.self, forCellReuseIdentifier: cellId)
+        tableview.register(CardStationNVViewCell.self, forCellReuseIdentifier: cellId)
         
         
         view.addSubview(viewImageBg)
@@ -67,8 +76,20 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
         view.addSubview(tableview)
         tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
-        configure(LastDataViewModel())
+      //  configure(LastDataViewModel())
+        
+        self.getWarningByType()
+        
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     func configure(_ interface: LastDataStationProtocol) {
@@ -79,11 +100,11 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     
     fileprivate func showAlert(data: StationXLastDataModel) {
         print("---")
-        DispatchQueue.main.async {
-            self.stations_last!.append(data)
-            self.tableview.reloadData()
-            self.stopLoding()
-        }
+//        DispatchQueue.main.async {
+//            self.stations_last!.append(data)
+//            self.tableview.reloadData()
+//            self.stopLoding()
+//        }
     }
 
     
@@ -93,13 +114,13 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stations_last!.count
+        return stationsWarnings!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CardStationViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! CardStationNVViewCell
         
-        cell.station = self.stations_last?[indexPath.row]
+        cell.station = self.stationsWarnings?[indexPath.row]
         
         return cell
     }
@@ -109,8 +130,8 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let rootVC = DetailStationViewController()
-        rootVC.stations_last = self.stations_last
+        let rootVC = DetailStationNVViewController()
+        rootVC.stations_last = self.stationsWarnings
         rootVC.currentPage = indexPath.item
         let rootNC = UINavigationController(rootViewController: rootVC)
         rootNC.modalPresentationStyle = .overFullScreen
@@ -128,6 +149,75 @@ class StationListViewController: UIViewController, UITableViewDelegate, UITableV
            }
        }
     
+    
+    
+    
+    func getWarningByType(){
+        
+        self.startLoding()
+        
+        
+        var request:[String:String] =   [String:String]()
+        
+        switch eventType {
+        case 0 :
+            request.updateValue("1", forKey: "show")
+            break
+            
+        case 1 :
+            request.updateValue("1", forKey: "status")
+            break
+        case 2 :
+            request.updateValue("2", forKey: "status")
+            break
+        case 3 :
+            request.updateValue("3", forKey: "status")
+            break
+        case 9 :
+            request.updateValue("9", forKey: "status")
+            break
+        default:
+            request.updateValue("2", forKey: "show")
+            break
+            
+            
+        }
+        
+        
+        apiServiceJsonProvider.rx.request(.GetWarningStation(request: request)).subscribe { event in
+            
+            switch event {
+            case let .success(response):
+                
+                self.stopLoding()
+                do {
+                    let result = try JSONDecoder().decode(StationWarningResponse.self, from: response.data)
+                    
+                    
+                    self.stationsWarnings = result.data ?? []
+                    
+                    
+                    print("ddd count -- \(self.stationsWarnings?.count ?? 0)")
+
+                    self.tableview.reloadData()
+                    
+                    
+                    
+                } catch { print("err --- \(error)") }
+                
+                
+            case let .failure(error):
+                self.stopLoding()
+                
+                print("ddd")
+            }
+            
+            
+        }
+        
+        
+        
+    }
 }
 
 

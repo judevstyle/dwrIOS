@@ -16,11 +16,14 @@ struct TambonData: Decodable {
     var latitude: String?
     var longitude: String?
 
+    var stn_name: String?
 
     
     enum CodingKeys: String, CodingKey {
         case name = "name"
         case stn = "stn"
+        case stn_name = "stn_name"
+
         case tambon = "tambon"
         case tambon_e = "tambon_e"
         case latitude = "latitude"

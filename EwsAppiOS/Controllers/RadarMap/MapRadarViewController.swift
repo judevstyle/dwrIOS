@@ -240,7 +240,7 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
     
     let sliderRadar: UISlider = {
         let slider = UISlider()
-        slider.maximumValue = 800
+        slider.maximumValue = 1000
         slider.minimumValue = 1
 
         
@@ -292,7 +292,7 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+        let baseURL = "https://ews.dwr.go.th/mobilexml" //Bundle.main.infoDictionary!["API_BASE_URL"] as! String
 
         print("baseURL \(baseURL)")
         view.backgroundColor = .white
@@ -397,13 +397,29 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
         var type = "all"
         if select == 0 {
             type = "warn" }
-        apiServiceJsonProvider.rx.request(.GetRadarService(type: type, radius: self.raduins, lat: locationCurrent!.latitude, lng: locationCurrent!.longitude)).subscribe { event in
+        
+//        print("ddd km-- \(self.raduins)")
+        print("ddd km-- \(self.raduins) -- \(type) --\(self.locationCurrent!.latitude)--\(self.locationCurrent!.longitude)")
+
+        self.startLoding()
+        var request:[String:String] =   [String:String]()
+
+        request.updateValue("2", forKey: "show")
+//        apiServiceJsonProvider.rx.request(.GetWarningStationMap(request: request)).subscribe { event in
+//        apiServiceJsonProvider.rx.request(.GetWarningStationMap(request: request)).subscribe { event in
+
+             apiServiceJsonProvider.rx.request(.GetRadarService(type: type, radius: self.raduins, lat: locationCurrent!.latitude, lng: locationCurrent!.longitude)).subscribe { event in
             self.mapView.clear()
 
             let km = self.raduins*1000
-            let circleCenter = CLLocationCoordinate2DMake(13.7194367, 100.6164316)//change to your center point
-            let circ = GMSCircle(position: circleCenter, radius: CLLocationDistance(km) )//radius in meters
+            
+            
+//            print("ddd km-- \(km) -- \(type)")
 
+            let circleCenter = CLLocationCoordinate2DMake(self.locationCurrent!.latitude, self.locationCurrent!.longitude)//change to your center point
+            let circ = GMSCircle(position: circleCenter, radius: CLLocationDistance(km) )//radius in meters
+            self.stopLoding()
+//
             circ.fillColor = UIColor(red: 0, green: 0, blue: 0.5, alpha: 0.05)
             circ.strokeColor = UIColor.blue
             circ.strokeWidth = 1
@@ -413,8 +429,14 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
                 print("ddd -- \(response.data)")
 
                 do {
-                    let result = try JSONDecoder().decode([StationDataResponse].self, from: response.data)
-                  //  print("ddd -- \(result[0].stn)")
+                    let result = try JSONDecoder().decode([WarningStation].self, from: response.data)
+                    
+//                    for item in result {
+//                        print("dddsd val -- \(item.name)--\( item.warning_type)--\(item.warn_wl_v)--\(item)")
+//
+//                       
+//                    }
+                  //  print("dddsd size -- \(result.count)")
                     
                     DispatchQueue.main.async {
 
@@ -422,8 +444,11 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
                     self.startLoding()
                     self.listMarker.removeAll()
                     self.index = 0
+                        
+               
+                        
                     DispatchQueue.global(qos: .background).async {
-                        LastDataModel.setMethodAllWarnMap(viewModel: self.viewModel as! LastDataViewModel,stations: result)
+                        LastDataModel.setMethodAllWarnMap(viewModel: self.viewModel as! LastDataViewModel,stations: result )
                         DispatchQueue.main.async {
                             self.stopLoding()
                         }
@@ -436,6 +461,8 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
 //                print("data ---- \(response.data)")
 //                let root = try? strongSelf.jsonDecoder.decode(Root.self, from: response.data)
             case let .failure(error):
+                print("dddsd err -- \(error)")
+
                 self.dashboards[0].value = "0"
                 self.dashboards[1].value = "0"
 //                self.dashboards[2].value = "0"
@@ -576,9 +603,9 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
                     case "สถานการณ์ เฝ้าระวัง":
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerBewareView)
                     case "สถานการณ์ ฝนตกเล็กน้อย":
-                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWhiteView )
                     default:
-                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWhiteView)
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
                     }
                 }
             }
@@ -737,8 +764,15 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
             }
         }
         
-        valueLabel.text = "\(station.value!)"
+//        valueLabel.text = "\(station.value!)"
+        if station.type_status == 9 || station.type_status == -999 || station.type_status == 0 {
+            valueLabel.text = "\(station.rain12h!)"
 
+        } else {
+            valueLabel.text = "\(station.value!)"
+
+        }
+        
         
         if let pm2Double = station.pm25!.toDouble() {
             Pm25Label.text = "PM 2.5 = \(pm2Double)"
@@ -839,9 +873,9 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
                         case "สถานการณ์ เฝ้าระวัง":
                             self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerBewareView)
                         case "สถานการณ์ ฝนตกเล็กน้อย":
-                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerDefaultView)
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerBewareView )
                         default:
-                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerBewareView)
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerDefaultView)
                         }
                         
                     }

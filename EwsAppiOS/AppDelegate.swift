@@ -85,9 +85,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         
-        DispatchQueue.global(qos: .background).async {
-            StationModel.FetchStations()
-        }
+//        DispatchQueue.global(qos: .background).async {
+//            StationModel.FetchStations()
+//        }
       
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
         if launchedBefore  {
@@ -102,7 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               print("Subscribed to ews topic")
             }
         }
-        
         
         let statusNotification = UserDefaults.standard.bool(forKey: "status_notification")
         if statusNotification {

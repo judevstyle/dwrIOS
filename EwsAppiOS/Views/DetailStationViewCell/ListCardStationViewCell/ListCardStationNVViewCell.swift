@@ -1,14 +1,15 @@
 //
-//  ListCardStationViewCell.swift
+//  ListCardStationNVViewCell.swift
 //  EwsAppiOS
 //
-//  Created by Nontawat Kanboon on 27/10/2563 BE.
-//  Copyright © 2563 ssoft. All rights reserved.
+//  Created by Ssoft_dev on 12/5/23.
+//  Copyright © 2023 ssoft. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class ListCardStationViewCell: UITableViewCell {
+class ListCardStationNVViewCell: UITableViewCell {
     
     
     
@@ -63,7 +64,7 @@ class ListCardStationViewCell: UITableViewCell {
         return image
     }()
     
-    var station: StationXLastDataModel? {
+    var station: WarningStation? {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.setupValue()
@@ -119,21 +120,16 @@ class ListCardStationViewCell: UITableViewCell {
 //        }
         
         
-        
-//        || station.type_status == 0 
-        
-//        value = "\n\(station!.rain12h!)"
-        
-        if station!.type_status == 9 || station!.type_status == -999 || station!.type_status == 0 {
+        if station!.show_status == 9 || station!.show_status == -999 || station!.show_status == 0 {
             value = "\n\(station!.rain12h!)"
         } else {
-            value = "\n\(station!.value!)"
+            value = "\n\(station!.rain_value!)"
         }
         
         
         
-        let name = "\n\(station!.title!)"
-        let address = "\n\(station!.address!)"
+        let name = "\n\(station!.name!)"
+        let address = "\nต.\(station!.tambon!) อ.\(station!.amphoe!) จ.\(station!.province!)\nหมู่บ้านครอบคลุมจำนวน \(station!.stn_cover ?? 0) หมู่บ้าน"
         
         let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 16), NSAttributedString.Key.foregroundColor: UIColor.white])
         
@@ -150,17 +146,17 @@ class ListCardStationViewCell: UITableViewCell {
         valueStation.attributedText = attributedText
         valueStation.numberOfLines = 0
         
-        switch station!.status! {
-        case "สถานการณ์ อพยพ":
+        switch station!.show_status! {
+        case 3:
             iconImage.image = UIImage(named: "rain_tornado")!
             break
-        case "สถานการณ์ เตือนภัย":
+        case 2:
             iconImage.image = UIImage(named: "rain_thunder")!
             break
-        case "สถานการณ์ เฝ้าระวัง":
+        case 1:
             iconImage.image = UIImage(named: "rain")!
             break
-        case "สถานการณ์ ฝนตกเล็กน้อย":
+        case 9:
             iconImage.image = UIImage(named: "overcast")!
             break
         default:

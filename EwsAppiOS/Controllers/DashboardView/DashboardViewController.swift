@@ -20,14 +20,17 @@ protocol DashboardDelegateProtocol {
 
 class DashboardViewController: UIViewController, SideMenuNavigationControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, DashboardDelegateProtocol {
     
-    
+    let apiServiceJsonProvider = MoyaProvider<APIJsonService>()
+
     var delegateMainApp: MainAppDelegateProtocol? = nil
     var ValueBannWarningStations:[String] = ["0","0","0","0"]
 
     var ValueWarningStations:[String] = ["0","0","0","0"]
-    var TitleWarningStations:[String] = ["อพยพ","เตือนภัย","เฝ้าระวัง","มีฝน"]
+    var TitleWarningStations:[String] = ["ไไไอพยพ","เตรียมพร้อม","เฝ้าระวัง","มีฝน"]
     
     let APIServiceProvider = MoyaProvider<APIService>()
+    
+    var sumWarning = 0
     
     lazy var viewAllButton: UIButton = {
         let button = UIButton()
@@ -120,13 +123,77 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         //        }
         
         DispatchQueue.main.async {
-            self.getCountStatus()
+//            self.getCountStatus()
+            self.getDashboard()
+
         }
         
     }
     
     @objc func handleAllEws()  {
-        getDataByType(type: "all")
+        
+//        getDataByType(type: "all")
+        
+        if self.sumWarning > 0 {
+            self.goToStationListByEvent(stationsEvent: -1)
+
+        } else {
+            self.ToastAlert(text: "ไม่มีข้อมูล", duration: 1.5)
+
+            
+        }
+        
+
+        
+        
+        
+    }
+    
+    
+    
+    func getDashboard(){
+        
+        self.startLoding()
+        apiServiceJsonProvider.rx.request(.GetDashboard).subscribe { event in
+
+            switch event {
+            case let .success(response):
+                print("ddd -- \(response)")
+                
+                self.stopLoding()
+                do {
+                    let result = try JSONDecoder().decode(DashBoardModel.self, from: response.data)
+                    
+                    
+                    self.dashboards[0].value = "\(result.type3?.count_station ?? 0)"
+                    self.dashboards[1].value = "\(result.type2?.count_station ?? 0)"
+                    self.dashboards[2].value = "\(result.type1?.count_station ?? 0)"
+                    self.dashboards[3].value = "\(result.type9?.count_station ?? 0)"
+                    
+                    
+                    
+                    self.sumWarning = (result.type1?.count_station ?? 0)+(result.type2?.count_station ?? 0)+(result.type3?.count_station ?? 0)
+                    
+                    self.dashboards[0].valueBann = "\(result.type3?.count_bann ?? 0)"
+                    self.dashboards[1].valueBann = "\(result.type2?.count_bann ?? 0)"
+                    self.dashboards[2].valueBann = "\(result.type1?.count_bann ?? 0)"
+                    self.dashboards[3].valueBann = "\(result.type9?.count_bann ?? 0)"
+                    self.tableview.reloadData()
+                    
+                    
+                
+                } catch { print("err --- \(error)") }
+                
+
+            case let .failure(error):
+                self.stopLoding()
+
+              print("ddd")
+            }
+        
+        }
+        
+        
     }
     
     
@@ -220,25 +287,50 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if AppDelegate.shareDelegate.stations != nil {
+        
+        
+        if indexPath.row < 4 &&  Int(self.dashboards[indexPath.row].value)! > 0 {
             
-            switch indexPath.row {
-            case 0:
-                getLastData(type: "สถานการณ์ อพยพ", index: indexPath.row)
-            case 1:
-                getLastData(type: "สถานการณ์ เตือนภัย", index: indexPath.row)
-            case 2:
-                getLastData(type: "สถานการณ์ เฝ้าระวัง", index: indexPath.row)
-            case 3:
-                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย", index: indexPath.row)
-            default:
-                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย", index: indexPath.row)
-            }
+                        switch indexPath.row {
+                        case 0:
+                            self.goToStationListByEvent(stationsEvent: 3)
+                        case 1:
+                            self.goToStationListByEvent(stationsEvent: 2)
+                        case 2:
+                            self.goToStationListByEvent(stationsEvent: 1)
+                        case 3:
+                            self.goToStationListByEvent(stationsEvent: 9)
+                        default:
+                            self.goToStationListByEvent(stationsEvent: -1)
+
+                        }
             
-        }else {
-            delegateMainApp!.ToastLoading()
+            
+        }else{
+            self.ToastAlert(text: "ไม่มีข้อมูล", duration: 1.5)
         }
         
+        
+        
+//        if AppDelegate.shareDelegate.stations != nil {
+//            
+//            switch indexPath.row {
+//            case 0:
+//                getLastData(type: "สถานการณ์ อพยพ", index: indexPath.row)
+//            case 1:
+//                getLastData(type: "สถานการณ์ เตือนภัย", index: indexPath.row)
+//            case 2:
+//                getLastData(type: "สถานการณ์ เฝ้าระวัง", index: indexPath.row)
+//            case 3:
+//                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย", index: indexPath.row)
+//            default:
+//                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย", index: indexPath.row)
+//            }
+//            
+//        }else {
+//            delegateMainApp!.ToastLoading()
+//        }
+//        
     }
     
     func getLastData(type: String, index: Int) {
@@ -250,6 +342,10 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
         }
         
     }
+    
+    
+
+    
     
     
     func getDataByType(type: String){
@@ -443,6 +539,16 @@ class DashboardViewController: UIViewController, SideMenuNavigationControllerDel
             }
         }
     }
+    
+    func goToStationListByEvent(stationsEvent: Int) {
+        let rootVC = StationListViewController()
+        rootVC.eventType = stationsEvent
+        let rootNC = UINavigationController(rootViewController: rootVC)
+        rootNC.modalPresentationStyle = .fullScreen
+        rootNC.modalTransitionStyle = .crossDissolve
+        self.present(rootNC, animated: true, completion: nil)
+    }
+    
     
     
     func goToStationList(stations_last: [LastDataModel]) {

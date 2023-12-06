@@ -15,6 +15,17 @@ enum APIJsonService {
     case GetTambon(am:String)
     case GetAmphone(pv:String)
     case GetProvince
+    
+    case GetDashboard
+    case GetWarningStation(request:[String:String])
+    case GetDepart
+    case GetRegion
+    case GetReport
+
+    case GetWarningStationMap(request:[String:String])
+    case GetWarningStationType(request:[String:String])
+    case GetSearchStation(request:[String:String])
+
     case GetRadarService(type:String,radius:Int,lat:Double,lng:Double)
     case CreateNews(stn:String,stn_name:String,tambon:String,amphone:String,province:String,latitude:Double,longitude:Double,text_news:String,pic_news:String)
 }
@@ -23,7 +34,7 @@ extension APIJsonService: TargetType, AccessTokenAuthorizable {
     
     var baseURL: URL {
         let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
-        return URL(string: "http://ews.dwr.go.th/ews")!
+        return URL(string: "https://ews.dwr.go.th/ews")!
     }
     
     var path: String {
@@ -37,9 +48,28 @@ extension APIJsonService: TargetType, AccessTokenAuthorizable {
         case .GetProvince:
             return "/api/province_data.php"
         case .GetRadarService:
-            return "/warning_radar_service.php"
+            return "/api/warning_radar_service.php"
         case .CreateNews:
             return "/api/news.php"
+        case .GetDashboard:
+            return "/api/dashbord.php"
+        case .GetWarningStation:
+            return "/api/warning.php"
+        case .GetReport:
+            return "/api/warning_reportv1.php"
+        case .GetDepart:
+            return "/api/depart_data.php"
+        case .GetRegion:
+            return "/api/region_data.php"
+        case .GetWarningStationType:
+            return "/api/warning_station_type.php"
+
+        case .GetWarningStationMap:
+            return "/api/warning_map_data.php"
+            
+        case .GetSearchStation:
+            return "/api/autocomplete_station.php"
+
         }
     }
     
@@ -66,6 +96,21 @@ extension APIJsonService: TargetType, AccessTokenAuthorizable {
             return .requestParameters(
                 parameters: [ "type": type,"radius":radius,"lat":lat,"lng":lng], encoding: URLEncoding.queryString)
             
+        case let .GetWarningStation(request):
+            return .requestParameters(
+                parameters: request, encoding: URLEncoding.queryString)
+        case let .GetWarningStationMap(request):
+            return .requestParameters(
+                parameters: request, encoding: URLEncoding.queryString)
+            
+        case let .GetWarningStationType(request):
+            return .requestParameters(
+                parameters: request, encoding: URLEncoding.queryString)
+            
+        case let .GetSearchStation(request):
+            return .requestParameters(
+                parameters: request, encoding: URLEncoding.queryString)
+            
         case let .UploadFile(image, fileName):
             let imageData = image.jpegData(compressionQuality: 1.0)
             let formData: [Moya.MultipartFormData] = [Moya.MultipartFormData(provider: .data(imageData!), name: "fileToUpload", fileName: fileName ?? "", mimeType: "image/jpeg")]
@@ -81,16 +126,25 @@ extension APIJsonService: TargetType, AccessTokenAuthorizable {
             params["longitude"] = longitude
             params["text_news"] = text_news
             params["pic_news"] = pic_news
+           return .requestParameters(parameters: params, encoding:  URLEncoding.httpBody)
+//            return .requestParameters(parameters: ["first_name": firstName, "last_name": lastName], encoding: JSONEncoding.default)
 
-           return .requestParameters(parameters: params, encoding: URLEncoding.default)
-            
         default:
             return .requestPlain
         }
     }
     
     var headers: [String : String]? {
-        return ["Content-type": "application/json"]
+        
+        
+        switch self {
+        case let .CreateNews:
+            return ["Content-type": "application/x-www-form-urlencoded"]
+        default:
+            return ["Content-type": "application/json"]
+        }
+        
+
         
     }
     

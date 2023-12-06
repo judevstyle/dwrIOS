@@ -9,7 +9,6 @@
 import UIKit
 import Moya
 import Toast_Swift
-import Toast
 class NewsViewController: UIViewController {
 
     let APIServiceProvider = MoyaProvider<APIService>()
@@ -43,6 +42,8 @@ class NewsViewController: UIViewController {
 //        view.font = .header9
         view.text = "จังหวัด"
 //        view.f
+        view.textColor = .white
+
         return view
     }()
     
@@ -51,6 +52,8 @@ class NewsViewController: UIViewController {
 //        view.font = .header9
         view.text = "อำเภอ"
 //        view.f
+        view.textColor = .white
+
         return view
     }()
     
@@ -58,6 +61,7 @@ class NewsViewController: UIViewController {
         let view = UILabel()
 //        view.font = .header9
         view.text = "ตำบล"
+        view.textColor = .white
 //        view.f
         return view
     }()
@@ -66,6 +70,8 @@ class NewsViewController: UIViewController {
         let view = UILabel()
 //        view.font = .header9
         view.text = "สถานี"
+        view.textColor = .white
+
 //        view.f
         return view
     }()
@@ -82,6 +88,8 @@ class NewsViewController: UIViewController {
         let view = UILabel()
 //        view.font = .header9
         view.text = "รายละเอียด"
+        view.textColor = .white
+
 //        view.f
         return view
     }()
@@ -91,6 +99,8 @@ class NewsViewController: UIViewController {
         let view = UILabel()
 //        view.font = .header9
         view.text = "รูปภาพ"
+        view.textColor = .white
+
 //        view.f
         return view
     }()
@@ -173,7 +183,9 @@ class NewsViewController: UIViewController {
         return view
     }()
     
-    
+    let updateInterval = 3.0
+    var gameTimer : Timer? = nil
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -189,7 +201,8 @@ class NewsViewController: UIViewController {
                    leftbutton.tintColor = .white
         
         navigationItem.leftBarButtonItem = leftbutton
-     
+        
+        
 
         
         setupUI()
@@ -197,7 +210,8 @@ class NewsViewController: UIViewController {
         
     }
     
-
+ 
+    
     func setupUI(){
         
         self.inputAmphur.delegate = self
@@ -364,7 +378,9 @@ class NewsViewController: UIViewController {
 //                        self.stopLoding()
 //                        if result.success {
                             self.view.makeToast("บันทึกข้อมูลเรียบร้อย")
-                        self.dismiss(animated: true, completion: nil)
+                        
+                        self.gameTimer = Timer.scheduledTimer(withTimeInterval: self.updateInterval, repeats: true) { timer in
+                            self.dismiss(animated: true, completion: nil)                        }
 
 //                        } else {
 //                            self.view.makeToast("เกิดข้อผิดพลาด กรุณาลองใหม่ภายหลัง")
@@ -528,7 +544,7 @@ class NewsViewController: UIViewController {
                         
                         for data in result {
                     
-                            dataModel.append(SelectionModel(id: 1, name: data.tambon ?? "",tm: "\(data.stn ?? "") \(data.name ?? "")",lat: Double((data.latitude ?? "0.0")),lng: Double((data.longitude ?? "0.0")) ))
+                            dataModel.append(SelectionModel(id: 1, name: data.tambon ?? "",tm: "\(data.stn ?? "") \(data.name ?? "")",lat: Double((data.latitude ?? "0.0")),lng: Double((data.longitude ?? "0.0")),stn: data.stn,stn_name: data.name ))
                         }
                                         
                         

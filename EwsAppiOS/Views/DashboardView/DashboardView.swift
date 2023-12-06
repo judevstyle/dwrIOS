@@ -139,7 +139,7 @@ class DashboardView: UITableViewCell {
         viewLine.anchor(viewCard.topAnchor, left: viewCard.leftAnchor, bottom: viewCard.bottomAnchor, right: nil, topConstant: 8, leftConstant: 8, bottomConstant: 8, rightConstant: 0, widthConstant: 11, heightConstant: 0)
         
         
-        titleLabel.anchor(viewCard.topAnchor, left: viewLine.rightAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 150, heightConstant: 0)
+        titleLabel.anchor(viewCard.topAnchor, left: viewLine.rightAnchor, bottom: nil, right: nil, topConstant: 16, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 180, heightConstant: 0)
         
         valueLabel.anchor(titleLabel.bottomAnchor, left: viewLine.rightAnchor, bottom: nil, right: nil, topConstant: -6, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         

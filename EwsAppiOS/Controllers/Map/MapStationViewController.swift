@@ -15,7 +15,8 @@ import SwiftyXMLParser
 
 
 class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate {
-    
+    let apiServiceJsonProvider = MoyaProvider<APIJsonService>()
+
     let APIServiceProvider = MoyaProvider<APIService>()
     
     private var mapView: GMSMapView!
@@ -280,57 +281,182 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         tableview.anchor(view.safeAreaLayoutGuide.topAnchor, left: nil, bottom: nil, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: -16, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 100, heightConstant: self.view.frame.height/1.5)
         loadMapView()
-
+        getDashboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         DispatchQueue.global(qos: .background).async {
-            self.getCountStatus()
-            DispatchQueue.main.async {
-                self.tableview.reloadData()
-            }
+//            self.getCountStatus()
+//            DispatchQueue.main.async {
+//                self.tableview.reloadData()
+//            }
         }
     }
     
-    func getCountStatus() {
+    
+    
+    
+    func getDashboard(){
         
-        APIServiceProvider.rx.request(.GetCountStatus).subscribe { event in
-            switch event {
-            case let .success(response):
-                
-                let xml = XML.parse(response.data)
-                let status3 = xml["ews"]["status1"]
-                let status2 = xml["ews"]["status2"]
-                let status1 = xml["ews"]["status3"]
-                let status4 = xml["ews"]["status9"]
-                
-                self.dashboards[0].value = status1.text ?? "0"
-                self.dashboards[1].value = status2.text ?? "0"
-                self.dashboards[2].value = status3.text ?? "0"
-                self.dashboards[3].value = status4.text ?? "0"
-                self.tableview.reloadData()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
-                    if Int(self.dashboards[0].value ?? "0")! == 0 && Int(self.dashboards[1].value ?? "0")! == 0 && Int(self.dashboards[2].value ?? "0")! == 0 {
-                        
-                        let alert = UIAlertController(title: "ไม่มีการเตือนภัย", message: "", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alert, animated: true)
-                    }
+            self.startLoding()
+            apiServiceJsonProvider.rx.request(.GetDashboard).subscribe { event in
+
+                switch event {
+                case let .success(response):
+                    print("ddds -- \(response)")
                     
-                   
+                    do {
+                        let result = try JSONDecoder().decode(DashBoardModel.self, from: response.data)
+                        
+                        self.dashboards[0].value = "\(result.type3?.count_bann ?? 0)"
+                        self.dashboards[1].value = "\(result.type2?.count_bann ?? 0)"
+                        self.dashboards[2].value = "\(result.type1?.count_bann ?? 0)"
+                        self.dashboards[3].value = "\(result.type9?.count_bann ?? 0)"
+                        self.tableview.reloadData()
+                        
+                        
+                        if ((result.type1?.count_station ?? 0)+(result.type2?.count_station ?? 0)+(result.type3?.count_station ?? 0)
+                        ) < 1 {
+                            let alert = UIAlertController(title: "ไม่มีการเตือนภัย", message: "", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                            
+                        }
+                        
+                        self.getWarning(type: "6")
+                        
+                        
+                        
+                       // self.listRegion = result
+    //                    NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(SearchViewController.ttt), object: nil)
+    //                        self.perform(#selector(SearchViewController.ttt), with: nil, afterDelay: 5000)
+    //
+                                    //    self.stopLoding()
+
+                    } catch { print("err --- \(error)") }
+                    
+
+                case let .failure(error):
+    //                self.stopLoding()
+
+                  print("ddd")
                 }
-                
-            case let .failure(error):
-                self.dashboards[0].value = "0"
-                self.dashboards[1].value = "0"
-                self.dashboards[2].value = "0"
-                self.dashboards[3].value = "0"
+            
             }
-        }
+            
+        
     }
     
+    func getWarning(type:String){
+        
+        var request:[String:String] =   [String:String]()
+        
+        
+        
+        
+        
+        switch type {
+            
+        case "1" :
+            request.updateValue("3", forKey: "status")
+            break
+        case "2" :
+            request.updateValue("2", forKey: "status")
+            break
+        case "3" :
+            request.updateValue("1", forKey: "status")
+            break
+        case "4" :
+            request.updateValue("9", forKey: "status")
+            break
+        case "5" :
+            request.updateValue("1", forKey: "show")
+            break
+        default :
+            request.updateValue("2", forKey: "show")
+            break
+        }
+        
+            self.startLoding()
+        apiServiceJsonProvider.rx.request(.GetWarningStationMap(request: request)).subscribe { event in
+
+                switch event {
+                case let .success(response):
+                    print("ddds -- \(response)")
+                    
+                    do {
+                        let result = try JSONDecoder().decode(StationWarningResponse.self, from: response.data)
+                        LastDataModel.setMethodAllWarnMap(viewModel: self.viewModel as! LastDataViewModel,stations: result.data ?? [])
+
+                        
+                        
+//                        LastDataModel.FetchMapLastData(type: type, viewModel: self.viewModel as! LastDataViewModel)
+
+                        
+                        self.stopLoding()
+                        
+                        
+                        
+                       // self.listRegion = result
+    //                    NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(SearchViewController.ttt), object: nil)
+    //                        self.perform(#selector(SearchViewController.ttt), with: nil, afterDelay: 5000)
+    //
+                                    //    self.stopLoding()
+
+                    } catch { print("err --- \(error)") }
+                    
+
+                case let .failure(error):
+    //                self.stopLoding()
+
+                  print("ddd")
+                }
+            
+            }
+            
+        
+    }
+    
+    
+//    func getCountStatus() {
+//        
+//        APIServiceProvider.rx.request(.GetCountStatus).subscribe { event in
+//            switch event {
+//            case let .success(response):
+//                
+//                let xml = XML.parse(response.data)
+//                let status3 = xml["ews"]["status1"]
+//                let status2 = xml["ews"]["status2"]
+//                let status1 = xml["ews"]["status3"]
+//                let status4 = xml["ews"]["status9"]
+//                
+//                self.dashboards[0].value = status1.text ?? "0"
+//                self.dashboards[1].value = status2.text ?? "0"
+//                self.dashboards[2].value = status3.text ?? "0"
+//                self.dashboards[3].value = status4.text ?? "0"
+////                self.tableview.reloadData()
+//                
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+//                    if Int(self.dashboards[0].value ?? "0")! == 0 && Int(self.dashboards[1].value ?? "0")! == 0 && Int(self.dashboards[2].value ?? "0")! == 0 {
+//                        
+//                        let alert = UIAlertController(title: "ไม่มีการเตือนภัย", message: "", preferredStyle: .alert)
+//                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//                        self.present(alert, animated: true)
+//                    }
+//                    
+//                   
+//                }
+//                
+//            case let .failure(error):
+//                self.dashboards[0].value = "0"
+//                self.dashboards[1].value = "0"
+//                self.dashboards[2].value = "0"
+//                self.dashboards[3].value = "0"
+//            }
+//        }
+//    }
+//    
     @objc func handleClose(){
         dismiss(animated: true, completion: nil)
     }
@@ -348,8 +474,11 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     func loadMapView() {
         
-        let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
+//        let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude , longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
         
+        let camera = GMSCameraPosition.camera(withLatitude: 13.806684877238261, longitude:  100.5057400551459, zoom: 5.0)
+        
+//        ,
         
         mapView = GMSMapView.map(withFrame: self.viewMain.frame, camera: camera)
         mapView.isMyLocationEnabled = true
@@ -379,24 +508,28 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     func configure(_ interface: LastDataStationProtocol) {
         self.viewModel = interface
         bindToViewModel()
-        self.getLastData(type: "all_warn")
+//        self.getWarning(type: "6")
+//        self.getLastData(type: "all_warn")
     }
     
     fileprivate func showAlert(data: StationXLastDataModel) {
         DispatchQueue.main.async {
             self.listMarker.append(data)
-            self.tableview.reloadData()
+//            self.tableview.reloadData()
+            
+            print("data22 \(data.title) -- \(data.rain12h)")
+            
             self.stopLoding()
             if let lat = data.latitude!.toDouble() {
                 if let long = data.longitude!.toDouble() {
-                    switch data.status {
-                    case "สถานการณ์ อพยพ":
+                    switch data.type_status {
+                    case 3:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerEvacuateView)
-                    case "สถานการณ์ เตือนภัย":
+                    case 2:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWarningView)
-                    case "สถานการณ์ เฝ้าระวัง":
+                    case 1:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerBewareView)
-                    case "สถานการณ์ ฝนตกเล็กน้อย":
+                    case 9:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
                     default:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWhiteView)
@@ -494,6 +627,9 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         Pm25Label.anchor(nil, left: nil, bottom: alertController.view.bottomAnchor, right: alertController.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 3, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
+        
+        print("data \(listMarker[index].title) -- \(listMarker[index].rain12h)")
+        
         setValueAlert(station: listMarker[index])
         
         self.present(alertController, animated: true) {
@@ -550,7 +686,16 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
             }
         }
         
-        valueLabel.text = "\(station.value!)"
+        print("type_status -- \(station.type_status) -- \(station.rain12h!) -- \(station.value!)")
+        
+        if station.type_status == 9 || station.type_status == -999 || station.type_status == 0  {
+            valueLabel.text = "\(station.rain12h!)"
+
+        } else {
+            valueLabel.text = "\(station.value!)"
+
+        }
+        
 
         
         if let pm2Double = station.pm25!.toDouble() {
@@ -599,20 +744,30 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if AppDelegate.shareDelegate.stations != nil {
+//        if AppDelegate.shareDelegate.stations != nil {
             switch indexPath.row {
             case 0:
-                getLastData(type: "สถานการณ์ อพยพ")
+                getWarning(type: "1")
+                break
+//                getLastData(type: "สถานการณ์ อพยพ")
             case 1:
-                getLastData(type: "สถานการณ์ เตือนภัย")
+                getWarning(type: "2")
+                break
+//                getLastData(type: "สถานการณ์ เตือนภัย")
             case 2:
-                getLastData(type: "สถานการณ์ เฝ้าระวัง")
+                getWarning(type: "3")
+                break
+//                getLastData(type: "สถานการณ์ เฝ้าระวัง")
             case 3:
-                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
+                getWarning(type: "4")
+                break
+//                getLastData(type: "สถานการณ์ ฝนตกเล็กน้อย")
             default:
-                getLastData(type: "all")
+                getWarning(type: "5")
+                break
+//                getLastData(type: "all")
             }
-        }
+//        }
         
     }
     
@@ -655,9 +810,13 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         }
         
         DispatchQueue.main.async {
+            
+            
             self.stopLoding()
-            let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
+            let camera = GMSCameraPosition.camera(withLatitude:13.708019369618574, longitude: 100.40275714558622, zoom: 5.0)
             self.mapView.animate(to: camera)
+//            let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
+//            self.mapView.animate(to: camera)
         }
         
         

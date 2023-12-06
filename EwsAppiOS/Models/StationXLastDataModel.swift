@@ -31,7 +31,8 @@ struct StationXLastDataModel : Codable {
     let warn_rf : Double?
     let warn_wl: Double?
     let value: Double?
-    
+    var type_status: Int?
+
     init(stn: String,
          warning_type:String,
          title:String,
@@ -75,9 +76,10 @@ struct StationXLastDataModel : Codable {
     }
     
     static func mixStationXLastData(last_data:[LastDataModel], list_ew07:[Ews07Model], viewModel: LastDataViewModel) {
-        
+        //print("test data p \(last_data.count) -- \(AppDelegate.shareDelegate.stations.count)")
         for lastdata in last_data {
             for (index, station) in AppDelegate.shareDelegate.stations.enumerated() {
+                print("test data \(station.std) -- \(lastdata.stn)")
                 if station.std! == lastdata.stn!  {
                     let myDouble = Double(lastdata.rain12h!)
                     viewModel.input.saveMessageData(data:  StationXLastDataModel(
@@ -107,6 +109,59 @@ struct StationXLastDataModel : Codable {
         }
         
     }
+    
+    
+    
+    static func mixStationXLastDataV3(last_data:[LastDataModel], stations:[WarningStation], viewModel: LastDataViewModel) {
+     //   print("test data p \(last_data.count) -- \(AppDelegate.shareDelegate.stations.count)")
+//        for lastdata in last_data {
+            for (index, lastdata) in last_data.enumerated() {
+//                print("test data \(station.std) -- \(lastdata.stn)")
+//                if station.std! == lastdata.stn!  {
+                let station = stations[index]
+                
+                    let myDouble = Double(lastdata.rain12h!)
+                print("lastdata data p  -\(station.name)-\(station.rain12h)- \(lastdata.rain12h)")
+
+                
+                var da = StationXLastDataModel(
+                    stn: lastdata.stn!,
+                    warning_type: lastdata.warning_type!,
+                    title: station.name ?? "",
+                    address: "ต.\(station.tambon!) อ.\(station.amphoe!) จ.\(station.province!) \nหมู่บ้านครอบคลุมจำนวน \(station.stn_cover!) หมู่บ้าน",
+                    rain: lastdata.rain!,
+                    rain12h: myDouble ?? 0.0,
+                    rain07h: lastdata.rain07h!,
+                    rain24h: lastdata.rain24h!,
+                    ews07: lastdata.ews07!,
+                    latitude: "\(station.latitude ?? "0.0")",
+                    longitude:"\(station.longitude ?? "0.0")",
+                    status: lastdata.status!,
+                    province: station.province  ?? "",
+                    region:  "",
+                    dept: station.dept ?? "",
+                    pm25: lastdata.pm25!,
+                    warn_rf: lastdata.warn_rf!,
+                    warn_wl: lastdata.warn_wl!,
+                    value: lastdata.value!
+                )
+                
+                print("test data p \(da.title) -- \(da.rain12h)")
+
+                
+                da.type_status = station.show_status
+                
+                    viewModel.input.saveMessageData(data: da )
+                    
+                }
+//            }
+//        }
+        
+    }
+    
+    
+    
+    
     
     static func mixStationXLastDataV2(last_data:[LastDataModel], list_ew07:[Ews07Model], viewModel: LastDataViewModel){
         

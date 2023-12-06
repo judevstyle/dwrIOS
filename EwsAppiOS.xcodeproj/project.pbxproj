@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -24,6 +24,19 @@
 		189BDA8A29460D880056FA6B /* MapRadarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189BDA8929460D880056FA6B /* MapRadarViewController.swift */; };
 		189BDA8C294616930056FA6B /* APIJsonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189BDA8B294616930056FA6B /* APIJsonService.swift */; };
 		189BDA8E29461BC30056FA6B /* JsonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189BDA8D29461BC30056FA6B /* JsonModel.swift */; };
+		18A967692B1E4A7E00AE7EBA /* DashBoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A967682B1E4A7E00AE7EBA /* DashBoardModel.swift */; };
+		18A9676B2B1E4EEA00AE7EBA /* WarningStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9676A2B1E4EEA00AE7EBA /* WarningStation.swift */; };
+		18A9676D2B1E56A400AE7EBA /* StationWarningResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9676C2B1E56A400AE7EBA /* StationWarningResponse.swift */; };
+		18A9676F2B1E576B00AE7EBA /* CardStationNVViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9676E2B1E576B00AE7EBA /* CardStationNVViewCell.swift */; };
+		18A967712B1E5D5D00AE7EBA /* DetailStationNVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A967702B1E5D5D00AE7EBA /* DetailStationNVViewController.swift */; };
+		18A967732B1E5E1200AE7EBA /* DetailStationNVViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A967722B1E5E1200AE7EBA /* DetailStationNVViewCell.swift */; };
+		18A967752B1E5E6800AE7EBA /* ListCardStationNVViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A967742B1E5E6800AE7EBA /* ListCardStationNVViewCell.swift */; };
+		18A967772B1E5F0300AE7EBA /* ListCardRainNVViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A967762B1E5F0300AE7EBA /* ListCardRainNVViewCell.swift */; };
+		18A967792B1E6DC800AE7EBA /* DepartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A967782B1E6DC800AE7EBA /* DepartResponse.swift */; };
+		18A9677B2B1E6E3200AE7EBA /* RegionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9677A2B1E6E3200AE7EBA /* RegionResponse.swift */; };
+		18A9677D2B1F11B300AE7EBA /* ReportNVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9677C2B1F11B300AE7EBA /* ReportNVModel.swift */; };
+		18A9677F2B1F193F00AE7EBA /* DetailReportNVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A9677E2B1F193F00AE7EBA /* DetailReportNVViewController.swift */; };
+		18A967812B1F199300AE7EBA /* DetailReportNVViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A967802B1F199300AE7EBA /* DetailReportNVViewCell.swift */; };
 		1DC1DA4BA9E5C9E7B4F3C07B /* Pods_EwsAppiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D6CF9A77F0399FEC7DD3B /* Pods_EwsAppiOS.framework */; };
 		C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C452CE2E25308031004CDC0A /* AppDelegate.swift */; };
 		C452CE3925308031004CDC0A /* EwsAppiOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C452CE3725308031004CDC0A /* EwsAppiOS.xcdatamodeld */; };
@@ -93,6 +106,19 @@
 		189BDA8929460D880056FA6B /* MapRadarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRadarViewController.swift; sourceTree = "<group>"; };
 		189BDA8B294616930056FA6B /* APIJsonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIJsonService.swift; sourceTree = "<group>"; };
 		189BDA8D29461BC30056FA6B /* JsonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonModel.swift; sourceTree = "<group>"; };
+		18A967682B1E4A7E00AE7EBA /* DashBoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardModel.swift; sourceTree = "<group>"; };
+		18A9676A2B1E4EEA00AE7EBA /* WarningStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningStation.swift; sourceTree = "<group>"; };
+		18A9676C2B1E56A400AE7EBA /* StationWarningResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationWarningResponse.swift; sourceTree = "<group>"; };
+		18A9676E2B1E576B00AE7EBA /* CardStationNVViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStationNVViewCell.swift; sourceTree = "<group>"; };
+		18A967702B1E5D5D00AE7EBA /* DetailStationNVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStationNVViewController.swift; sourceTree = "<group>"; };
+		18A967722B1E5E1200AE7EBA /* DetailStationNVViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStationNVViewCell.swift; sourceTree = "<group>"; };
+		18A967742B1E5E6800AE7EBA /* ListCardStationNVViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardStationNVViewCell.swift; sourceTree = "<group>"; };
+		18A967762B1E5F0300AE7EBA /* ListCardRainNVViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardRainNVViewCell.swift; sourceTree = "<group>"; };
+		18A967782B1E6DC800AE7EBA /* DepartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartResponse.swift; sourceTree = "<group>"; };
+		18A9677A2B1E6E3200AE7EBA /* RegionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegionResponse.swift; path = ../RegionResponse.swift; sourceTree = "<group>"; };
+		18A9677C2B1F11B300AE7EBA /* ReportNVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportNVModel.swift; sourceTree = "<group>"; };
+		18A9677E2B1F193F00AE7EBA /* DetailReportNVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportNVViewController.swift; sourceTree = "<group>"; };
+		18A967802B1F199300AE7EBA /* DetailReportNVViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReportNVViewCell.swift; sourceTree = "<group>"; };
 		1CC00E3E78A135CF2274AC84 /* Pods-EwsAppiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EwsAppiOS.release.xcconfig"; path = "Target Support Files/Pods-EwsAppiOS/Pods-EwsAppiOS.release.xcconfig"; sourceTree = "<group>"; };
 		771D6CF9A77F0399FEC7DD3B /* Pods_EwsAppiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EwsAppiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C452CE2B25308031004CDC0A /* EWS DWR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EWS DWR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -368,6 +394,11 @@
 				18416DBA2AA3DC8D00E61AE2 /* GetAmPhurRequest.swift */,
 				18416DBC2AA3DCBF00E61AE2 /* GetDistricRequest.swift */,
 				18416DBE2AA3DF4700E61AE2 /* TambonData.swift */,
+				18A9677A2B1E6E3200AE7EBA /* RegionResponse.swift */,
+				18A9676A2B1E4EEA00AE7EBA /* WarningStation.swift */,
+				18A9676C2B1E56A400AE7EBA /* StationWarningResponse.swift */,
+				18A967782B1E6DC800AE7EBA /* DepartResponse.swift */,
+				18A9677C2B1F11B300AE7EBA /* ReportNVModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -392,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				EF1A1EA6253C6390009DBBEF /* CardStationViewCell.swift */,
+				18A9676E2B1E576B00AE7EBA /* CardStationNVViewCell.swift */,
 			);
 			path = CardStationView;
 			sourceTree = "<group>";
@@ -417,6 +449,7 @@
 			children = (
 				EF7396422548876000A0266C /* ReportViewController.swift */,
 				EFFD46142593B15600D5738C /* DetailReportViewController.swift */,
+				18A9677E2B1F193F00AE7EBA /* DetailReportNVViewController.swift */,
 			);
 			path = ReportView;
 			sourceTree = "<group>";
@@ -449,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				EFB3159225482EAE00B2E4E9 /* ListCardRainViewCell.swift */,
+				18A967762B1E5F0300AE7EBA /* ListCardRainNVViewCell.swift */,
 			);
 			path = ListCardRainViewCell;
 			sourceTree = "<group>";
@@ -457,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				EFB3159425482EBA00B2E4E9 /* ListCardStationViewCell.swift */,
+				18A967742B1E5E6800AE7EBA /* ListCardStationNVViewCell.swift */,
 			);
 			path = ListCardStationViewCell;
 			sourceTree = "<group>";
@@ -475,6 +510,7 @@
 			children = (
 				EFBBB5062539DBBF002AA238 /* StationListViewController.swift */,
 				EFC62B932547448800F19217 /* DetailStationViewController.swift */,
+				18A967702B1E5D5D00AE7EBA /* DetailStationNVViewController.swift */,
 			);
 			path = StationList;
 			sourceTree = "<group>";
@@ -502,6 +538,7 @@
 				EFB3159125482E7D00B2E4E9 /* ListCardStationViewCell */,
 				EFB3159025482E6200B2E4E9 /* ListCardRainViewCell */,
 				EFC62B962547459A00F19217 /* DetailStationViewCell.swift */,
+				18A967722B1E5E1200AE7EBA /* DetailStationNVViewCell.swift */,
 			);
 			path = DetailStationViewCell;
 			sourceTree = "<group>";
@@ -527,6 +564,7 @@
 			isa = PBXGroup;
 			children = (
 				EFC8F4FC254ACC00003FCB44 /* InfoModel.swift */,
+				18A967682B1E4A7E00AE7EBA /* DashBoardModel.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -535,6 +573,7 @@
 			isa = PBXGroup;
 			children = (
 				EFFD46182593B23C00D5738C /* DetailReportViewCell.swift */,
+				18A967802B1F199300AE7EBA /* DetailReportNVViewCell.swift */,
 			);
 			path = DetailReportViewCell;
 			sourceTree = "<group>";
@@ -702,6 +741,7 @@
 				1877C8082AA27BB8005C202E /* SelectionModel.swift in Sources */,
 				EF4003C8254FFBD100BBE499 /* LastDataViewModel.swift in Sources */,
 				EF9ABE4525417CB9001EAA20 /* DashboardMapView.swift in Sources */,
+				18A967812B1F199300AE7EBA /* DetailReportNVViewCell.swift in Sources */,
 				EFC09627258B5073004BE921 /* SplashViewController.swift in Sources */,
 				18416DBB2AA3DC8D00E61AE2 /* GetAmPhurRequest.swift in Sources */,
 				18416DB92AA3CD5100E61AE2 /* ImagePickerHelpConfig.swift in Sources */,
@@ -716,6 +756,7 @@
 				EF739645254888FA00A0266C /* ReportModel.swift in Sources */,
 				EF1A1EA7253C6390009DBBEF /* CardStationViewCell.swift in Sources */,
 				EFC62B972547459A00F19217 /* DetailStationViewCell.swift in Sources */,
+				18A967752B1E5E6800AE7EBA /* ListCardStationNVViewCell.swift in Sources */,
 				C452CE3925308031004CDC0A /* EwsAppiOS.xcdatamodeld in Sources */,
 				EFC8F4FA254ACB52003FCB44 /* CollapsibleTableViewHeader.swift in Sources */,
 				C452CE6B25309985004CDC0A /* DashboardView.swift in Sources */,
@@ -723,13 +764,19 @@
 				EFC8F4F5254AC37B003FCB44 /* InfoViewController.swift in Sources */,
 				EFAF564A2551065900E881A6 /* SearchViewController.swift in Sources */,
 				EFC62B942547448800F19217 /* DetailStationViewController.swift in Sources */,
+				18A967772B1E5F0300AE7EBA /* ListCardRainNVViewCell.swift in Sources */,
 				1877C8062AA27B87005C202E /* TextFieldSelectView.swift in Sources */,
 				C452CE2F25308031004CDC0A /* AppDelegate.swift in Sources */,
 				1877C80D2AA28005005C202E /* NewsViewController.swift in Sources */,
+				18A9677D2B1F11B300AE7EBA /* ReportNVModel.swift in Sources */,
+				18A9676F2B1E576B00AE7EBA /* CardStationNVViewCell.swift in Sources */,
 				EFB3159525482EBA00B2E4E9 /* ListCardStationViewCell.swift in Sources */,
 				EFB3159325482EAE00B2E4E9 /* ListCardRainViewCell.swift in Sources */,
+				18A9677F2B1F193F00AE7EBA /* DetailReportNVViewController.swift in Sources */,
 				EF1A1EA2253C39D0009DBBEF /* DashboardViewController.swift in Sources */,
+				18A967692B1E4A7E00AE7EBA /* DashBoardModel.swift in Sources */,
 				EFC8F4FD254ACC00003FCB44 /* InfoModel.swift in Sources */,
+				18A9677B2B1E6E3200AE7EBA /* RegionResponse.swift in Sources */,
 				C452CE5225308504004CDC0A /* Extensions.swift in Sources */,
 				C490D308253570B9004CF6BE /* APIService.swift in Sources */,
 				EF4003C5254FF9F800BBE499 /* LastDataStationProtocol.swift in Sources */,
@@ -739,9 +786,14 @@
 				EFFD46152593B15600D5738C /* DetailReportViewController.swift in Sources */,
 				EF1A1E9C253C2957009DBBEF /* MainAppViewController.swift in Sources */,
 				189BDA8E29461BC30056FA6B /* JsonModel.swift in Sources */,
+				18A967792B1E6DC800AE7EBA /* DepartResponse.swift in Sources */,
+				18A967732B1E5E1200AE7EBA /* DetailStationNVViewCell.swift in Sources */,
 				EFC62B8F2547378200F19217 /* MenuSlideModel.swift in Sources */,
 				EFC62B9225473FDF00F19217 /* SettingViewController.swift in Sources */,
+				18A967712B1E5D5D00AE7EBA /* DetailStationNVViewController.swift in Sources */,
 				EFBBB5072539DBBF002AA238 /* StationListViewController.swift in Sources */,
+				18A9676D2B1E56A400AE7EBA /* StationWarningResponse.swift in Sources */,
+				18A9676B2B1E4EEA00AE7EBA /* WarningStation.swift in Sources */,
 				EF1A1E9F253C2AFC009DBBEF /* MenuSlideViewController.swift in Sources */,
 				18416DAC2AA3CAE100E61AE2 /* ImagePickerHelp.swift in Sources */,
 				EF6D8327253CBEAA00A77DC3 /* StationXLastDataModel.swift in Sources */,
@@ -889,7 +941,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -897,7 +949,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.11;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = th.go.dwr.ews4thai;
 				PRODUCT_NAME = "EWS DWR";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -916,7 +968,7 @@
 				CODE_SIGN_ENTITLEMENTS = EwsAppiOS/EwsAppiOS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = WK667ZUV74;
 				INFOPLIST_FILE = EwsAppiOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -924,7 +976,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.11;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = th.go.dwr.ews4thai;
 				PRODUCT_NAME = "EWS DWR";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -29,6 +29,9 @@ struct LastDataModel : Codable {
     let warn_wl : Double?
     let stn_cover : String?
     let value : Double?
+//    var warningStation:WarningStation? = nil
+    var ews07:Ews07Model? = nil
+
     
     init(stn: String,
          warning_type:String,
@@ -483,7 +486,7 @@ struct LastDataModel : Codable {
                         let wlDouble = Double(item_station.warnRF ?? "0.0")
                         
                         var valueTitle:Double = 0
-                        if item_station.showStatus == -999 {
+                        if item_station.showStatus == -999 ||  item_station.showStatus == 9{
                             valueTitle = myDouble!
                         }else {
                             if item_station.warningType == "rain" {
@@ -522,9 +525,100 @@ struct LastDataModel : Codable {
         
         let sortedLast_data = last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
         
+        print("setMethodAllWarnMap \(sortedLast_data.count)--\(list_ew07.count)")
         StationXLastDataModel.mixStationXLastData(last_data: sortedLast_data, list_ew07: list_ew07, viewModel: viewModel)
         
     }
+    
+    
+    
+    static func setMethodAllWarnMap(viewModel: LastDataViewModel,stations:[WarningStation]) {
+        
+      
+        var last_data = [LastDataModel]()
+        
+    
+                for item_station in stations {
+//                    if item_station.childElements[11].name == "status"{
+                        
+                    let myDouble = Double(item_station.rain12h ?? "0.0")
+                    let rainDouble =  item_station.warn_rf_v  ?? 0.0
+                        let wlDouble = item_station.warn_wl_v ?? 0.0
+                        
+                        var valueTitle:Double = 0
+                        if item_station.show_status == -999 ||  item_station.show_status == 9  ||  item_station.show_status == 0 {
+                            valueTitle = myDouble!
+                        }else {
+                            if item_station.warning_type == "rain" {
+                                valueTitle = rainDouble
+                            }else {
+                                valueTitle = wlDouble
+                            }
+                        }
+                        
+                    
+                    var data =  LastDataModel(
+                        stn: item_station.stn!,
+                        warning_type: item_station.warning_type ?? "",
+                        date: item_station.stn_date ?? "",
+                        temp: item_station.temp ?? "",
+                        rain: item_station.rain ?? "",
+                        rain12h: myDouble ?? 0.0,
+                        rain07h: item_station.rain07h ?? "",
+                        rain24h: item_station.rain24h ?? "",
+                        wl: item_station.wl ?? "",
+                        wl07h: item_station.wl07h ?? "",
+                        soil: item_station.soil2 ?? "",
+                        pm25: item_station.soil2 ?? "",
+                        status: getStatus(status: item_station.show_status ?? 0),
+                        warn_rf: rainDouble ?? 0.0,
+                        warn_wl: wlDouble ?? 0.0,
+                        stn_cover: "0",
+                        value: valueTitle
+                    )
+                    
+                    
+                    
+                    var ews07 = Ews07Model(
+                        stn: item_station.stn ?? "",
+                        date: item_station.stn_date ?? "",
+                        rain: item_station.rain ?? "",
+                        rain12h: item_station.rain12h ?? "0.0",
+                        rain07h: item_station.rain07h ?? "0.0",
+                        rain1day: item_station.rain24h ?? "0.0",
+                        rain2day: item_station.rain48h ?? "0.0",
+                        rain3day: item_station.rain72h ?? "0.0",
+                        rain4day: item_station.rain96h ?? "0.0",
+                        rain5day: item_station.rain120h ?? "0.0",
+                        rain6day: item_station.rain144h ?? "0.0",
+                        rain7day: item_station.rain168h ?? "0.0",
+                        stn_cover: "\(item_station.stn_cover ?? 0)")
+                    
+                    print("rain 12 \(item_station.name) \(data.rain12h) --07-\(ews07.rain12h)")
+                    data.ews07 = ews07
+//                    data.warningStation = item_station
+                        last_data.append(
+                            data
+                        )
+                    
+                    print("ppp \(valueTitle)")
+                    
+                    
+//                    }
+                }//end for
+          
+        
+//        let list_ew07 = Ews07Model.FetchEws07()
+        
+//        let sortedLast_data = last_data.sorted(by: {$1.rain12h! < $0.rain12h!})
+        
+//        print("setMethodAllWarnMap \(sortedLast_data.count)--\(list_ew07.count)")
+        StationXLastDataModel.mixStationXLastDataV3(last_data: last_data, stations: stations, viewModel: viewModel)
+        
+    }
+    
+    
+    
     
     
     static func getStatus(status:Int) -> String {

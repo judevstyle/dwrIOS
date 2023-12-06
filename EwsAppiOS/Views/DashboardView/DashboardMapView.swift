@@ -29,7 +29,7 @@ class DashboardMapView: UITableViewCell {
         let label = UILabel()
         
         label.numberOfLines = 1
-        label.font = .PrimaryRegular(size: 17)
+        label.font = .PrimaryRegular(size: 15)
         label.textColor = .red
         label.text = "อพยพ"
         label.textAlignment = .center

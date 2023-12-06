@@ -13,7 +13,8 @@ import SwiftyXMLParser
 class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let APIServiceProvider = MoyaProvider<APIService>()
-    
+    let apiServiceJsonProvider = MoyaProvider<APIJsonService>()
+
     let cellId = "cellReport"
     lazy var tableview: UITableView = {
         let tableview = UITableView()
@@ -30,8 +31,9 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return tableview
     }()
     
-    var reports_list: [ReportModel] = []
-    
+//    var reports_list: [ReportModel] = []
+    var reports_list: [ReportNVModel] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,7 +57,7 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableview.rowHeight = UITableView.automaticDimension
         tableview.estimatedRowHeight = UITableView.automaticDimension
-        getReportResponse()
+        getReportV1()
     }
     
     @objc func handleClose(){
@@ -106,7 +108,7 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             reports.append(ReportModel(title: "\(title[0])", address: "สถานี \(title[1])", date: "\(date)", status: status, body: "\(body)"))
                         }
                         
-                        self.reports_list = reports
+//                        self.reports_list = reports
                         self.tableview.reloadData()
                         self.stopLoding()
                     }
@@ -139,7 +141,7 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let rootVC = DetailReportViewController()
+        let rootVC = DetailReportNVViewController()
         rootVC.reports = self.reports_list
         rootVC.currentPage = indexPath.item
         let rootNC = UINavigationController(rootViewController: rootVC)
@@ -147,6 +149,37 @@ class ReportViewController: UIViewController, UITableViewDelegate, UITableViewDa
         rootNC.modalTransitionStyle = .crossDissolve
         present(rootNC, animated: true, completion: nil)
     }
+    
+    func getReportV1(){
+        
+        self.startLoding()
+        apiServiceJsonProvider.rx.request(.GetReport).subscribe { event in
+
+            switch event {
+            case let .success(response):
+                print("ddd -- \(response)")
+                
+                self.stopLoding()
+                do {
+                    let result = try JSONDecoder().decode([ReportNVModel].self, from: response.data)
+                    
+                    self.reports_list = result
+                    self.tableview.reloadData()
+                
+                } catch { print("err --- \(error)") }
+                
+
+            case let .failure(error):
+                self.stopLoding()
+
+              print("ddd")
+            }
+        
+        }
+        
+        
+    }
+    
 
     
     

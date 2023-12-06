@@ -16,9 +16,17 @@ class SplashViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        self.startLodingCircle()
+//        self.startLodingCircle()
+       
         
-        NotificationCenter.default.addObserver(self, selector: #selector(onDidLoadStationsSuccess(_:)), name: .didLoadStationsSuccess, object: nil)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let rootVc = MainAppViewController()
+            appDelegate.window?.rootViewController = rootVc
+        }
+        
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(onDidLoadStationsSuccess(_:)), name: .didLoadStationsSuccess, object: nil)
         
     }
 

@@ -59,7 +59,12 @@ struct StationModel : Codable {
     static let APIServiceProvider = MoyaProvider<APIService>()
     
     static func FetchStations() {
-    
+        var baseURL: URL {
+            let baseURL = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
+            return URL(string: "\(baseURL)")!
+        }
+        print("url \(baseURL)")
+        
         APIServiceProvider.request(.GetStations, completion: { [self] result in
             switch result {
             case .success(let response):
@@ -91,7 +96,8 @@ struct StationModel : Codable {
                             }
                         }
                     }
-                    
+                    print("shareDelegate.stations \(stations.count)")
+
                     AppDelegate.shareDelegate.stations = stations
                     LastDataModel.SearchData()
     

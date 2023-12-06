@@ -29,6 +29,8 @@ extension APIService: TargetType, AccessTokenAuthorizable {
         return URL(string: "\(baseURL)")!
     }
     
+
+    
     var path: String {
         switch self {
         case .GetStations:

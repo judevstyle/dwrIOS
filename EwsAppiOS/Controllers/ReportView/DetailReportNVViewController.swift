@@ -1,15 +1,14 @@
 //
-//  DetailReportViewController.swift
+//  DetailReportNVViewController.swift
 //  EwsAppiOS
 //
-//  Created by Nontawat Kanboon on 24/12/2563 BE.
-//  Copyright © 2563 BE ssoft. All rights reserved.
+//  Created by Ssoft_dev on 12/5/23.
+//  Copyright © 2023 ssoft. All rights reserved.
 //
 
 import UIKit
-import Moya
 
-class DetailReportViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DetailReportNVViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private var cellID = "CellReport"
     
@@ -99,7 +98,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
     //
     //    }()
     
-    var reports: [ReportModel]? = []
+    var reports: [ReportNVModel]? = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +115,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
         
         navigationItem.leftBarButtonItem = leftbutton
         
-        collectionView.register(DetailReportViewCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.register(DetailReportNVViewCell.self, forCellWithReuseIdentifier: cellID)
         
         
         view.addSubview(previousBtn)
@@ -223,7 +222,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DetailReportViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DetailReportNVViewCell
         
         cell.report = self.reports![indexPath.row]
         
@@ -239,9 +238,9 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func setValueStation() {
-        titlLabel.text = "\(self.reports![currentPage].title!)"
+        titlLabel.text = "\(splitAddr(text: "สถานี",msg: reports![currentPage].report_title!))"
         
-        let unit = "\(self.reports![currentPage].address!)"
+        let unit = "สถานี \(splitAddr(text: "สถานี",msg: reports![currentPage].report_title!)) ต.\(splitAddr(text: "ตำบล",msg: reports![currentPage].report_title!)) อ.\(splitAddr(text: "อำเภอ",msg: reports![currentPage].report_title!)) จ.\(splitAddr(text: "จังหวัด",msg: reports![currentPage].report_title!))"
 
         let attributedText = NSMutableAttributedString(string: unit, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 15), NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
 
@@ -254,6 +253,42 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
         valueLabel.numberOfLines = 2
         valueLabel.adjustsFontSizeToFitWidth = true
     }
+    
+    
+    func splitAddr(text:String,msg:String)->String{
+
+        do {
+            let splits = ((msg.components(separatedBy: text))[1]).components(separatedBy: " ")[1]
+
+            return splits
+                 //return (msg.split("${text}")[1]).split(" ")[1]
+
+             }catch {
+                 return ""
+             }
+
+         }
+    func splitTitle(text:String,msg:String)->String{
+
+        return msg.components(separatedBy: text)[0]
+
+       }
+
+    
+    
+    func splitSpace(msg:String)->String{
+
+                do {
+                    return msg.components(separatedBy: " ")[1]
+
+                }catch {
+                    return ""
+                }
+
+            }
+    
+    
+    
     
 }
 

@@ -1,17 +1,17 @@
 //
-//  DetailReportViewController.swift
+//  DetailStationNVViewController.swift
 //  EwsAppiOS
 //
-//  Created by Nontawat Kanboon on 24/12/2563 BE.
-//  Copyright © 2563 BE ssoft. All rights reserved.
+//  Created by Ssoft_dev on 12/5/23.
+//  Copyright © 2023 ssoft. All rights reserved.
 //
 
+import Foundation
 import UIKit
-import Moya
 
-class DetailReportViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DetailStationNVViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private var cellID = "CellReport"
+    private var cellID = "CellStation"
     
     var currentPage: Int = 0
     
@@ -38,7 +38,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
     lazy var titlLabel: UILabel = {
         let label = UILabel()
         label.text = "บ้านแซะ"
-        label.font = .PrimaryRegular(size: 18)
+        label.font = .PrimaryRegular(size: 23)
         label.textAlignment = .center
         label.textColor = .white
         
@@ -50,7 +50,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
         
         let unit = "ต.หนองไผ่ อ.ด่านมะขามเตี้ย จ.กาญจนบุรี\nหมู่บ้านคลอบคลุมจำนวน 3 หมู่บ้าน"
         
-        let attributedText = NSMutableAttributedString(string: unit, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 15), NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
+        let attributedText = NSMutableAttributedString(string: unit, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 17), NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 0.9
@@ -99,7 +99,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
     //
     //    }()
     
-    var reports: [ReportModel]? = []
+    var stations_last: [WarningStation]? = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +116,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
         
         navigationItem.leftBarButtonItem = leftbutton
         
-        collectionView.register(DetailReportViewCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.register(DetailStationNVViewCell.self, forCellWithReuseIdentifier: cellID)
         
         
         view.addSubview(previousBtn)
@@ -132,7 +132,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
         valueLabel.anchor(titlLabel.bottomAnchor, left: previousBtn.rightAnchor, bottom: nil, right: nextBtn.leftAnchor, topConstant: 5, leftConstant: 5, bottomConstant: 0, rightConstant: 5, widthConstant: 0, heightConstant: 0)
         
         view.addSubview(collectionView)
-        collectionView.anchor(valueLabel.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 20, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        collectionView.anchor(valueLabel.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
         
         DispatchQueue.main.async {
@@ -174,7 +174,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
             previousBtn.isEnabled = false
             nextBtn.tintColor = .white
             nextBtn.isEnabled = true
-        }else if currentPage == (self.reports!.count-1)  {
+        }else if currentPage == (self.stations_last!.count-1)  {
             nextBtn.tintColor = .whiteAlpha(alpha: 0.5)
             nextBtn.isEnabled = false
             previousBtn.tintColor = .white
@@ -186,7 +186,7 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
             nextBtn.isEnabled = true
         }
         
-        if self.reports!.count == 1 {
+        if self.stations_last!.count == 1 {
             previousBtn.tintColor = .whiteAlpha(alpha: 0.5)
             previousBtn.isEnabled = false
             nextBtn.tintColor = .whiteAlpha(alpha: 0.5)
@@ -217,15 +217,15 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.reports!.count
+        
+        return self.stations_last!.count
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DetailReportViewCell
-        
-        cell.report = self.reports![indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DetailStationNVViewCell
+        cell.station = self.stations_last![indexPath.row]
         
         return cell
     }
@@ -239,16 +239,16 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func setValueStation() {
-        titlLabel.text = "\(self.reports![currentPage].title!)"
+        titlLabel.text = "\(self.stations_last![currentPage].name!)"
         
-        let unit = "\(self.reports![currentPage].address!)"
-
-        let attributedText = NSMutableAttributedString(string: unit, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 15), NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
-
+        let unit = "ต.\(self.stations_last![currentPage].tambon!) อ.\(self.stations_last![currentPage].amphoe!) จ.\(self.stations_last![currentPage].province!)\nหมู่บ้านครอบคลุมจำนวน \(self.stations_last![currentPage].stn_cover ?? 0) หมู่บ้าน" //\(self.stations_last![currentPage].address!)"
+        
+        let attributedText = NSMutableAttributedString(string: unit, attributes: [NSAttributedString.Key.font : UIFont.PrimaryLight(size: 17), NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 0.9
         attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.length))
-
+        
         valueLabel.attributedText = attributedText
         valueLabel.textAlignment = .center
         valueLabel.numberOfLines = 2
@@ -256,4 +256,3 @@ class DetailReportViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
 }
-
