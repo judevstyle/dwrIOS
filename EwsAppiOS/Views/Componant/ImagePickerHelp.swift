@@ -222,7 +222,23 @@ extension ImagePickerHelp: UIImagePickerControllerDelegate {
             let name = urlArray.last {
             fileName = name
         }
-        self.pickerController(picker, image: image, fileName: fileName)
+        
+        if (picker.sourceType == UIImagePickerController.SourceType.camera){
+            let imgName = UUID().uuidString
+            let documentDirectory = NSTemporaryDirectory()
+            let localPath = documentDirectory.appending(imgName)
+            
+            let data = image.jpegData(compressionQuality: 0.3)! as NSData
+            data.write(toFile: localPath, atomically: true)
+            let photoURL = URL.init(fileURLWithPath: localPath)
+            self.pickerController(picker, image: image, fileName: imgName)
+
+            
+            
+        }else {
+            
+            self.pickerController(picker, image: image, fileName: fileName)
+        }
     }
 }
 

@@ -495,6 +495,10 @@ extension UIColor {
         return UIColor(named: "AppPrimaryDarkGray")!
     }
     
+    static func AppPrimaryDarkGray1() -> UIColor {
+        return UIColor(named: "AppPrimaryDark-1")!
+    }
+    
     
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)

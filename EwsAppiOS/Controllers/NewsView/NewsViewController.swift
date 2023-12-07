@@ -42,6 +42,8 @@ class NewsViewController: UIViewController {
 //        view.font = .header9
         view.text = "จังหวัด"
 //        view.f
+        view.font = .PrimaryRegular(size: 16)
+
         view.textColor = .white
 
         return view
@@ -51,6 +53,8 @@ class NewsViewController: UIViewController {
         let view = UILabel()
 //        view.font = .header9
         view.text = "อำเภอ"
+        view.font = .PrimaryRegular(size: 16)
+
 //        view.f
         view.textColor = .white
 
@@ -61,6 +65,8 @@ class NewsViewController: UIViewController {
         let view = UILabel()
 //        view.font = .header9
         view.text = "ตำบล"
+        view.font = .PrimaryRegular(size: 16)
+
         view.textColor = .white
 //        view.f
         return view
@@ -70,6 +76,8 @@ class NewsViewController: UIViewController {
         let view = UILabel()
 //        view.font = .header9
         view.text = "สถานี"
+        view.font = .PrimaryRegular(size: 16)
+
         view.textColor = .white
 
 //        view.f
@@ -79,6 +87,8 @@ class NewsViewController: UIViewController {
     lazy var stationValueView: UILabel = {
         let view = UILabel()
 //        view.font = .header9
+        view.font = .PrimaryRegular(size: 16)
+
         view.text = ""
 //        view.f
         return view
@@ -87,6 +97,8 @@ class NewsViewController: UIViewController {
     lazy var descTitleTextView: UILabel = {
         let view = UILabel()
 //        view.font = .header9
+        view.font = .PrimaryRegular(size: 16)
+
         view.text = "รายละเอียด"
         view.textColor = .white
 
@@ -99,6 +111,8 @@ class NewsViewController: UIViewController {
         let view = UILabel()
 //        view.font = .header9
         view.text = "รูปภาพ"
+        view.font = .PrimaryRegular(size: 16)
+
         view.textColor = .white
 
 //        view.f
@@ -123,6 +137,7 @@ class NewsViewController: UIViewController {
         view.setAllRounded(rounded: 8)
 //        view.pess
 
+        view.font =   .PrimaryRegular(size: 16)
         view.setBorder(width: 1.0, color: .CED4D9)
         view.backgroundColor = .white
         view.textColor = .black
@@ -134,6 +149,8 @@ class NewsViewController: UIViewController {
     
     let inputProvince: TextFieldSelectView = {
         let view = TextFieldSelectView(placeholder: "เลือก", listSelect: [])
+        view.inputText.font =    .PrimaryRegular(size: 16)
+
         return view
     }()
     
@@ -145,6 +162,8 @@ class NewsViewController: UIViewController {
     
     let inputAmphur: TextFieldSelectView = {
         let view = TextFieldSelectView(placeholder: "เลือก", listSelect: [])
+        view.inputText.font =    .PrimaryRegular(size: 16)
+
         return view
     }()
     private let dmAmphurView: UIView = {
@@ -155,6 +174,8 @@ class NewsViewController: UIViewController {
     
     let inputDistric: TextFieldSelectView = {
         let view = TextFieldSelectView(placeholder: "เลือก", listSelect: [])
+        view.inputText.font =    .PrimaryRegular(size: 16)
+
         return view
     }()
     private let dmDistricView: UIView = {
@@ -175,8 +196,9 @@ class NewsViewController: UIViewController {
     
     private let btnSave: UIView = {
         let view = UIButton()
-        view.backgroundColor = .green
+        view.backgroundColor = .AppPrimaryDarkGray1()
         view.setAllRounded(rounded: 8)
+        view.titleLabel?.font =  .PrimaryRegular(size: 16)
         view.setTitle("บันทึก", for: .normal)
         view.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
 //        view.titleLabel?.font = .h3Text
