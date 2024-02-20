@@ -32,6 +32,8 @@ struct StationXLastDataModel : Codable {
     let warn_wl: Double?
     let value: Double?
     var type_status: Int?
+    var stn_type: String?
+    var wl: String?
 
     init(stn: String,
          warning_type:String,
@@ -148,7 +150,8 @@ struct StationXLastDataModel : Codable {
                 
                 print("test data p \(da.title) -- \(da.rain12h)")
 
-                
+                da.wl = station.wl
+                da.stn_type = lastdata.stn_type
                 da.type_status = station.show_status
                 
                     viewModel.input.saveMessageData(data: da )

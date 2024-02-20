@@ -37,12 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13.0, *) {
             print("dok")
             window?.overrideUserInterfaceStyle = .light
-            
             UIApplication.shared.keyWindow?.overrideUserInterfaceStyle =  .light
-
             
         }
-        
         
         UINavigationBar.appearance().titleTextAttributes = attrs
         

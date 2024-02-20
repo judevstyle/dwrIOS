@@ -18,6 +18,10 @@ class NewsViewController: UIViewController {
     var proveinceSelect:SelectionModel? = nil
     var amPhurSelect:SelectionModel? = nil
     var districSelect:SelectionModel? = nil
+    var stationSelect:SelectionModel? = nil
+
+    
+    
     var imgName:String? = nil
 
     public let scrollView: UIScrollView = {
@@ -84,15 +88,15 @@ class NewsViewController: UIViewController {
         return view
     }()
     
-    lazy var stationValueView: UILabel = {
-        let view = UILabel()
-//        view.font = .header9
-        view.font = .PrimaryRegular(size: 16)
-
-        view.text = ""
-//        view.f
-        return view
-    }()
+//    lazy var stationValueView: UILabel = {
+//        let view = UILabel()
+////        view.font = .header9
+//        view.font = .PrimaryRegular(size: 16)
+//
+//        view.text = ""
+////        view.f
+//        return view
+//    }()
     
     lazy var descTitleTextView: UILabel = {
         let view = UILabel()
@@ -113,6 +117,18 @@ class NewsViewController: UIViewController {
         view.text = "รูปภาพ"
         view.font = .PrimaryRegular(size: 16)
 
+        view.textColor = .white
+
+//        view.f
+        return view
+    }()
+    
+    
+    lazy var stateUpload: UILabel = {
+        let view = UILabel()
+//        view.font = .header9
+        view.text = "กำลังอัพโหลดรูปภาพ..."
+        view.font = .PrimaryRegular(size: 12)
         view.textColor = .white
 
 //        view.f
@@ -178,11 +194,30 @@ class NewsViewController: UIViewController {
 
         return view
     }()
+    
+    let inputStation: TextFieldSelectView = {
+        let view = TextFieldSelectView(placeholder: "เลือก", listSelect: [])
+        view.inputText.font =    .PrimaryRegular(size: 16)
+
+        return view
+    }()
+    
+    
     private let dmDistricView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         return view
     }()
+    
+    
+    
+    private let dmStationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
+    
     
     
     lazy var bgImage: UIView = {
@@ -239,6 +274,7 @@ class NewsViewController: UIViewController {
         self.inputAmphur.delegate = self
         self.inputDistric.delegate = self
         self.inputProvince.delegate = self
+        self.inputStation.delegate = self
 
         var mediaTypes: [ImagePickerMediaTypes] = [.publicImage]
         var sourceType: [UIImagePickerController.SourceType] = [.camera, .photoLibrary]
@@ -280,6 +316,10 @@ class NewsViewController: UIViewController {
         dmDistricView.addSubview(inputDistric)
         inputDistric.anchor(dmDistricView.topAnchor, left: dmDistricView.leftAnchor, bottom: dmDistricView.bottomAnchor, right: dmDistricView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
    
+        
+        dmStationView.addSubview(inputStation)
+        inputStation.anchor(dmStationView.topAnchor, left: dmStationView.leftAnchor, bottom: dmStationView.bottomAnchor, right: dmStationView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
         stackViewContainer.addArrangedSubview(provinceTextView)
         stackViewContainer.addArrangedSubview(dmProvinceView)
      
@@ -290,7 +330,7 @@ class NewsViewController: UIViewController {
         stackViewContainer.addArrangedSubview(dmDistricView)
         
         stackViewContainer.addArrangedSubview(stationTextView)
-        stackViewContainer.addArrangedSubview(stationValueView)
+        stackViewContainer.addArrangedSubview(dmStationView)
 
         stackViewContainer.addArrangedSubview(descTitleTextView)
         
@@ -305,7 +345,8 @@ class NewsViewController: UIViewController {
 
         bgImage.addSubview(imgAddView)
         bgImage.addSubview(imgView)
-        
+        bgImage.addSubview(stateUpload)
+
         let imgViewClick = UITapGestureRecognizer(target: self, action: #selector(handleCheckImage))
         imgView.addGestureRecognizer(imgViewClick)
         imgView.isUserInteractionEnabled = true
@@ -313,7 +354,10 @@ class NewsViewController: UIViewController {
         
         imgView.setAllRounded(rounded: 8)
         
+        stateUpload.anchor(bgImage.topAnchor, left: bgImage.leftAnchor, bottom: nil, right: nil, topConstant: 160, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         imgAddView.anchor(bgImage.topAnchor, left: bgImage.leftAnchor, bottom: nil, right: nil, topConstant: (160/2)-30, leftConstant: (view.frame.width/2)-51, bottomConstant: 0, rightConstant: 0, widthConstant: 60, heightConstant: 60)
+        
+        
 //        imgView.backgroundColor = . white
         imgView.anchor(bgImage.topAnchor, left: bgImage.leftAnchor, bottom: bgImage.bottomAnchor, right: bgImage.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
@@ -322,6 +366,10 @@ class NewsViewController: UIViewController {
         
         
         stackViewContainer.addArrangedSubview(imgTitleTextView)
+        //stackViewContainer.addArrangedSubview(/*stateUpload*/)
+
+        
+        
         stackViewContainer.addArrangedSubview(bgImage)
         
         
@@ -333,7 +381,7 @@ class NewsViewController: UIViewController {
         
         stackViewContainer.addArrangedSubview(btnSave)
         btnSave.heightAnchor.constraint(equalToConstant: 48).isActive = true
-
+        stateUpload.isHidden = true
 //        inputInfoView.anchor(scrollView.topAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
         
@@ -358,13 +406,17 @@ class NewsViewController: UIViewController {
         if self.proveinceSelect == nil {
             self.view.makeToast("เลือกจังหวัด")
             
-        } else if self.proveinceSelect == nil {
+        } else if self.amPhurSelect == nil {
             self.view.makeToast("เลือกอำเภอ")
             
-        } else if self.proveinceSelect == nil {
+        } else if self.districSelect == nil {
             self.view.makeToast("เลือกตำบล")
             
-        }else if self.inputInfoView.text == "" {
+        } else if self.stationSelect == nil {
+            self.view.makeToast("เลือกสถานี")
+            
+        }
+        else if self.inputInfoView.text == "" {
             self.view.makeToast("ระบุรายละเอียด")
             
         } else if self.imgName == nil {
@@ -384,8 +436,7 @@ class NewsViewController: UIViewController {
     func createNews() {
     
         
-        apiServiceJsonProvider.rx.request(.CreateNews(stn: districSelect?.stn ?? "", stn_name: districSelect?.stn_name ?? "", tambon: districSelect?.name ?? "", amphone: amPhurSelect?.name ?? "", province: proveinceSelect?.name ?? "", latitude:  districSelect?.lat ?? 0.0, longitude: districSelect?.lng ?? 0.0, text_news: self.inputInfoView.text, pic_news: imgName ?? "")).subscribe { event in
-
+        apiServiceJsonProvider.rx.request(.CreateNews(stn: stationSelect?.stn ?? "", stn_name: stationSelect?.stn_name ?? "", tambon: districSelect?.name ?? "", amphone: amPhurSelect?.name ?? "", province: proveinceSelect?.name ?? "", latitude:  stationSelect?.lat ?? 0.0, longitude: stationSelect?.lng ?? 0.0, text_news: self.inputInfoView.text, pic_news: imgName ?? "")).subscribe { event in
             switch event {
             case let .success(response):
                 print("ddd -- \(response)")
@@ -393,11 +444,11 @@ class NewsViewController: UIViewController {
                 do {
                     let result = try JSONDecoder().decode(CallbackData.self, from: response.data)
                     print("ddd -- \(result)")
-//                    self.startLoding()
+                    self.startLoding()
 
                     DispatchQueue.main.async {
 
-//                        self.stopLoding()
+                        self.stopLoding()
 //                        if result.success {
                             self.view.makeToast("บันทึกข้อมูลเรียบร้อย")
                         
@@ -550,7 +601,7 @@ class NewsViewController: UIViewController {
                 print("ddd -- \(response)")
 
                 do {
-                    let result = try JSONDecoder().decode([TambonData].self, from: response.data)
+                    let result = try JSONDecoder().decode([String].self, from: response.data)
                     print("ddd -- \(result)")
                     
                     DispatchQueue.main.async {
@@ -565,8 +616,9 @@ class NewsViewController: UIViewController {
                         var dataModel:[SelectionModel] = []
                         
                         for data in result {
-                    
-                            dataModel.append(SelectionModel(id: 1, name: data.tambon ?? "",tm: "\(data.stn ?? "") \(data.name ?? "")",lat: Double((data.latitude ?? "0.0")),lng: Double((data.longitude ?? "0.0")),stn: data.stn,stn_name: data.name ))
+                            dataModel.append(SelectionModel(id: 1, name: data ?? ""))
+
+                 /*           dataModel.append(SelectionModel(id: 1, name: data.tambon ?? "",tm: "\(data.stn ?? "") \(data.name ?? "")",lat: Double((data.latitude ?? "0.0")),lng: Double((data.longitude ?? "0.0")),stn: data.stn,stn_name: data.name ))*/
                         }
                                         
                         
@@ -596,34 +648,91 @@ class NewsViewController: UIViewController {
     }
     
     
+    func getStation() {
     
-    
-    
-    
-    func uploadImage(image: UIImage, fileName: String?) {
-    
-        
-      
-        apiServiceJsonProvider.rx.request(.UploadFile(image: image, fileName: fileName)).subscribe { event in
+        print("getDistric -- \(self.amPhurSelect?.name ?? "")")
+
+        apiServiceJsonProvider.rx.request(.GetStation(tm:  self.districSelect?.name ?? "")).subscribe { event in
 
             switch event {
             case let .success(response):
                 print("ddd -- \(response)")
 
                 do {
-                    let result = try JSONDecoder().decode(CallbackData.self, from: response.data)
+                    let result = try JSONDecoder().decode([TambonData].self, from: response.data)
                     print("ddd -- \(result)")
                     
                     DispatchQueue.main.async {
 
-                        self.imgName = result.msg
+                    
                     self.startLoding()
                 
                         
                     DispatchQueue.global(qos: .background).async {
 //                        LastDataModel.setMethodAllWarnMap(viewModel: self.viewModel as! LastDataViewModel,stations: result)
+                        
+                        var dataModel:[SelectionModel] = []
+                        
+                        for data in result {
+                    
+                            dataModel.append(SelectionModel(id: 1, name: data.name ?? "",tm: "\(data.stn ?? "") \(data.name ?? "")",lat: Double((data.latitude ?? "0.0")),lng: Double((data.longitude ?? "0.0")),stn: data.stn,stn_name: data.name ))
+                        }
+                                        
+                        
                         DispatchQueue.main.async {
                             self.stopLoding()
+                            self.inputStation.setupValue(listSelect: dataModel)
+
+                        }
+                    }
+                    }
+                    
+                    
+                    
+                } catch { print("err --- \(error)") }
+//                print("data ---- \(response.data)")
+//                let root = try? strongSelf.jsonDecoder.decode(Root.self, from: response.data)
+            case let .failure(error):
+              print("ddd")
+//                self.dashboards[2].value = "0"
+//                self.dashboards[3].value = "0"
+            }
+        
+        }
+        
+        
+        
+    }
+    
+    
+    
+    func uploadImage(image: UIImage, fileName: String?) {
+    
+        print("ddd UploadFile name-- \(image)--\(fileName)")
+
+      //  self.startLoding()
+        self.startLodingCircle()
+        stateUpload.isHidden = false
+        apiServiceJsonProvider.rx.request(.UploadFile(image: image, fileName: fileName)).subscribe { event in
+
+            switch event {
+            case let .success(response):
+                print("ddd UploadFile-- \(response)")
+
+                do {
+                    let result = try JSONDecoder().decode(CallbackData.self, from: response.data)
+                    print("ddd UploadFile2-- --\(result.success)-\(result.msg)")
+                    
+                    DispatchQueue.main.async {
+
+                        self.imgName = result.msg
+                        self.stateUpload.isHidden = true
+
+//                        self.stopLoding()
+
+                    DispatchQueue.global(qos: .background).async {
+//                        LastDataModel.setMethodAllWarnMap(viewModel: self.viewModel as! LastDataViewModel,stations: result)
+                        DispatchQueue.main.async {
                         }
                     }
                     }
@@ -676,9 +785,15 @@ extension NewsViewController : TextFieldSelectViewDelegate{
             self.getDistric()
 
             break
+        case self.inputStation:
+            self.stationSelect = item
+//            self.get()
+
+            break
         default :
             self.districSelect = item
-            self.stationValueView.text = item?.tm ?? ""
+            self.getStation()
+//            self.stationValueView.text = item?.tm ?? ""
             break
             
             

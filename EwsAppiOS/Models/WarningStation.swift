@@ -50,6 +50,7 @@ struct WarningStation: Decodable {
     var pm25: String?
     var status: String?
     var rain_value: Double?
+    var stn_type: String?
 
     
     enum CodingKeys: String, CodingKey {
@@ -91,6 +92,7 @@ struct WarningStation: Decodable {
         case pm25 =  "pm25"
         case status =  "status"
         case rain_value =  "rain_value"
+        case stn_type =  "stn_type"
 
     }
 }

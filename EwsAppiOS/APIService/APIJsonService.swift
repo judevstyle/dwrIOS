@@ -14,6 +14,8 @@ enum APIJsonService {
     case UploadFile(image: UIImage, fileName: String?)
     case GetTambon(am:String)
     case GetAmphone(pv:String)
+    case GetStation(tm:String)
+
     case GetProvince
     
     case GetDashboard
@@ -70,6 +72,9 @@ extension APIJsonService: TargetType, AccessTokenAuthorizable {
         case .GetSearchStation:
             return "/api/autocomplete_station.php"
 
+        case .GetStation:
+            return "/api/station_data.php"
+
         }
     }
     
@@ -92,6 +97,9 @@ extension APIJsonService: TargetType, AccessTokenAuthorizable {
         case let .GetTambon(am):
             return .requestParameters(
                 parameters: [ "amphoe": am], encoding: URLEncoding.queryString)
+        case let .GetStation(tm):
+            return .requestParameters(
+                parameters: [ "tambon": tm], encoding: URLEncoding.queryString)
         case let .GetRadarService(type, radius, lat, lng):
             return .requestParameters(
                 parameters: [ "type": type,"radius":radius,"lat":lat,"lng":lng], encoding: URLEncoding.queryString)

@@ -146,7 +146,7 @@ struct ItemSearchModel {
         var list:[ItemSearchModel] = []
         
         var listDept:[String] = []
-        print("filterDept --- \(AppDelegate.shareDelegate.last_data_search.count)")
+        //print("filterDept --- \(AppDelegate.shareDelegate.last_data_search.count)")
         
         for (index,item) in data.enumerated() {
             if index == 0 {

@@ -173,39 +173,43 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
     let valueLabel: UILabel = {
         let label = UILabel()
         
+//        label.numberOfLines = 1
+//        label.textColor = .blackAlpha(alpha: 0.7)
+//
+//        var stringValue = "0"
+//
+//        let attributedString = NSMutableAttributedString(string: stringValue)
+//
+//        let paragraphStyle = NSMutableParagraphStyle()
+//
+//        paragraphStyle.maximumLineHeight = 50
+//
+//        attributedString.addAttribute(
+//            .paragraphStyle,
+//            value: paragraphStyle,
+//            range: NSRange(location: 0, length: attributedString.length
+//        ))
+//
+//        attributedString.addAttribute(
+//            .font,
+//            value: UIFont.PrimaryRegular(size: CGFloat(16)),
+//            range: NSRange(location: 0, length: attributedString.length
+//        ))
+//
+//        attributedString.addAttribute(
+//            .foregroundColor,
+//            value: UIColor.blackAlpha(alpha: 0.7),
+//            range: NSRange(location: 0, length: attributedString.length
+//        ))
+//
+//
+//        label.attributedText = attributedString
         label.numberOfLines = 1
+        label.text = "ฝนสะสม 12 ชั่วโมง"
         label.textColor = .blackAlpha(alpha: 0.7)
-        
-        var stringValue = "0"
-        
-        let attributedString = NSMutableAttributedString(string: stringValue)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        
-        paragraphStyle.maximumLineHeight = 50
-        
-        attributedString.addAttribute(
-            .paragraphStyle,
-            value: paragraphStyle,
-            range: NSRange(location: 0, length: attributedString.length
-        ))
-        
-        attributedString.addAttribute(
-            .font,
-            value: UIFont.PrimaryRegular(size: CGFloat(35)),
-            range: NSRange(location: 0, length: attributedString.length
-        ))
-        
-        attributedString.addAttribute(
-            .foregroundColor,
-            value: UIColor.blackAlpha(alpha: 0.7),
-            range: NSRange(location: 0, length: attributedString.length
-        ))
-        
-        
-        label.attributedText = attributedString
-        
+        label.font = .PrimaryRegular(size: 15)
         label.textAlignment = .right
+//        label.textAlignment = .right
         
         return label
     }()
@@ -216,10 +220,30 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
         label.numberOfLines = 1
         label.text = "มม."
         label.textColor = .blackAlpha(alpha: 0.7)
-        label.font = .PrimaryRegular(size: 16)
+        label.font = .PrimaryRegular(size: 22)
         label.textAlignment = .right
         return label
     }()
+    
+    lazy var valueWlLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.text = "มม."
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.font = .PrimaryRegular(size: 22)
+        label.textAlignment = .right
+        return label
+    }()
+    lazy var titleWlLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.text = "ระดับน้ำ"
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.font = .PrimaryRegular(size: 15)
+        label.textAlignment = .right
+        return label
+    }()
+    
     
     lazy var viewRecenty: UIView = {
         let view = UIView()
@@ -595,18 +619,35 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
             self.stopLoding()
             if let lat = data.latitude!.toDouble() {
                 if let long = data.longitude!.toDouble() {
-                    switch data.status {
-                    case "สถานการณ์ อพยพ":
+                    switch data.type_status {
+                    case 3:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerEvacuateView)
-                    case "สถานการณ์ เตือนภัย":
+                    case 2:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWarningView)
-                    case "สถานการณ์ เฝ้าระวัง":
+                    case 1:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerBewareView)
-                    case "สถานการณ์ ฝนตกเล็กน้อย":
-                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWhiteView )
+                    case -999:
+                       
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWhiteView)
+                        
                     default:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
+                   
                     }
+//                    switch data.status {
+//                    case "สถานการณ์ อพยพ":
+//                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerEvacuateView)
+//                    case "สถานการณ์ เตือนภัย":
+//                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWarningView)
+//                    case "สถานการณ์ เฝ้าระวัง":
+//                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerBewareView)
+//                    case "สถานการณ์ ฝนตกเล็กน้อย":
+//                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
+//                    default:
+//                       
+//                        
+//                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWhiteView )
+//                    }
                 }
             }
             
@@ -685,13 +726,17 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
         customView.addSubview(rainLabel)
         customView.addSubview(valueLabel)
         customView.addSubview(valueUnitLabel)
+        
+        customView.addSubview(titleWlLabel)
+        customView.addSubview(valueWlLabel)
+        
         customView.addSubview(Pm25Label)
         
         titleLabel.anchor(customView.topAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
         addressLabel.anchor(titleLabel.bottomAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
-        viewRecenty.anchor(addressLabel.bottomAnchor, left: customView.leftAnchor, bottom: customView.bottomAnchor, right: nil, topConstant: 5, leftConstant: 20, bottomConstant: 8, rightConstant: 20, widthConstant: alertController.view.frame.width/2, heightConstant: 0)
+        viewRecenty.anchor(addressLabel.bottomAnchor, left: customView.leftAnchor, bottom: customView.bottomAnchor, right: nil, topConstant: 5, leftConstant: 20, bottomConstant: 8, rightConstant: 20, widthConstant: alertController.view.frame.width/3, heightConstant: 0)
         
         viewRecenty.addSubview(iconView)
         viewRecenty.addSubview(textRecenty)
@@ -702,14 +747,34 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
         rainLabel.anchor(addressLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
         
-        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: valueUnitLabel.leftAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+//        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: valueUnitLabel.leftAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+//        
+//        valueUnitLabel.anchor(nil, left: valueLabel.rightAnchor, bottom: valueLabel.bottomAnchor, right: customView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 8, widthConstant: 25, heightConstant: 0)
+//        
+//        
+        valueLabel.anchor(rainLabel.bottomAnchor, left: nil, bottom: nil, right: valueUnitLabel.leftAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
-        valueUnitLabel.anchor(nil, left: valueLabel.rightAnchor, bottom: valueLabel.bottomAnchor, right: customView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 8, widthConstant: 25, heightConstant: 0)
+        //valueUnitLabel.backgroundColor = .red
+        valueUnitLabel.anchor(nil, left: valueLabel.rightAnchor, bottom: valueLabel.bottomAnchor, right: customView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -2, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        
+        
+ 
+//
+//
+        valueWlLabel.anchor(valueUnitLabel.bottomAnchor, left: nil, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        
+        titleWlLabel.anchor(nil, left: nil, bottom: valueWlLabel.bottomAnchor, right: valueWlLabel.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 2, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+//
+        
+        
+        
+        
         
         Pm25Label.anchor(nil, left: nil, bottom: alertController.view.bottomAnchor, right: alertController.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 3, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
         setValueAlert(station: listMarker[index])
-        
+        Pm25Label.isHidden = true
+
         self.present(alertController, animated: true) {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlertController))
             alertController.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
@@ -765,20 +830,68 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
         }
         
 //        valueLabel.text = "\(station.value!)"
-        if station.type_status == 9 || station.type_status == -999 || station.type_status == 0 {
-            valueLabel.text = "\(station.rain12h!)"
+//        if station.type_status == 9 || station.type_status == -999 || station.type_status == 0 {
+//            valueLabel.text = "\(station.rain12h!)"
+//            rainLabel.text = "ปริมาณน้ำฝนสะสม"
+//
+//
+//        } else {
+//            valueLabel.text = "\(station.value!)"
+//
+//        }
+        
+        
+        if station.type_status == 9 || station.type_status == -999 || station.type_status == 0  {
+           // rainLabel.text = "ปริมาณน้ำฝนสะสม"
+
+            valueUnitLabel.text = "\(station.rain12h!) มม."
+            
+            if station.stn_type == "wl" {
+                self.valueWlLabel.text = "\(station.wl ?? "0.0") ม."
+            } else {
+                self.valueWlLabel.text = "ไม่มีข้อมูล"
+            }
+            
 
         } else {
-            valueLabel.text = "\(station.value!)"
+            valueUnitLabel.text = "\(station.warn_rf!) มม."
+            
+            if station.stn_type == "wl" {
+                self.valueWlLabel.text = "\(station.warn_wl ?? 0.0) ม."
+            } else {
+                self.valueWlLabel.text = "ไม่มีข้อมูล"
+            }
+            
+            
 
         }
         
         
-        if let pm2Double = station.pm25!.toDouble() {
-            Pm25Label.text = "PM 2.5 = \(pm2Double)"
+        
+        rainLabel.isHidden = true
+
+        
+        if let pm2Double = station.pm25 {
+            
+            
+            let jsonlongs = Double(pm2Double) ?? 0.0
+
+            if jsonlongs > 0 {
+                Pm25Label.text = "ค่าระดับน้ำ ล่าสุด = \(pm2Double) m."
+            } else {
+                Pm25Label.text = "ค่าระดับน้ำ ล่าสุด = รอข้อมูล"
+            }
+           
         }else {
-            Pm25Label.text = "PM 2.5 = \(station.pm25!)"
+            Pm25Label.text = "ค่าระดับน้ำ ล่าสุด = รอข้อมูล"
         }
+        
+        
+//        if let pm2Double = station.pm25!.toDouble() {
+//            Pm25Label.text = "PM 2.5 = \(pm2Double)"
+//        }else {
+//            Pm25Label.text = "PM 2.5 = \(station.pm25!)"
+//        }
         
         
         switch station.status! {
@@ -873,9 +986,10 @@ class MapRadarViewController : UIViewController, GMSMapViewDelegate, UITableView
                         case "สถานการณ์ เฝ้าระวัง":
                             self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerBewareView)
                         case "สถานการณ์ ฝนตกเล็กน้อย":
-                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerBewareView )
-                        default:
                             self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerDefaultView)
+                        default:
+                            
+                            self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: index, iconMarker: self.markerBewareView )
                         }
                         
                     }

@@ -31,6 +31,7 @@ struct LastDataModel : Codable {
     let value : Double?
 //    var warningStation:WarningStation? = nil
     var ews07:Ews07Model? = nil
+    var stn_type : String? = nil
 
     
     init(stn: String,
@@ -509,7 +510,7 @@ struct LastDataModel : Codable {
                                 wl: item_station.wl ?? "",
                                 wl07h: item_station.wl07H ?? "",
                                 soil: item_station.soil2 ?? "",
-                                pm25: item_station.soil2 ?? "",
+                                pm25: item_station.wl ?? "0.0",
                                 status: getStatus(status: item_station.showStatus ?? 0),
                                 warn_rf: rainDouble ?? 0.0,
                                 warn_wl: wlDouble ?? 0.0,
@@ -569,7 +570,7 @@ struct LastDataModel : Codable {
                         wl: item_station.wl ?? "",
                         wl07h: item_station.wl07h ?? "",
                         soil: item_station.soil2 ?? "",
-                        pm25: item_station.soil2 ?? "",
+                        pm25: item_station.wl ?? "0.0",
                         status: getStatus(status: item_station.show_status ?? 0),
                         warn_rf: rainDouble ?? 0.0,
                         warn_wl: wlDouble ?? 0.0,
@@ -595,6 +596,7 @@ struct LastDataModel : Codable {
                         stn_cover: "\(item_station.stn_cover ?? 0)")
                     
                     print("rain 12 \(item_station.name) \(data.rain12h) --07-\(ews07.rain12h)")
+                    data.stn_type = item_station.stn_type
                     data.ews07 = ews07
 //                    data.warningStation = item_station
                         last_data.append(

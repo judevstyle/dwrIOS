@@ -224,6 +224,7 @@ extension ImagePickerHelp: UIImagePickerControllerDelegate {
         }
         
         if (picker.sourceType == UIImagePickerController.SourceType.camera){
+            
             let imgName = UUID().uuidString
             let documentDirectory = NSTemporaryDirectory()
             let localPath = documentDirectory.appending(imgName)
@@ -231,7 +232,7 @@ extension ImagePickerHelp: UIImagePickerControllerDelegate {
             let data = image.jpegData(compressionQuality: 0.3)! as NSData
             data.write(toFile: localPath, atomically: true)
             let photoURL = URL.init(fileURLWithPath: localPath)
-            self.pickerController(picker, image: image, fileName: imgName)
+            self.pickerController(picker, image: image, fileName: "\(imgName).jpg")
 
             
             

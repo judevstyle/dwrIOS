@@ -27,6 +27,7 @@ class TextFieldSelectView: UIView {
     let inputText: UITextField = {
         let view = UITextField()
         view.borderStyle = .none
+        view.attributedPlaceholder = NSAttributedString(string: "Placeholder String...",attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
 //        view.font = .smallText
         view.textColor = .white
         view.backgroundColor = .clear

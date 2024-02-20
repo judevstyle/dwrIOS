@@ -39,6 +39,7 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         return view
     }()
     
+    var isMove = false
     
     let cellId = "cellDashboard"
     
@@ -163,39 +164,43 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
     let valueLabel: UILabel = {
         let label = UILabel()
         
+//        label.numberOfLines = 1
+//        label.textColor = .blackAlpha(alpha: 0.7)
+//        
+//        var stringValue = "0"
+//        
+//        let attributedString = NSMutableAttributedString(string: stringValue)
+//        
+//        let paragraphStyle = NSMutableParagraphStyle()
+//        
+//        paragraphStyle.maximumLineHeight = 50
+//        
+//        attributedString.addAttribute(
+//            .paragraphStyle,
+//            value: paragraphStyle,
+//            range: NSRange(location: 0, length: attributedString.length
+//        ))
+//        
+//        attributedString.addAttribute(
+//            .font,
+//            value: UIFont.PrimaryRegular(size: CGFloat(16)),
+//            range: NSRange(location: 0, length: attributedString.length
+//        ))
+//        
+//        attributedString.addAttribute(
+//            .foregroundColor,
+//            value: UIColor.blackAlpha(alpha: 0.7),
+//            range: NSRange(location: 0, length: attributedString.length
+//        ))
+//        
+//        
+//        label.attributedText = attributedString
         label.numberOfLines = 1
+        label.text = "ฝนสะสม 12 ชั่วโมง"
         label.textColor = .blackAlpha(alpha: 0.7)
-        
-        var stringValue = "0"
-        
-        let attributedString = NSMutableAttributedString(string: stringValue)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        
-        paragraphStyle.maximumLineHeight = 50
-        
-        attributedString.addAttribute(
-            .paragraphStyle,
-            value: paragraphStyle,
-            range: NSRange(location: 0, length: attributedString.length
-        ))
-        
-        attributedString.addAttribute(
-            .font,
-            value: UIFont.PrimaryRegular(size: CGFloat(35)),
-            range: NSRange(location: 0, length: attributedString.length
-        ))
-        
-        attributedString.addAttribute(
-            .foregroundColor,
-            value: UIColor.blackAlpha(alpha: 0.7),
-            range: NSRange(location: 0, length: attributedString.length
-        ))
-        
-        
-        label.attributedText = attributedString
-        
+        label.font = .PrimaryRegular(size: 15)
         label.textAlignment = .right
+//        label.textAlignment = .right
         
         return label
     }()
@@ -206,10 +211,31 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         label.numberOfLines = 1
         label.text = "มม."
         label.textColor = .blackAlpha(alpha: 0.7)
-        label.font = .PrimaryRegular(size: 16)
+        label.font = .PrimaryRegular(size: 22)
         label.textAlignment = .right
         return label
     }()
+    
+    lazy var valueWlLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.text = "มม."
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.font = .PrimaryRegular(size: 22)
+        label.textAlignment = .right
+        return label
+    }()
+    lazy var titleWlLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.text = "ระดับน้ำ"
+        label.textColor = .blackAlpha(alpha: 0.7)
+        label.font = .PrimaryRegular(size: 15)
+        label.textAlignment = .right
+        return label
+    }()
+    
+    
     
     lazy var viewRecenty: UIView = {
         let view = UIView()
@@ -396,6 +422,13 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
                         
                         self.stopLoding()
                         
+                        if !self.isMove {
+                            let camera = GMSCameraPosition.camera(withLatitude:13.708019369618574, longitude: 100.40275714558622, zoom: 5.0)
+                            self.mapView.animate(to: camera)
+                            self.mapView.camera = camera
+                            self.isMove = true
+                        }
+                        
                         
                         
                        // self.listRegion = result
@@ -478,11 +511,13 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         let camera = GMSCameraPosition.camera(withLatitude: 13.806684877238261, longitude:  100.5057400551459, zoom: 5.0)
         
-//        ,
+//        ,      let camera  = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: 10)
+
         
         mapView = GMSMapView.map(withFrame: self.viewMain.frame, camera: camera)
         mapView.isMyLocationEnabled = true
-        
+        self.mapView.camera = camera
+
         self.viewMain.addSubview(mapView)
         mapView.anchor(viewMain.topAnchor, left: viewMain.leftAnchor, bottom: viewMain.bottomAnchor, right: viewMain.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
@@ -529,10 +564,13 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWarningView)
                     case 1:
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerBewareView)
-                    case 9:
-                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
-                    default:
+                    case -999:
+                       
                         self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerWhiteView)
+                        
+                    default:
+                        self.handleAddMarker(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long), index: self.index, iconMarker: self.markerDefaultView)
+                      
                     }
                 }
             }
@@ -604,13 +642,18 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         customView.addSubview(rainLabel)
         customView.addSubview(valueLabel)
         customView.addSubview(valueUnitLabel)
-        customView.addSubview(Pm25Label)
         
+        
+        customView.addSubview(titleWlLabel)
+        customView.addSubview(valueWlLabel)
+        
+        customView.addSubview(Pm25Label)
+//        viewRecenty.backgroundColor = .red
         titleLabel.anchor(customView.topAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
         addressLabel.anchor(titleLabel.bottomAnchor, left: customView.leftAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
         
-        viewRecenty.anchor(addressLabel.bottomAnchor, left: customView.leftAnchor, bottom: customView.bottomAnchor, right: nil, topConstant: 5, leftConstant: 20, bottomConstant: 8, rightConstant: 20, widthConstant: alertController.view.frame.width/2, heightConstant: 0)
+        viewRecenty.anchor(addressLabel.bottomAnchor, left: customView.leftAnchor, bottom: customView.bottomAnchor, right: nil, topConstant: 5, leftConstant: 20, bottomConstant: 8, rightConstant: 20, widthConstant: alertController.view.frame.width/3, heightConstant: 0)
         
         viewRecenty.addSubview(iconView)
         viewRecenty.addSubview(textRecenty)
@@ -618,15 +661,25 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         textRecenty.anchor(iconView.bottomAnchor, left: viewRecenty.leftAnchor, bottom: viewRecenty.bottomAnchor, right: viewRecenty.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         
-        rainLabel.anchor(addressLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        rainLabel.anchor(addressLabel.bottomAnchor, left: nil, bottom: nil, right: customView.rightAnchor, topConstant: 5, leftConstant: 8, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
         
-        valueLabel.anchor(rainLabel.bottomAnchor, left: iconView.rightAnchor, bottom: nil, right: valueUnitLabel.leftAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        valueLabel.anchor(rainLabel.bottomAnchor, left: nil, bottom: nil, right: valueUnitLabel.leftAnchor, topConstant: 0, leftConstant: 5, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
-        valueUnitLabel.anchor(nil, left: valueLabel.rightAnchor, bottom: valueLabel.bottomAnchor, right: customView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 8, rightConstant: 8, widthConstant: 25, heightConstant: 0)
+        //valueUnitLabel.backgroundColor = .red
+        valueUnitLabel.anchor(nil, left: valueLabel.rightAnchor, bottom: valueLabel.bottomAnchor, right: customView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: -2, rightConstant: 8, widthConstant: 0, heightConstant: 0)
         
+        
+ 
+//        
+//        
+        valueWlLabel.anchor(valueUnitLabel.bottomAnchor, left: nil, bottom: nil, right: customView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 8, widthConstant: 0, heightConstant: 0)
+        
+        titleWlLabel.anchor(nil, left: nil, bottom: valueWlLabel.bottomAnchor, right: valueWlLabel.leftAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 2, rightConstant: 4, widthConstant: 0, heightConstant: 0)
+//
+//        
         Pm25Label.anchor(nil, left: nil, bottom: alertController.view.bottomAnchor, right: alertController.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 3, rightConstant: 8, widthConstant: 0, heightConstant: 0)
-        
+        Pm25Label.isHidden = true
         
         print("data \(listMarker[index].title) -- \(listMarker[index].rain12h)")
         
@@ -672,7 +725,8 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
         
         addressLabel.attributedText = attributedString
         
-        
+                       // valueWlLabel.text = "100.0 ม."
+
         if station.status == "สถานการณ์ ฝนตกเล็กน้อย" {
             rainLabel.text = "ปริมาณน้ำฝนสะสม"
 //            valueUnitLabel.text = "มม."
@@ -685,23 +739,54 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
 //                valueUnitLabel.text = "ม."
             }
         }
+        rainLabel.isHidden = true
+//        if station.type_status == 9 || station.type_status == -999 || station.type_status == 0 {
+//            rainLabel.text = "ปริมาณน้ำฝนสะสม"
+//        }
+//        
         
         print("type_status -- \(station.type_status) -- \(station.rain12h!) -- \(station.value!)")
         
         if station.type_status == 9 || station.type_status == -999 || station.type_status == 0  {
-            valueLabel.text = "\(station.rain12h!)"
+           // rainLabel.text = "ปริมาณน้ำฝนสะสม"
+
+            valueUnitLabel.text = "\(station.rain12h!) มม."
+            
+            if station.stn_type == "wl" {
+                self.valueWlLabel.text = "\(station.wl ?? "0.0") ม."
+            } else {
+                self.valueWlLabel.text = "ไม่มีข้อมูล"
+            }
+            
 
         } else {
-            valueLabel.text = "\(station.value!)"
+            valueUnitLabel.text = "\(station.warn_rf!) มม."
+            
+            if station.stn_type == "wl" {
+                self.valueWlLabel.text = "\(station.warn_wl ?? 0.0) ม."
+            } else {
+                self.valueWlLabel.text = "ไม่มีข้อมูล"
+            }
+            
+            
 
         }
         
 
         
-        if let pm2Double = station.pm25!.toDouble() {
-            Pm25Label.text = "PM 2.5 = \(pm2Double)"
+        if let pm2Double = station.pm25 {
+            
+            
+            let jsonlongs = Double(pm2Double)  ?? 0.0
+
+            if jsonlongs > 0 {
+                Pm25Label.text = "ค่าระดับน้ำ ล่าสุด = \(pm2Double) m."
+            } else {
+                Pm25Label.text = "ค่าระดับน้ำ ล่าสุด = รอข้อมูล"
+            }
+           
         }else {
-            Pm25Label.text = "PM 2.5 = \(station.pm25!)"
+            Pm25Label.text = "ค่าระดับน้ำ ล่าสุด = รอข้อมูล"
         }
         
         
@@ -815,6 +900,8 @@ class MapStationViewController: UIViewController, GMSMapViewDelegate, UITableVie
             self.stopLoding()
             let camera = GMSCameraPosition.camera(withLatitude:13.708019369618574, longitude: 100.40275714558622, zoom: 5.0)
             self.mapView.animate(to: camera)
+            self.mapView.camera = camera
+
 //            let camera = GMSCameraPosition.camera(withLatitude: AppDelegate.shareDelegate.currentLocation!.latitude, longitude: AppDelegate.shareDelegate.currentLocation!.longitude, zoom: 5.0)
 //            self.mapView.animate(to: camera)
         }

@@ -638,6 +638,8 @@ extension UIViewController: NVActivityIndicatorViewable {
     
     func stopLoding() {
         stopAnimating()
+        print("stopLoding -- stopLoding")
+
     }
     
     

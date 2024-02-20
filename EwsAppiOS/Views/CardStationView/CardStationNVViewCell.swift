@@ -166,12 +166,14 @@ class CardStationNVViewCell: UITableViewCell {
 
         
         
-        if station!.show_status == 9 || station!.show_status == -999  {
+        if station!.show_status == 9 || station!.show_status == -999 || station!.show_status == 0  {
+            
             rainLabel.text = "ปริมาณน้ำฝนสะสม"
             valueUnitLabel.text = "มม."
             valueLabel.text = "\(station!.rain12h!)"
 
         }else {
+            
             valueLabel.text = "\(station!.rain_value!)"
 
             if station!.warning_type == "rain" {
